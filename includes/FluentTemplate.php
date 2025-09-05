@@ -98,7 +98,6 @@ class FluentTemplate extends BaseTemplate {
 			)
 		);
 
-		$html .= $this->getTrail();
 		$html .= Html::closeElement( 'body' );
 		$html .= Html::closeElement( 'html' );
 
@@ -133,7 +132,7 @@ class FluentTemplate extends BaseTemplate {
 			$siteTitle = MediaWikiServices::getInstance()->
 				getLanguageConverterFactory()->
 				getLanguageConverter()->convert( $this->getMsg( 'sitetitle' )->escaped() );
-			
+
 			$html .= Html::rawElement(
 				'a',
 				[
@@ -215,7 +214,7 @@ class FluentTemplate extends BaseTemplate {
 					$html .= $this->getSearch();
 					break;
 				case 'TOOLBOX':
-					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
+					$html .= $this->getPortlet( 'tb', $this->data['sidebar']['TOOLBOX'], 'toolbox' );
 					break;
 				case 'LANGUAGES':
 					$html .= $this->getLanguageLinks();
@@ -638,7 +637,6 @@ class FluentTemplate extends BaseTemplate {
 	 *   practice we currently only check if it is or isn't 'iconsfirst'
 	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
 	 *   as in id='f-whatever' vs id='footer-whatever'
-	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
 	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
 	 *   nested array
 	 *
@@ -651,12 +649,11 @@ class FluentTemplate extends BaseTemplate {
 			'class' => 'mw-footer',
 			'order' => 'iconsfirst',
 			'link-prefix' => 'footer',
-			'icon-style' => 'icononly',
 			'link-style' => null
 		];
 		'@phan-var array{id:string,class:string,order:string,link-prefix:string,icon-style:string,link-style:?string} $options';
 
-		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
+		$validFooterIcons = $this->get('footericons');
 		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
 
 		$html = '';

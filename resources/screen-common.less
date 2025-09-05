@@ -626,10 +626,14 @@ ul.gallery {
 }
 
 table.wikitable  {
-	border:0;
+	border-collapse: collapse;
 	background: var(--wikitable-background-color);
 	> tr > th, > tr > td, > * > tr > th, > * > tr > td {
 		padding: 0.4em;
+		border-bottom: 1px solid;
+	}
+	> thead > tr > th, > thead > tr > td, > * > thead > tr > th, > * > thead > tr > td {
+		border-color: #8a8886;
 	}
 	> tr > th, > * > tr > th {
 		font-weight: 600;
@@ -639,6 +643,9 @@ table.wikitable  {
 	> tr > td, > * > tr > td {
 		border-color: var(--wikitable-td-border-color);
 	}
+	&.filehistory > tbody > tr:first-child {
+		border-color: #8a8886;
+	}table.wikitable.filehistory > tbody > tr:first-child{border-color:#8a8886}
 }
 
 table.mw_metadata {

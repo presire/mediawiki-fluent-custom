@@ -23,7 +23,7 @@
 	},
 	"ResourceModules": {
 		"skins.fluent": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"features": [
 				"normalize",
 				"elements",

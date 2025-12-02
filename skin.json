@@ -1,6 +1,6 @@
 {
 	"name": "Fluent",
-	"version": "0.70",
+	"version": "0.50",
 	"author": "immewnity",
 	"url": "https://www.mediawiki.org/wiki/Skin:Fluent",
 	"descriptionmsg": "fluent-desc",
@@ -23,7 +23,7 @@
 	},
 	"ResourceModules": {
 		"skins.fluent": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
+			"class": "ResourceLoaderSkinModule",
 			"features": [
 				"normalize",
 				"elements",

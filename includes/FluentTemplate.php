@@ -31,6 +31,20 @@ class FluentTemplate extends BaseTemplate {
 					) .
 					Html::rawElement(
 						'button',
+						[
+							'id' => 'theme-toggle',
+							'class' => 'theme-toggle-button',
+							'title' => 'Toggle theme',
+							'aria-label' => 'Toggle dark/light mode'
+						],
+						Html::rawElement(
+							'span',
+							[ 'class' => 'theme-toggle-icon' ],
+							''
+						)
+					) .
+					Html::rawElement(
+						'button',
 						[ 'id' => 'user-icon', 'title' => 'User icon' ],
 						Html::rawElement(
 							'div',
@@ -98,6 +112,7 @@ class FluentTemplate extends BaseTemplate {
 			)
 		);
 
+		$html .= $this->getTrail();
 		$html .= Html::closeElement( 'body' );
 		$html .= Html::closeElement( 'html' );
 
@@ -129,9 +144,8 @@ class FluentTemplate extends BaseTemplate {
 			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' )
 		);
 		if ( !$imageOnly ) {
-			$siteTitle = MediaWikiServices::getInstance()->
-				getLanguageConverterFactory()->
-				getLanguageConverter()->convert( $this->getMsg( 'sitetitle' )->escaped() );
+			$language = $this->getSkin()->getLanguage();
+			$siteTitle = $language->convert( $this->getMsg( 'sitetitle' )->escaped() );
 
 			$html .= Html::rawElement(
 				'a',
@@ -214,7 +228,7 @@ class FluentTemplate extends BaseTemplate {
 					$html .= $this->getSearch();
 					break;
 				case 'TOOLBOX':
-					$html .= $this->getPortlet( 'tb', $this->data['sidebar']['TOOLBOX'], 'toolbox' );
+					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
 					break;
 				case 'LANGUAGES':
 					$html .= $this->getLanguageLinks();
@@ -324,7 +338,7 @@ class FluentTemplate extends BaseTemplate {
 			'https://www.gravatar.com/avatar/' .
 			md5( strtolower( trim( $this->getSkin()->getUser()->getEmail() ) ) ) . '?d=' .
 			urlencode( $genericFace ) . '&s=' . 100;
-	
+
 		return $gravatarUrl;
 	}
     }
@@ -372,37 +386,6 @@ class FluentTemplate extends BaseTemplate {
 		}
 
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
-
-
-
-
-
-
-		$html .= Html::rawElement(
-			'div',
-			[ 'id' => 'p-dark-toggle', 'class' => 'mw-portlet' ],
-			Html::rawElement(
-				'div',
-				[ 'id' => 'menu-dark-toggle', 'class' => 'mw-portlet-body' ],
-				Html::rawElement(
-					'ul',
-					[ 'id' => 'ul-dark-toggle' ],
-					Html::rawElement(
-						'li',
-						[ 'id' => 'li-dark-toggle' ],
-						Html::rawElement(
-							'a',
-							[ "id" => "a-dark-toggle", "title" => "Toggle dark mode" ],
-							"Toggle dark mode"
-						)
-					)
-				)
-			)
-		);
-
-
-
-
 
 		$html .= Html::closeElement( 'div' );
 
@@ -637,6 +620,7 @@ class FluentTemplate extends BaseTemplate {
 	 *   practice we currently only check if it is or isn't 'iconsfirst'
 	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
 	 *   as in id='f-whatever' vs id='footer-whatever'
+	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
 	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
 	 *   nested array
 	 *
@@ -649,11 +633,12 @@ class FluentTemplate extends BaseTemplate {
 			'class' => 'mw-footer',
 			'order' => 'iconsfirst',
 			'link-prefix' => 'footer',
+			'icon-style' => 'icononly',
 			'link-style' => null
 		];
 		'@phan-var array{id:string,class:string,order:string,link-prefix:string,icon-style:string,link-style:?string} $options';
 
-		$validFooterIcons = $this->get('footericons');
+		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
 		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
 
 		$html = '';

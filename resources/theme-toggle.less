@@ -1,0 +1,386 @@
+/* ============================================
+   テーマ切り替えボタンのスタイル
+   ============================================ */
+
+.theme-toggle-button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  position: relative;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  &:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+    outline-offset: -2px;
+  }
+
+  .theme-toggle-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    position: relative;
+    transition: transform 0.3s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+/* ライトモード時のアイコン（太陽） */
+.theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23323130" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
+}
+
+/* ダークモード時のアイコン（月） */
+.theme-toggle-button[data-theme="dark"] .theme-toggle-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>');
+}
+
+/* 自動モード時のアイコン（モニター） */
+.theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23323130" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
+}
+
+/* モバイルでの調整 */
+@media (max-width: 1000px) {
+  .theme-toggle-button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ダークモード適用時のアイコン色調整 */
+body.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
+html.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
+}
+
+body.theme-dark .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before,
+html.theme-dark .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
+}
+
+/* 自動モード + OSダークモード時のアイコン色調整 */
+@media (prefers-color-scheme: dark) {
+  body.theme-auto .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
+  html.theme-auto .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
+  }
+
+  body.theme-auto .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before,
+  html.theme-auto .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
+  }
+}
+
+/* ============================================
+   WikiEditorツールバーのテーマ対応
+   MediaWiki:Common.cssから統合
+   ============================================ */
+
+/* デフォルト（ライトモード）の背景色 - テーマクラスがない場合 */
+.wikiEditor-ui-toolbar,
+.wikiEditor-ui .wikiEditor-ui-top,
+.wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
+  background: #f5f5f5 !important;
+  background-color: #f5f5f5 !important;
+  background-image: none !important;
+}
+
+.wikiEditor-ui-toolbar .sections,
+.wikiEditor-ui-toolbar .group,
+.wikiEditor-ui-toolbar .group-insert,
+.wikiEditor-ui-toolbar .group-format {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* ============================================
+   ライトモード専用のWikiEditorスタイル
+   ============================================ */
+
+body.theme-light,
+html.theme-light {
+  .wikiEditor-ui-toolbar,
+  .wikiEditor-ui .wikiEditor-ui-top,
+  .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
+    background: #f5f5f5 !important;
+    background-color: #f5f5f5 !important;
+    background-image: none !important;
+  }
+
+  .wikiEditor-ui-toolbar .sections,
+  .wikiEditor-ui-toolbar .group,
+  .wikiEditor-ui-toolbar .group-insert,
+  .wikiEditor-ui-toolbar .group-format {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* アイコンを黒に */
+  .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .oo-ui-icon-bold,
+  .wikiEditor-ui-toolbar .oo-ui-icon-italic,
+  .wikiEditor-ui-toolbar .oo-ui-icon-link,
+  .wikiEditor-ui-toolbar .oo-ui-icon-reference,
+  .wikiEditor-ui-toolbar .oo-ui-icon-image,
+  .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
+    filter: brightness(0) saturate(100%) !important;
+    opacity: 0.87 !important;
+  }
+
+  /* テキストを黒に */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
+    color: #202124 !important;
+  }
+
+  /* ホバー時 */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
+    opacity: 1 !important;
+  }
+
+  /* アクティブ状態のボタン */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+}
+
+/* ============================================
+   ダークモード専用のWikiEditorスタイル
+   ============================================ */
+
+body.theme-dark,
+html.theme-dark {
+  .wikiEditor-ui-toolbar,
+  .wikiEditor-ui .wikiEditor-ui-top,
+  .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
+    background: #2d2d2d !important;
+    background-color: #2d2d2d !important;
+    background-image: none !important;
+  }
+
+  .wikiEditor-ui-toolbar .sections,
+  .wikiEditor-ui-toolbar .group,
+  .wikiEditor-ui-toolbar .group-insert,
+  .wikiEditor-ui-toolbar .group-format {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* アイコンを白に（黒にしてから反転） */
+  .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .oo-ui-icon-bold,
+  .wikiEditor-ui-toolbar .oo-ui-icon-italic,
+  .wikiEditor-ui-toolbar .oo-ui-icon-link,
+  .wikiEditor-ui-toolbar .oo-ui-icon-reference,
+  .wikiEditor-ui-toolbar .oo-ui-icon-image,
+  .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
+  .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
+    filter: brightness(0) saturate(100%) invert(1) !important;
+    opacity: 0.87 !important;
+  }
+
+  /* テキストを白に */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
+    color: #e0e0e0 !important;
+  }
+
+  /* ホバー時 */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
+    opacity: 1 !important;
+  }
+
+  /* アクティブ状態のボタン */
+  .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* ============================================
+   自動モード専用のWikiEditorスタイル
+   システムのカラースキームに基づいて完全に分離
+   ============================================ */
+
+/* 自動モード + システムがライトテーマの場合 */
+@media (prefers-color-scheme: light) {
+  body.theme-auto,
+  html.theme-auto {
+    .wikiEditor-ui-toolbar,
+    .wikiEditor-ui .wikiEditor-ui-top,
+    .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
+      background: #f5f5f5 !important;
+      background-color: #f5f5f5 !important;
+      background-image: none !important;
+    }
+
+    .wikiEditor-ui-toolbar .sections,
+    .wikiEditor-ui-toolbar .group,
+    .wikiEditor-ui-toolbar .group-insert,
+    .wikiEditor-ui-toolbar .group-format {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+    /* アイコンを黒に */
+    .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .oo-ui-icon-bold,
+    .wikiEditor-ui-toolbar .oo-ui-icon-italic,
+    .wikiEditor-ui-toolbar .oo-ui-icon-link,
+    .wikiEditor-ui-toolbar .oo-ui-icon-reference,
+    .wikiEditor-ui-toolbar .oo-ui-icon-image,
+    .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
+      filter: brightness(0) saturate(100%) !important;
+      opacity: 0.87 !important;
+    }
+
+    /* テキストを黒に */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
+      color: #202124 !important;
+    }
+
+    /* ホバー時 */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
+      opacity: 1 !important;
+    }
+
+    /* アクティブ状態のボタン */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
+      background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+  }
+}
+
+/* 自動モード + システムがダークテーマの場合 */
+@media (prefers-color-scheme: dark) {
+  body.theme-auto,
+  html.theme-auto {
+    .wikiEditor-ui-toolbar,
+    .wikiEditor-ui .wikiEditor-ui-top,
+    .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
+      background: #2d2d2d !important;
+      background-color: #2d2d2d !important;
+      background-image: none !important;
+    }
+
+    .wikiEditor-ui-toolbar .sections,
+    .wikiEditor-ui-toolbar .group,
+    .wikiEditor-ui-toolbar .group-insert,
+    .wikiEditor-ui-toolbar .group-format {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+    /* アイコンを白に */
+    .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .oo-ui-icon-bold,
+    .wikiEditor-ui-toolbar .oo-ui-icon-italic,
+    .wikiEditor-ui-toolbar .oo-ui-icon-link,
+    .wikiEditor-ui-toolbar .oo-ui-icon-reference,
+    .wikiEditor-ui-toolbar .oo-ui-icon-image,
+    .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
+    .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
+      filter: brightness(0) saturate(100%) invert(1) !important;
+      opacity: 0.87 !important;
+    }
+
+    /* テキストを白に */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
+      color: #e0e0e0 !important;
+    }
+
+    /* ホバー時 */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
+      opacity: 1 !important;
+    }
+
+    /* アクティブ状態のボタン */
+    .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+/* ============================================
+   WikiEditor共通スタイル（すべてのモードで適用）
+   ============================================ */
+
+.wikiEditor-ui-toolbar .group .tool {
+  color: inherit;
+}
+
+/* ============================================
+   特殊文字パレットのダークモード対応
+   ============================================ */
+
+/* ダークモード時の特殊文字を白色に */
+body.theme-dark .pages span,
+html.theme-dark .pages span {
+  color: #ffffff !important;
+}
+
+/* ダークモード時のカテゴリーインデックスのホバー効果 */
+/* マウスカーソルが当たった時に背景を白、文字を黒にして視認性を確保 */
+body.theme-dark .index div[role="option"]:hover,
+html.theme-dark .index div[role="option"]:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* フォーカス時も同様のスタイルを適用 */
+body.theme-dark .index div[role="option"]:focus,
+html.theme-dark .index div[role="option"]:focus {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* 自動モード + システムがダークテーマの場合 */
+@media (prefers-color-scheme: dark) {
+  body.theme-auto .pages span,
+  html.theme-auto .pages span {
+    color: #ffffff !important;
+  }
+
+  /* カテゴリーインデックスのホバー効果 */
+  body.theme-auto .index div[role="option"]:hover,
+  html.theme-auto .index div[role="option"]:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* フォーカス時も同様のスタイルを適用 */
+  body.theme-auto .index div[role="option"]:focus,
+  html.theme-auto .index div[role="option"]:focus {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+}

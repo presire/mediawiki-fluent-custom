@@ -3,170 +3,1272 @@
 @nav-width: 226px;
 @icon-width: 48px;
 
+/* ===================================
+   ライトモード（デフォルト）のCSS変数
+   =================================== */
 :root {
+  /* アクセントカラー */
   --accent-color: #CF8B54;
-  --page-tools-icon-color: #BA7C4B;
-  --footer-border: #CCC;
-  --logo-hover-background-color: rgba(0,0,0,0.2);
-  --user-tools-hover-background-color: rgba(0,0,0,0.2);
-  --postedit-shadow-color: rgba(0,0,0,0.2);
-  --user-links-shadow-color: rgba(0,0,0,0.2);
-  --mobile-expanded-sidebar-shadow-color: rgba(0,0,0,0.25);
-  --body-shadow-color: rgba(0,0,0,0.1);
-  --search-suggestions-shadow-color-1: rgba(0,0,0,0.13);
-  --search-suggestions-shadow-color-2: rgba(0,0,0,0.11);
-  --cookie-warning-shadow-color-1: rgba(0,0,0,0.13);
-  --cookie-warning-shadow-color-2: rgba(0,0,0,0.11);
-  --mobile-search-icon-color: white;
-}
 
-[data-theme="light"] {
+  /* 検索関連 */
   --desktop-search-icon-color: #A87045;
   --desktop-search-clear-icon-color: #A87045;
   --search-background-color: #E1DFDD;
-  --nav-background-color: #F1F2F3;
-  --site-notice-background-color: #F1F2F3;
-  --nav-text-color: #323130;
-  --user-links-text-color: #323130;
-  --page-tools-text-color: #323130;
+  --search-hover-color: white;
+  --mobile-search-icon-color: white;
   --search-suggestions-text-color: #444;
   --search-suggestions-background-color: #F4F4F4;
-  --user-links-hover-background-color: #F3F2F1;
-  --page-tools-hover-background-color: #F3F2F1;
-  --gallerybox-hover-background-color: #EFEFEF;
-  --file-img-hover-background-color: #EFEFEF;
-  --wikitable-td-border-color: #E6E6E6;
-  --fieldset-border-color: #A3A2A1;
-  --gallerybox-hover-border-color: #C1C5CA;
+  --search-suggestions-shadow-color-1: rgba(0,0,0,0.13);
+  --search-suggestions-shadow-color-2: rgba(0,0,0,0.11);
+
+  /* ナビゲーション関連 */
+  --nav-background-color: #F1F2F3;
+  --nav-text-color: #323130;
   --nav-background-hover-color: rgba(70,30,0,0.09);
+
+  /* ユーザーリンク関連 */
   --user-links-background-color: white;
+  --user-links-text-color: #323130;
+  --user-links-hover-background-color: #F3F2F1;
+  --user-links-shadow-color: rgba(0,0,0,0.2);
+
+  /* ページツール関連 */
+  --page-tools-icon-color: #BA7C4B;
+  --page-tools-text-color: #323130;
+  --page-tools-hover-background-color: #F3F2F1;
+
+  /* サイト通知関連 */
+  --site-notice-background-color: #F1F2F3;
+
+  /* テーブル関連 */
   --wikitable-background-color: white;
   --wikitable-th-background-color: white;
-  --search-hover-color: white;
+  --wikitable-td-border-color: #E6E6E6;
+
+  /* フィールドセット・ギャラリー関連 */
+  --fieldset-border-color: #A3A2A1;
+  --gallerybox-hover-background-color: #EFEFEF;
+  --gallerybox-hover-border-color: #C1C5CA;
+
+  /* 画像関連 */
   --file-img-background-color: white;
+  --file-img-hover-background-color: #EFEFEF;
+
+  /* ロゴ・ユーザーツール関連 */
+  --logo-hover-background-color: rgba(0,0,0,0.2);
+  --user-tools-hover-background-color: rgba(0,0,0,0.2);
+
+  /* シャドウ関連 */
+  --postedit-shadow-color: rgba(0,0,0,0.2);
+  --mobile-expanded-sidebar-shadow-color: rgba(0,0,0,0.25);
+  --body-shadow-color: rgba(0,0,0,0.1);
+
+  /* Cookie警告関連 */
   --cookie-warning-background-color: white;
   --cookie-warning-button-text-color: white;
   --cookie-warning-text-color: black;
+  --cookie-warning-shadow-color-1: rgba(0,0,0,0.13);
+  --cookie-warning-shadow-color-2: rgba(0,0,0,0.11);
+
+  /* フッター関連 */
+  --footer-border: #CCC;
+
+  /* ボディ・コンテンツ関連（ライトモード用） */
+  --body-background-color: #fff;
+  --body-background-image: none;
+  --content-background-color: #fff;
+  --content-text-color: #202124;
+  --content-link-color: #0645ad;
+  --content-link-visited-color: #0b0080;
+  --content-link-new-color: #d33;
+  --heading-color: #000;
+
+  /* 編集エリア関連（ライトモード用） */
+  --textarea-background-color: #fff;
+  --textarea-text-color: #000;
+  --editoptions-background-color: #f8f9fa;
+  --editoptions-text-color: #202124;
+  --editoptions-border-color: #a2a9b1;
+
+  /* 警告・通知関連（ライトモード用） */
+  --warningbox-background-color: #fef6e7;
+  --warningbox-text-color: #202124;
+  --warningbox-border-color: #fc3;
+
+  /* パネル関連（ライトモード用） */
+  --panel-background-color: #f8f9fa;
+  --panel-link-color: #0645ad;
+  --panel-link-visited-color: #0b0080;
+  --panel-link-new-color: #d33;
+
+  /* プリフォーマットテキスト関連（ライトモード用） */
+  --pre-background-color: #f8f9fa;
+  --pre-text-color: #202124;
+
+  /* 検索ボックス関連（ライトモード用） */
+  --simplesearch-background-color: #fff;
+  --simplesearch-text-color: #202124;
+
+  /* サジェスチョン関連（ライトモード用） */
+  --suggestions-result-background-color: #f8f9fa;
+  --suggestions-result-text-color: #202124;
+  --suggestions-special-label-color: #666;
+
+  /* ベクターメニュー関連（ライトモード用） */
+  --vectormenu-background-color: #f8f9fa;
+  --vectormenu-hover-background-color: #fff;
+  --vectormenu-ul-background-color: #fff;
+  --vectormenu-ul-border-color: #a2a9b1;
+  --vectormenu-link-color: #202124;
+
+  /* コード関連（ライトモード用） */
+  --code-text-color: #202124;
+  --code-background-color: #f8f9fa;
+  --code-border-color: #a2a9b1;
+
+  /* OOUIウィジェット関連（ライトモード用） */
+  --ooui-input-background-color: #fff;
+  --ooui-input-text-color: #202124;
+  --ooui-button-background-color: #f8f9fa;
+  --ooui-button-border-color: #a2a9b1;
+  --ooui-button-text-color: #202124;
+  --ooui-button-hover-background-color: #e8eaed;
+
+  /* WikiEditorツールバー関連（ライトモード用） */
+  --wikieditor-toolbar-background-color: #f8f9fa;
+  --wikieditor-border-color: #a2a9b1;
+
+  /* フッターリスト関連（ライトモード用） */
+  --footer-list-color: #202124;
+
+  /* ギャラリー・TOC・警告関連（ライトモード用） */
+  --gallery-border-color: #a2a9b1;
+  --gallery-background-color: #f8f9fa;
+
+  /* ポップアップ関連（ライトモード用） */
+  --popup-background-color: #fff;
+  --popup-text-color: #202124;
+  --popup-border-color: #a2a9b1;
+
+  /* メタデータ関連（ライトモード用） */
+  --metadata-background-color: #f8f9fa;
+  --metadata-text-color: #202124;
+  --metadata-border-color: #a2a9b1;
+  --metadata-th-background-color: #eaecf0;
+
+  /* タグマルチセレクト関連（ライトモード用） */
+  --tagmultiselect-background-color: #fff;
+  --tagmultiselect-border-color: #a2a9b1;
+
+  /* RCフィルター関連（ライトモード用） */
+  --rcfilters-background-color: #fff;
+  --rcfilters-text-color: #202124;
+
+  /* ドロップダウン関連（ライトモード用） */
+  --dropdown-background-color: #fff;
+  --dropdown-text-color: #202124;
+  --dropdown-border-color: #a2a9b1;
+  --dropdown-hover-background-color: #f8f9fa;
+
+  /* ページ履歴選択関連（ライトモード用） */
+  --pagehistory-selected-background-color: #eaf3ff;
+  --pagehistory-selected-outline-color: #36c;
+  --pagehistory-selected-text-color: #202124;
+
+  /* 投稿編集通知関連（ライトモード用） */
+  --postedit-background-color: #d5fdf4;
+  --postedit-text-color: #202124;
+  --postedit-border-color: #14866d;
+
+  /* 通知関連（ライトモード用） */
+  --notification-background-color: #fff;
+
+  /* 検索プロファイルタブ関連（ライトモード用） */
+  --searchprofile-background-color: #f8f9fa;
+  --searchoptions-background-color: #fff;
+  --results-info-color: #202124;
+
+  /* 文字挿入ボタン関連（ライトモード用） */
+  --charinsert-button-hover-background-color: rgba(0,0,0,0.05);
+
+  /* SMW Callout関連（ライトモード用） */
+  --smw-callout-warning-background: #fef6e7;
+
+  /* サムネイル関連（ライトモード用） */
+  --thumbinner-background-color: #f8f9fa;
+  --thumbinner-border-color: #a2a9b1;
 }
 
+/* ===================================
+   ライトモード用のインジケーター・アイコン
+   プルダウンの下矢印を黒に設定（デフォルト）
+   =================================== */
+.oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+.oo-ui-icon-expand, .oo-ui-icon-collapse,
+.oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+.oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+  filter: none !important;
+}
 
-[data-theme="dark"] {
-	--desktop-search-icon-color: white;
-	--desktop-search-clear-icon-color: white;
-	--search-background-color: #513D2E;
-	--nav-background-color: #323130;
-	--site-notice-background-color: #323130;
-	--nav-text-color: #F1F2F3;
-	--user-links-text-color: #F1F2F3;
-	--page-tools-text-color: #F1F2F3;
-	--search-suggestions-text-color: #DDD;
-	--search-suggestions-background-color: #212121;
-	--user-links-hover-background-color: #323130;
-	--page-tools-hover-background-color: #323130;
-	--gallerybox-hover-background-color: rgba(0,0,0,0.1);
-	--file-img-hover-background-color: #333;
-	--wikitable-td-border-color: #555;
-	--fieldset-border-color: #999;
-	--gallerybox-hover-border-color: #777;
-	--nav-background-hover-color: rgba(255,255,255,0.09);
-	--user-links-background-color: black;
-	--wikitable-background-color: #222;
-	--wikitable-th-background-color: #414141;
-	--search-hover-color: #6D4E36;
-	--file-img-background-color: #202020;
-	--cookie-warning-background-color: black;
-	--cookie-warning-button-text-color: white;
-	--cookie-warning-text-color: white;
+/* ===================================
+   ダークモード用のCSS変数
+   =================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* アクセントカラー（ダークモード用に調整） */
+    --accent-color: #8B5A3C;
 
-	.mw-portlet h3 {
-	  color: white;
-	}
+    /* 検索関連 */
+    --desktop-search-icon-color: white;
+    --desktop-search-clear-icon-color: white;
+    --search-background-color: #513D2E;
+    --search-hover-color: #6D4E36;
+    --mobile-search-icon-color: white;
+    --search-suggestions-text-color: #DDD;
+    --search-suggestions-background-color: #212121;
+    --search-suggestions-shadow-color-1: rgba(0,0,0,0.3);
+    --search-suggestions-shadow-color-2: rgba(0,0,0,0.25);
 
-	#fabric-heading #search-box form#p-search input#searchInput {
-	  color: white;
-	  caret-color: white;
-	}
+    /* ナビゲーション関連 */
+    --nav-background-color: #323130;
+    --nav-text-color: #F1F2F3;
+    --nav-background-hover-color: rgba(255,255,255,0.09);
 
-	#fabric-heading #search-box form#p-search input#searchInput::placeholder {
-	  color: rgba(255,255,255,0.5);
-	}
+    /* ユーザーリンク関連 */
+    --user-links-background-color: black;
+    --user-links-text-color: #F1F2F3;
+    --user-links-hover-background-color: #323130;
+    --user-links-shadow-color: rgba(0,0,0,0.4);
 
-	/* Temporary copy from Metrolook */
+    /* ページツール関連 */
+    --page-tools-icon-color: #D4A574;
+    --page-tools-text-color: #F1F2F3;
+    --page-tools-hover-background-color: #323130;
 
-	body {background:#222; background-image:none;}
-	div#content {background:#202020;color:#fff;}
-	div#content a {color:#9bf;}
-	div#content a:visited {color:#99f;}
-	div#content a.new, #p-personal a.new {color:#e55;}
-	div#content textarea {background:#292929;color:#fff;}
-	div#content #siteNotice {background:#414141;color:#fff;}
-	div#content .editOptions {background:#414141;color:#fff;border:1px solid #767676;border-top:0;}
-	div#content h1, div#content h2, div#content h3, div#content h4, div#content h5, div#content h6 {color:#fff;}
-	div#content .warningbox {background-color:#292929;color:#fff;border:0;border-left:3px #fc3 solid;}
-	div#content div#mw-read-only-warning {background-color:#592929;color:#fff;border:0;border-left:3px #f33 solid;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin-bottom:16px;padding:12px 24px;overflow-wrap:break-word;overflow:hidden;}
-	div#content .mw-warning-with-logexcerpt {border:0;border-left:3px solid #2a4b8d;background-color:#292929;}
-	div#mw-panel {background:#292929;}
-	div#mw-panel div.portal div.body ul li a {color:#9bf;}
-	div#mw-panel div.portal div.body ul li a:visited {color:#99f;}
-	div#mw-panel div.portal div.body ul li a.new {color:#e55;}
-	div#content pre {background-color:#292929;color:#f5f5f5;}
-	#mw-panel.collapsible-nav .portal h3 a, #mw-panel.collapsible-nav .portal h5 a {color:#dadada;}
-	#mw-panel div#simpleSearch {background-color:#292929;}
-	#mw-panel div#simpleSearch input#searchInput {color:#fff;}
-	.suggestions-results, .suggestions-special {background-color:#414141 !important;}
-	.suggestions-results .suggestions-result, .suggestions-special .special-query {color:#fff !important;}
-	.suggestions-special .special-label {color:#bbb !important;}
-	div.vectorMenu, #mw-page-base {background-color:#683C1B;}
-	div.vectorMenu:hover, div.vectorTabs li a:hover, .onhoverbg:hover {background-color:#874C2F;}
-	div.vectorMenu ul {background-color:#292929;border:solid 2px #683C1B;border-top:0;}
-	div.vectorMenu li a, #p-personal a {color:white;}
-	div.vectorMenu li a:hover {background-color:#414141;color:white;}
-	.wikitable, .mw-datatable {background-color:#292929;color:#eee;border:1px solid #4e4e4e;}
-	.wikitable > tr > th, .wikitable > tr > td, .wikitable > * > tr > th, .wikitable > * > tr > td, .mw-datatable th, .mw-datatable td {border:1px solid #606060;}
-	.wikitable > tr > th, .wikitable > * > tr > th, .mw-datatable th {background-color:#414141;}
-	.mw-datatable tr td {background-color:#222;}
-	.mw-datatable tr:hover td {background-color:#313131;}
-	code {color:#fff;background-color:#000;border-color:#777;}
-	.oo-ui-textInputWidget .oo-ui-inputWidget-input {background-color:#292929 !important;color:#fff !important;}
-	.oo-ui-checkboxInputWidget [type='checkbox'] + span {background-color:#292929 !important;}
-	.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {background-color:#292929 !important;border-color:#292929 !important;color:#fff !important;}
-	.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {background-color:#4e4e4e !important;border-color:#4e4e4e !important;color:#fff !important;}
-	.oo-ui-buttonElement-frameless.oo-ui-labelElement > .oo-ui-buttonElement-button:hover {background-color:#4e4e4e !important;}
-	.wikiEditor-ui-toolbar {background-color:#414141;background-image:linear-gradient(to bottom,#4e4e4e 0,#292929 32px);}
-	.oo-ui-buttonElement.oo-ui-iconElement .oo-ui-iconElement-icon, .oo-ui-buttonElement.oo-ui-indicatorElement .oo-ui-indicatorElement-indicator {filter:invert(1) !important;}
-	.wikiEditor-ui .wikiEditor-ui-top {border-bottom:1px solid #767676 !important;}
-	.wikiEditor-ui .wikiEditor-ui-view {border:1px solid #767676 !important;}
-	.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement, .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button {outline:0 !important;border:0 !important;border-radius:0.2em !important;}
-	.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement:hover, .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {background-color:#202020 !important;}
-	.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {top:2px;left:2px;}
-	.mw-rcfilters-ui-cell, .mw-rcfilters-ui-itemMenuOptionWidget, .mw-rcfilters-ui-filterMenuSectionOptionWidget, .mw-rcfilters-ui-menuSelectWidget-footer, .mw-rcfilters-ui-menuSelectWidget-footer-feedback {background-color:#292929 !important;color:#fff !important;}
-	div#footer ul li {color:#aaa !important;}
-	li.gallerybox div.thumb, #filetoc, .toc, #toc, .mw-warning, .catlinks {border:1px solid #606060; background-color:#292929;}
-	.oo-ui-popupWidget-popup, .mw-rcfilters-ui-changesListWrapperWidget .mw-changeslist-legend {border:1px solid #606060 !important; background-color:#292929 !important;color:#fff;}
-	#wpUploadFile {color:#fff !important;}
-	.mw_metadata {background-color:#292929;color:#eee;border:1px solid #4e4e4e !important;}
-	.mw_metadata > tr > th, .mw_metadata > tr > td, .mw_metadata > tr > td, .mw_metadata > * > tr > th, .mw_metadata > * > tr > td {border:1px solid #606060 !important;background-color:#292929 !important;color:#eee !important;}
-	.mw_metadata > tr > th, .mw_metadata > * > tr > th {background-color:#414141 !important;}
-	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagMultiselectWidget-handle {background-color:#414141;border:1px solid #606060 !important;}
-	.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-content-title {color:#eee !important;}
-	.oo-ui-icon-menu, oo-ui-indicatorElement-indicator oo-ui-indicator-down, .oo-ui-icon-expand, .oo-ui-icon-collapse, .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator, .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {filter:invert(1) !important;}
-	#pagehistory li.selected {background-color:#292929 !important;outline:1px dashed #606060 !important;color:#eee !important;}
-	.oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle {background-color:#292929 !important;color:#eee !important;border-color:#606060 !important;}
-	.oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle:hover {background-color:#414141 !important;}
-	div#content .oo-ui-widget-disabled a .oo-ui-labelElement-label {color:#000 !important;}
-	#editbutton:hover {background-color:transparent;}
-	.postedit {color: #eee !important; background-color: #202020 !important;border-top: 2px solid #eee !important;}
-	.mw-notification {background-color:#000 !important;}
-	.postedit-icon-checkmark {background-image: url(/wiki/skins/Metrolook/images/checkmark-w.png) !important; background-position: left !important;}
-	div#mw-panel div.portal h5 {color:#c0c0c0;}
-	.mw-search-profile-tabs {background: #333;}
-	#mw-searchoptions {background: #222;}
-	.results-info {color:#ccc;}
-	.mw-charinsert-buttons, .mw-charinsert-buttons a {background-color: transparent !important;}
-	.mw-charinsert-buttons a:hover, .mw-charinsert-buttons a:active {background-color: rgba(255,255,255,0.1) !important;}
-	.oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button .oo-ui-icon-close {filter: invert(0) !important;}
-	.oo-ui-dropdownInputWidget.oo-ui-widget-enabled {background-color:transparent !important;}
-	.smw-callout-warning {background: #48310f !important;}
-	div.thumbinner { background-color:#292929; border: 1px solid #606060; }
-	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined, .mw-rcfilters-ui-cell, .mw-rcfilters-ui-itemMenuOptionWidget, .mw-rcfilters-ui-filterMenuSectionOptionWidget, .mw-rcfilters-ui-menuSelectWidget-footer, .mw-rcfilters-ui-menuSelectWidget-footer-feedback { background-color: transparent !important; }
+    /* サイト通知関連 */
+    --site-notice-background-color: #323130;
+
+    /* テーブル関連 */
+    --wikitable-background-color: #222;
+    --wikitable-th-background-color: #414141;
+    --wikitable-td-border-color: #555;
+
+    /* フィールドセット・ギャラリー関連 */
+    --fieldset-border-color: #999;
+    --gallerybox-hover-background-color: rgba(0,0,0,0.1);
+    --gallerybox-hover-border-color: #777;
+
+    /* 画像関連 */
+    --file-img-background-color: #202020;
+    --file-img-hover-background-color: #333;
+
+    /* ロゴ・ユーザーツール関連 */
+    --logo-hover-background-color: rgba(255,255,255,0.1);
+    --user-tools-hover-background-color: rgba(255,255,255,0.1);
+
+    /* シャドウ関連 */
+    --postedit-shadow-color: rgba(0,0,0,0.4);
+    --mobile-expanded-sidebar-shadow-color: rgba(0,0,0,0.5);
+    --body-shadow-color: rgba(0,0,0,0.3);
+
+    /* Cookie警告関連 */
+    --cookie-warning-background-color: black;
+    --cookie-warning-button-text-color: white;
+    --cookie-warning-text-color: white;
+    --cookie-warning-shadow-color-1: rgba(0,0,0,0.3);
+    --cookie-warning-shadow-color-2: rgba(0,0,0,0.25);
+
+    /* フッター関連 */
+    --footer-border: #555;
+
+    /* ボディ・コンテンツ関連（ダークモード用） */
+    --body-background-color: #222;
+    --body-background-image: none;
+    --content-background-color: #202020;
+    --content-text-color: #fff;
+    --content-link-color: #9bf;
+    --content-link-visited-color: #99f;
+    --content-link-new-color: #e55;
+    --heading-color: #fff;
+
+    /* 編集エリア関連（ダークモード用） */
+    --textarea-background-color: #292929;
+    --textarea-text-color: #fff;
+    --editoptions-background-color: #414141;
+    --editoptions-text-color: #fff;
+    --editoptions-border-color: #767676;
+
+    /* 警告・通知関連（ダークモード用） */
+    --warningbox-background-color: #292929;
+    --warningbox-text-color: #fff;
+    --warningbox-border-color: #fc3;
+
+    /* パネル関連（ダークモード用） */
+    --panel-background-color: #292929;
+    --panel-link-color: #9bf;
+    --panel-link-visited-color: #99f;
+    --panel-link-new-color: #e55;
+
+    /* プリフォーマットテキスト関連（ダークモード用） */
+    --pre-background-color: #292929;
+    --pre-text-color: #f5f5f5;
+
+    /* 検索ボックス関連（ダークモード用） */
+    --simplesearch-background-color: #292929;
+    --simplesearch-text-color: #fff;
+
+    /* サジェスチョン関連（ダークモード用） */
+    --suggestions-result-background-color: #414141;
+    --suggestions-result-text-color: #fff;
+    --suggestions-special-label-color: #bbb;
+
+    /* ベクターメニュー関連（ダークモード用） */
+    --vectormenu-background-color: #683C1B;
+    --vectormenu-hover-background-color: #874C2F;
+    --vectormenu-ul-background-color: #292929;
+    --vectormenu-ul-border-color: #683C1B;
+    --vectormenu-link-color: white;
+
+    /* コード関連（ダークモード用） */
+    --code-text-color: #fff;
+    --code-background-color: #000;
+    --code-border-color: #777;
+
+    /* OOUIウィジェット関連（ダークモード用） */
+    --ooui-input-background-color: #292929;
+    --ooui-input-text-color: #fff;
+    --ooui-button-background-color: #292929;
+    --ooui-button-border-color: #292929;
+    --ooui-button-text-color: #fff;
+    --ooui-button-hover-background-color: #4e4e4e;
+
+    /* WikiEditorツールバー関連（ダークモード用） */
+    --wikieditor-toolbar-background-color: #414141;
+    --wikieditor-border-color: #767676;
+
+    /* フッターリスト関連（ダークモード用） */
+    --footer-list-color: #aaa;
+
+    /* ギャラリー・TOC・警告関連（ダークモード用） */
+    --gallery-border-color: #606060;
+    --gallery-background-color: #292929;
+
+    /* ポップアップ関連（ダークモード用） */
+    --popup-background-color: #292929;
+    --popup-text-color: #fff;
+    --popup-border-color: #606060;
+
+    /* メタデータ関連（ダークモード用） */
+    --metadata-background-color: #292929;
+    --metadata-text-color: #eee;
+    --metadata-border-color: #4e4e4e;
+    --metadata-th-background-color: #414141;
+
+    /* タグマルチセレクト関連（ダークモード用） */
+    --tagmultiselect-background-color: #414141;
+    --tagmultiselect-border-color: #606060;
+
+    /* RCフィルター関連（ダークモード用） */
+    --rcfilters-background-color: #292929;
+    --rcfilters-text-color: #fff;
+
+    /* ドロップダウン関連（ダークモード用） */
+    --dropdown-background-color: #292929;
+    --dropdown-text-color: #eee;
+    --dropdown-border-color: #606060;
+    --dropdown-hover-background-color: #414141;
+
+    /* ページ履歴選択関連（ダークモード用） */
+    --pagehistory-selected-background-color: #292929;
+    --pagehistory-selected-outline-color: #606060;
+    --pagehistory-selected-text-color: #eee;
+
+    /* 投稿編集通知関連（ダークモード用） */
+    --postedit-background-color: #202020;
+    --postedit-text-color: #eee;
+    --postedit-border-color: #eee;
+
+    /* 通知関連（ダークモード用） */
+    --notification-background-color: #000;
+
+    /* 検索プロファイルタブ関連（ダークモード用） */
+    --searchprofile-background-color: #333;
+    --searchoptions-background-color: #222;
+    --results-info-color: #ccc;
+
+    /* 文字挿入ボタン関連（ダークモード用） */
+    --charinsert-button-hover-background-color: rgba(255,255,255,0.1);
+
+    /* SMW Callout関連（ダークモード用） */
+    --smw-callout-warning-background: #48310f;
+
+    /* サムネイル関連（ダークモード用） */
+    --thumbinner-background-color: #292929;
+    --thumbinner-border-color: #606060;
+  }
+
+  /* ダークモード用の追加スタイル */
+  .mw-portlet h3 {
+    color: white;
+  }
+
+  #fabric-heading #search-box form#p-search input#searchInput {
+    color: white;
+    caret-color: white;
+  }
+
+  #fabric-heading #search-box form#p-search input#searchInput::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ボディとコンテンツ */
+  body {
+    background: var(--body-background-color);
+    background-image: var(--body-background-image);
+  }
+
+  div#content {
+    background: var(--content-background-color);
+    color: var(--content-text-color);
+  }
+
+  div#content a {
+    color: var(--content-link-color);
+  }
+
+  div#content a:visited {
+    color: var(--content-link-visited-color);
+  }
+
+  div#content a.new, #p-personal a.new {
+    color: var(--content-link-new-color);
+  }
+
+  div#content textarea {
+    background: var(--textarea-background-color);
+    color: var(--textarea-text-color);
+  }
+
+  div#content #siteNotice {
+    background: var(--editoptions-background-color);
+    color: var(--editoptions-text-color);
+  }
+
+  div#content .editOptions {
+    background: var(--editoptions-background-color);
+    color: var(--editoptions-text-color);
+    border: 1px solid var(--editoptions-border-color);
+    border-top: 0;
+  }
+
+  div#content h1, div#content h2, div#content h3,
+  div#content h4, div#content h5, div#content h6 {
+    color: var(--heading-color);
+  }
+
+  div#content .warningbox {
+    background-color: var(--warningbox-background-color);
+    color: var(--warningbox-text-color);
+    border: 0;
+    border-left: 3px var(--warningbox-border-color) solid;
+  }
+
+  div#content div#mw-read-only-warning {
+    background-color: #592929;
+    color: #fff;
+    border: 0;
+    border-left: 3px #f33 solid;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    padding: 12px 24px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+  }
+
+  div#content .mw-warning-with-logexcerpt {
+    border: 0;
+    border-left: 3px solid #2a4b8d;
+    background-color: var(--warningbox-background-color);
+  }
+
+  div#mw-panel {
+    background: var(--panel-background-color);
+  }
+
+  div#mw-panel div.portal div.body ul li a {
+    color: var(--panel-link-color);
+  }
+
+  div#mw-panel div.portal div.body ul li a:visited {
+    color: var(--panel-link-visited-color);
+  }
+
+  div#mw-panel div.portal div.body ul li a.new {
+    color: var(--panel-link-new-color);
+  }
+
+  div#content pre {
+    background-color: var(--pre-background-color);
+    color: var(--pre-text-color);
+  }
+
+  #mw-panel.collapsible-nav .portal h3 a,
+  #mw-panel.collapsible-nav .portal h5 a {
+    color: #dadada;
+  }
+
+  #mw-panel div#simpleSearch {
+    background-color: var(--simplesearch-background-color);
+  }
+
+  #mw-panel div#simpleSearch input#searchInput {
+    color: var(--simplesearch-text-color);
+  }
+
+  .suggestions-results, .suggestions-special {
+    background-color: var(--suggestions-result-background-color) !important;
+  }
+
+  .suggestions-results .suggestions-result,
+  .suggestions-special .special-query {
+    color: var(--suggestions-result-text-color) !important;
+  }
+
+  .suggestions-special .special-label {
+    color: var(--suggestions-special-label-color) !important;
+  }
+
+  div.vectorMenu, #mw-page-base {
+    background-color: var(--vectormenu-background-color);
+  }
+
+  div.vectorMenu:hover, div.vectorTabs li a:hover, .onhoverbg:hover {
+    background-color: var(--vectormenu-hover-background-color);
+  }
+
+  div.vectorMenu ul {
+    background-color: var(--vectormenu-ul-background-color);
+    border: solid 2px var(--vectormenu-ul-border-color);
+    border-top: 0;
+  }
+
+  div.vectorMenu li a, #p-personal a {
+    color: var(--vectormenu-link-color);
+  }
+
+  div.vectorMenu li a:hover {
+    background-color: var(--editoptions-background-color);
+    color: white;
+  }
+
+  .wikitable, .mw-datatable {
+    background-color: var(--wikitable-background-color);
+    color: #eee;
+    border: 1px solid #4e4e4e;
+  }
+
+  .wikitable > tr > th, .wikitable > tr > td,
+  .wikitable > * > tr > th, .wikitable > * > tr > td,
+  .mw-datatable th, .mw-datatable td {
+    border: 1px solid #606060;
+  }
+
+  .wikitable > tr > th, .wikitable > * > tr > th,
+  .mw-datatable th {
+    background-color: var(--wikitable-th-background-color);
+  }
+
+  .mw-datatable tr td {
+    background-color: var(--wikitable-background-color);
+  }
+
+  .mw-datatable tr:hover td {
+    background-color: #313131;
+  }
+
+  code {
+    color: var(--code-text-color);
+    background-color: var(--code-background-color);
+    border-color: var(--code-border-color);
+  }
+
+  .oo-ui-textInputWidget .oo-ui-inputWidget-input {
+    background-color: var(--ooui-input-background-color) !important;
+    color: var(--ooui-input-text-color) !important;
+  }
+
+  .oo-ui-checkboxInputWidget [type='checkbox'] + span {
+    background-color: var(--ooui-input-background-color) !important;
+  }
+
+  .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+    background-color: var(--ooui-button-background-color) !important;
+    border-color: var(--ooui-button-border-color) !important;
+    color: var(--ooui-button-text-color) !important;
+  }
+
+  .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
+    background-color: var(--ooui-button-hover-background-color) !important;
+    border-color: var(--ooui-button-hover-background-color) !important;
+    color: #fff !important;
+  }
+
+  .oo-ui-buttonElement-frameless.oo-ui-labelElement > .oo-ui-buttonElement-button:hover {
+    background-color: var(--ooui-button-hover-background-color) !important;
+  }
+
+  .wikiEditor-ui-toolbar {
+    background-color: var(--wikieditor-toolbar-background-color);
+    background-image: linear-gradient(to bottom, #4e4e4e 0, var(--wikitable-background-color) 32px);
+  }
+
+  .oo-ui-buttonElement.oo-ui-iconElement .oo-ui-iconElement-icon,
+  .oo-ui-buttonElement.oo-ui-indicatorElement .oo-ui-indicatorElement-indicator {
+    filter: invert(1) !important;
+  }
+
+  .wikiEditor-ui .wikiEditor-ui-top {
+    border-bottom: 1px solid var(--wikieditor-border-color) !important;
+  }
+
+  .wikiEditor-ui .wikiEditor-ui-view {
+    border: 1px solid var(--wikieditor-border-color) !important;
+  }
+
+  .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement,
+  .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+    outline: 0 !important;
+    border: 0 !important;
+    border-radius: 0.2em !important;
+  }
+
+  .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement:hover,
+  .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
+    background-color: var(--content-background-color) !important;
+  }
+
+  .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
+    top: 2px;
+    left: 2px;
+  }
+
+  .mw-rcfilters-ui-cell, .mw-rcfilters-ui-itemMenuOptionWidget,
+  .mw-rcfilters-ui-filterMenuSectionOptionWidget,
+  .mw-rcfilters-ui-menuSelectWidget-footer,
+  .mw-rcfilters-ui-menuSelectWidget-footer-feedback {
+    background-color: var(--rcfilters-background-color) !important;
+    color: var(--rcfilters-text-color) !important;
+  }
+
+  div#footer ul li {
+    color: var(--footer-list-color) !important;
+  }
+
+  li.gallerybox div.thumb, #filetoc, .toc, #toc, .mw-warning, .catlinks {
+    border: 1px solid var(--gallery-border-color);
+    background-color: var(--gallery-background-color);
+  }
+
+  .oo-ui-popupWidget-popup,
+  .mw-rcfilters-ui-changesListWrapperWidget .mw-changeslist-legend {
+    border: 1px solid var(--popup-border-color) !important;
+    background-color: var(--popup-background-color) !important;
+    color: var(--popup-text-color);
+  }
+
+  #wpUploadFile {
+    color: #fff !important;
+  }
+
+  .mw_metadata {
+    background-color: var(--metadata-background-color);
+    color: var(--metadata-text-color);
+    border: 1px solid var(--metadata-border-color) !important;
+  }
+
+  .mw_metadata > tr > th, .mw_metadata > tr > td,
+  .mw_metadata > tr > td, .mw_metadata > * > tr > th,
+  .mw_metadata > * > tr > td {
+    border: 1px solid #606060 !important;
+    background-color: var(--metadata-background-color) !important;
+    color: var(--metadata-text-color) !important;
+  }
+
+  .mw_metadata > tr > th, .mw_metadata > * > tr > th {
+    background-color: var(--metadata-th-background-color) !important;
+  }
+
+  .oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagMultiselectWidget-handle {
+    background-color: var(--tagmultiselect-background-color);
+    border: 1px solid var(--tagmultiselect-border-color) !important;
+  }
+
+  .mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-content-title {
+    color: #eee !important;
+  }
+
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: invert(1) !important;
+  }
+
+  #pagehistory li.selected {
+    background-color: var(--pagehistory-selected-background-color) !important;
+    outline: 1px dashed var(--pagehistory-selected-outline-color) !important;
+    color: var(--pagehistory-selected-text-color) !important;
+  }
+
+  .oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle {
+    background-color: var(--dropdown-background-color) !important;
+    color: var(--dropdown-text-color) !important;
+    border-color: var(--dropdown-border-color) !important;
+  }
+
+  .oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle:hover {
+    background-color: var(--dropdown-hover-background-color) !important;
+  }
+
+  div#content .oo-ui-widget-disabled a .oo-ui-labelElement-label {
+    color: #000 !important;
+  }
+
+  #editbutton:hover {
+    background-color: transparent;
+  }
+
+  .postedit {
+    color: var(--postedit-text-color) !important;
+    background-color: var(--postedit-background-color) !important;
+    border-top: 2px solid var(--postedit-border-color) !important;
+  }
+
+  .mw-notification {
+    background-color: var(--notification-background-color) !important;
+  }
+
+  .postedit-icon-checkmark {
+    background-image: url(/wiki/skins/Metrolook/images/checkmark-w.png) !important;
+    background-position: left !important;
+  }
+
+  div#mw-panel div.portal h5 {
+    color: #c0c0c0;
+  }
+
+  .mw-search-profile-tabs {
+    background: var(--searchprofile-background-color);
+  }
+
+  #mw-searchoptions {
+    background: var(--searchoptions-background-color);
+  }
+
+  .results-info {
+    color: var(--results-info-color);
+  }
+
+  .mw-charinsert-buttons, .mw-charinsert-buttons a {
+    background-color: transparent !important;
+  }
+
+  .mw-charinsert-buttons a:hover, .mw-charinsert-buttons a:active {
+    background-color: var(--charinsert-button-hover-background-color) !important;
+  }
+
+  .oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button .oo-ui-icon-close {
+    filter: invert(0) !important;
+  }
+
+  .oo-ui-dropdownInputWidget.oo-ui-widget-enabled {
+    background-color: transparent !important;
+  }
+
+  .smw-callout-warning {
+    background: var(--smw-callout-warning-background) !important;
+  }
+
+  div.thumbinner {
+    background-color: var(--thumbinner-background-color);
+    border: 1px solid var(--thumbinner-border-color);
+  }
+
+  .oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined,
+  .mw-rcfilters-ui-cell, .mw-rcfilters-ui-itemMenuOptionWidget,
+  .mw-rcfilters-ui-filterMenuSectionOptionWidget,
+  .mw-rcfilters-ui-menuSelectWidget-footer,
+  .mw-rcfilters-ui-menuSelectWidget-footer-feedback {
+    background-color: transparent !important;
+  }
+
+  /* ===================================
+     ダークモード時のOOUIアイコン反転設定
+     OOUIのアイコンは通常黒色のSVGとして提供されるため、
+     ダークモード時には filter: invert(1) で白色に反転させて視認性を向上させる
+     =================================== */
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: invert(1) !important;
+  }
+}
+
+/* ===================================
+   ライトモード用の追加スタイル
+   =================================== */
+@media (prefers-color-scheme: light) {
+  /* ライトモード固有のスタイルを追加（必要に応じて） */
+  body {
+    background: var(--body-background-color);
+    background-image: var(--body-background-image);
+  }
+
+  div#content {
+    background: var(--content-background-color);
+    color: var(--content-text-color);
+  }
+
+  div#content a {
+    color: var(--content-link-color);
+  }
+
+  div#content a:visited {
+    color: var(--content-link-visited-color);
+  }
+
+  div#content a.new, #p-personal a.new {
+    color: var(--content-link-new-color);
+  }
+
+  /* プルダウンの下矢印を黒に設定（自動モード・ライトテーマ時） */
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: none !important;
+  }
+}
+
+/* ===================================
+   手動テーマ切り替え用のスタイル
+   =================================== */
+
+/* ライトモードを手動で適用 */
+body.theme-light,
+html.theme-light {
+  /* アクセントカラー */
+  --accent-color: #CF8B54;
+
+  /* 検索関連 */
+  --desktop-search-icon-color: #A87045;
+  --desktop-search-clear-icon-color: #A87045;
+  --search-background-color: #E1DFDD;
+  --search-hover-color: white;
+  --mobile-search-icon-color: white;
+  --search-suggestions-text-color: #444;
+  --search-suggestions-background-color: #F4F4F4;
+  --search-suggestions-shadow-color-1: rgba(0,0,0,0.13);
+  --search-suggestions-shadow-color-2: rgba(0,0,0,0.11);
+
+  /* ナビゲーション関連 */
+  --nav-background-color: #F1F2F3;
+  --nav-text-color: #323130;
+  --nav-background-hover-color: rgba(70,30,0,0.09);
+
+  /* ユーザーリンク関連 */
+  --user-links-background-color: white;
+  --user-links-text-color: #323130;
+  --user-links-hover-background-color: #F3F2F1;
+  --user-links-shadow-color: rgba(0,0,0,0.2);
+
+  /* ページツール関連 */
+  --page-tools-icon-color: #BA7C4B;
+  --page-tools-text-color: #323130;
+  --page-tools-hover-background-color: #F3F2F1;
+
+  /* サイト通知関連 */
+  --site-notice-background-color: #F1F2F3;
+
+  /* テーブル関連 */
+  --wikitable-background-color: white;
+  --wikitable-th-background-color: white;
+  --wikitable-td-border-color: #E6E6E6;
+
+  /* フィールドセット・ギャラリー関連 */
+  --fieldset-border-color: #A3A2A1;
+  --gallerybox-hover-background-color: #EFEFEF;
+  --gallerybox-hover-border-color: #C1C5CA;
+
+  /* 画像関連 */
+  --file-img-background-color: white;
+  --file-img-hover-background-color: #EFEFEF;
+
+  /* ロゴ・ユーザーツール関連 */
+  --logo-hover-background-color: rgba(0,0,0,0.2);
+  --user-tools-hover-background-color: rgba(0,0,0,0.2);
+
+  /* シャドウ関連 */
+  --postedit-shadow-color: rgba(0,0,0,0.2);
+  --mobile-expanded-sidebar-shadow-color: rgba(0,0,0,0.25);
+  --body-shadow-color: rgba(0,0,0,0.1);
+
+  /* Cookie警告関連 */
+  --cookie-warning-background-color: white;
+  --cookie-warning-button-text-color: white;
+  --cookie-warning-text-color: black;
+  --cookie-warning-shadow-color-1: rgba(0,0,0,0.13);
+  --cookie-warning-shadow-color-2: rgba(0,0,0,0.11);
+
+  /* フッター関連 */
+  --footer-border: #CCC;
+
+  /* ボディ・コンテンツ関連 */
+  --body-background-color: #fff;
+  --body-background-image: none;
+  --content-background-color: #fff;
+  --content-text-color: #202124;
+  --content-link-color: #0645ad;
+  --content-link-visited-color: #0b0080;
+  --content-link-new-color: #d33;
+  --heading-color: #000;
+
+  /* 編集エリア関連 */
+  --textarea-background-color: #fff;
+  --textarea-text-color: #000;
+  --editoptions-background-color: #f8f9fa;
+  --editoptions-text-color: #202124;
+  --editoptions-border-color: #a2a9b1;
+
+  /* 警告・通知関連 */
+  --warningbox-background-color: #fef6e7;
+  --warningbox-text-color: #202124;
+  --warningbox-border-color: #fc3;
+
+  /* パネル関連 */
+  --panel-background-color: #f8f9fa;
+  --panel-link-color: #0645ad;
+  --panel-link-visited-color: #0b0080;
+  --panel-link-new-color: #d33;
+
+  /* プリフォーマットテキスト関連 */
+  --pre-background-color: #f8f9fa;
+  --pre-text-color: #202124;
+
+  /* 検索ボックス関連 */
+  --simplesearch-background-color: #fff;
+  --simplesearch-text-color: #202124;
+
+  /* サジェスチョン関連 */
+  --suggestions-result-background-color: #f8f9fa;
+  --suggestions-result-text-color: #202124;
+  --suggestions-special-label-color: #666;
+
+  /* ベクターメニュー関連 */
+  --vectormenu-background-color: #f8f9fa;
+  --vectormenu-hover-background-color: #fff;
+  --vectormenu-ul-background-color: #fff;
+  --vectormenu-ul-border-color: #a2a9b1;
+  --vectormenu-link-color: #202124;
+
+  /* コード関連 */
+  --code-text-color: #202124;
+  --code-background-color: #f8f9fa;
+  --code-border-color: #a2a9b1;
+
+  /* OOUIウィジェット関連 */
+  --ooui-input-background-color: #fff;
+  --ooui-input-text-color: #202124;
+  --ooui-button-background-color: #f8f9fa;
+  --ooui-button-border-color: #a2a9b1;
+  --ooui-button-text-color: #202124;
+  --ooui-button-hover-background-color: #e8eaed;
+
+  /* WikiEditorツールバー関連 */
+  --wikieditor-toolbar-background-color: #f8f9fa;
+  --wikieditor-border-color: #a2a9b1;
+
+  /* フッターリスト関連 */
+  --footer-list-color: #202124;
+
+  /* ギャラリー・TOC・警告関連 */
+  --gallery-border-color: #a2a9b1;
+  --gallery-background-color: #f8f9fa;
+
+  /* ポップアップ関連 */
+  --popup-background-color: #fff;
+  --popup-text-color: #202124;
+  --popup-border-color: #a2a9b1;
+
+  /* メタデータ関連 */
+  --metadata-background-color: #f8f9fa;
+  --metadata-text-color: #202124;
+  --metadata-border-color: #a2a9b1;
+  --metadata-th-background-color: #eaecf0;
+
+  /* タグマルチセレクト関連 */
+  --tagmultiselect-background-color: #fff;
+  --tagmultiselect-border-color: #a2a9b1;
+
+  /* RCフィルター関連 */
+  --rcfilters-background-color: #fff;
+  --rcfilters-text-color: #202124;
+
+  /* ドロップダウン関連 */
+  --dropdown-background-color: #fff;
+  --dropdown-text-color: #202124;
+  --dropdown-border-color: #a2a9b1;
+  --dropdown-hover-background-color: #f8f9fa;
+
+  /* ページ履歴選択関連 */
+  --pagehistory-selected-background-color: #eaf3ff;
+  --pagehistory-selected-outline-color: #36c;
+  --pagehistory-selected-text-color: #202124;
+
+  /* 投稿編集通知関連 */
+  --postedit-background-color: #d5fdf4;
+  --postedit-text-color: #202124;
+  --postedit-border-color: #14866d;
+
+  /* 通知関連 */
+  --notification-background-color: #fff;
+
+  /* 検索プロファイルタブ関連 */
+  --searchprofile-background-color: #f8f9fa;
+  --searchoptions-background-color: #fff;
+  --results-info-color: #202124;
+
+  /* 文字挿入ボタン関連 */
+  --charinsert-button-hover-background-color: rgba(0,0,0,0.05);
+
+  /* SMW Callout関連 */
+  --smw-callout-warning-background: #fef6e7;
+
+  /* サムネイル関連 */
+  --thumbinner-background-color: #f8f9fa;
+  --thumbinner-border-color: #a2a9b1;
+}
+
+/* ===================================
+   明示的なライトモード用のインジケーター・アイコン
+   プルダウンの下矢印を黒に設定
+   =================================== */
+body.theme-light,
+html.theme-light {
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: none !important;
+  }
+}
+
+/* ダークモードを手動で適用 */
+body.theme-dark,
+html.theme-dark {
+  /* アクセントカラー */
+  --accent-color: #8B5A3C;
+
+  /* 検索関連 */
+  --desktop-search-icon-color: white;
+  --desktop-search-clear-icon-color: white;
+  --search-background-color: #513D2E;
+  --search-hover-color: #6D4E36;
+  --mobile-search-icon-color: white;
+  --search-suggestions-text-color: #DDD;
+  --search-suggestions-background-color: #212121;
+  --search-suggestions-shadow-color-1: rgba(0,0,0,0.3);
+  --search-suggestions-shadow-color-2: rgba(0,0,0,0.25);
+
+  /* ナビゲーション関連 */
+  --nav-background-color: #323130;
+  --nav-text-color: #F1F2F3;
+  --nav-background-hover-color: rgba(255,255,255,0.09);
+
+  /* ユーザーリンク関連 */
+  --user-links-background-color: black;
+  --user-links-text-color: #F1F2F3;
+  --user-links-hover-background-color: #323130;
+  --user-links-shadow-color: rgba(0,0,0,0.4);
+
+  /* ページツール関連 */
+  --page-tools-icon-color: #D4A574;
+  --page-tools-text-color: #F1F2F3;
+  --page-tools-hover-background-color: #323130;
+
+  /* サイト通知関連 */
+  --site-notice-background-color: #323130;
+
+  /* テーブル関連 */
+  --wikitable-background-color: #222;
+  --wikitable-th-background-color: #414141;
+  --wikitable-td-border-color: #555;
+
+  /* フィールドセット・ギャラリー関連 */
+  --fieldset-border-color: #999;
+  --gallerybox-hover-background-color: rgba(0,0,0,0.1);
+  --gallerybox-hover-border-color: #777;
+
+  /* 画像関連 */
+  --file-img-background-color: #202020;
+  --file-img-hover-background-color: #333;
+
+  /* ロゴ・ユーザーツール関連 */
+  --logo-hover-background-color: rgba(255,255,255,0.1);
+  --user-tools-hover-background-color: rgba(255,255,255,0.1);
+
+  /* シャドウ関連 */
+  --postedit-shadow-color: rgba(0,0,0,0.4);
+  --mobile-expanded-sidebar-shadow-color: rgba(0,0,0,0.5);
+  --body-shadow-color: rgba(0,0,0,0.3);
+
+  /* Cookie警告関連 */
+  --cookie-warning-background-color: #202020;
+  --cookie-warning-button-text-color: black;
+  --cookie-warning-text-color: white;
+  --cookie-warning-shadow-color-1: rgba(0,0,0,0.3);
+  --cookie-warning-shadow-color-2: rgba(0,0,0,0.25);
+
+  /* フッター関連 */
+  --footer-border: #555;
+
+  /* ボディ・コンテンツ関連 */
+  --body-background-color: #1e1e1e;
+  --body-background-image: none;
+  --content-background-color: #1e1e1e;
+  --content-text-color: #e0e0e0;
+  --content-link-color: #6da3ff;
+  --content-link-visited-color: #b19cd9;
+  --content-link-new-color: #ff6b6b;
+  --heading-color: #fff;
+
+  /* 編集エリア関連 */
+  --textarea-background-color: #2d2d2d;
+  --textarea-text-color: #e0e0e0;
+  --editoptions-background-color: #252525;
+  --editoptions-text-color: #e0e0e0;
+  --editoptions-border-color: #555;
+
+  /* 警告・通知関連 */
+  --warningbox-background-color: #3d3520;
+  --warningbox-text-color: #ffd700;
+  --warningbox-border-color: #806600;
+
+  /* パネル関連 */
+  --panel-background-color: #252525;
+  --panel-link-color: #6da3ff;
+  --panel-link-visited-color: #b19cd9;
+  --panel-link-new-color: #ff6b6b;
+
+  /* プリフォーマットテキスト関連 */
+  --pre-background-color: #2d2d2d;
+  --pre-text-color: #e0e0e0;
+
+  /* 検索ボックス関連 */
+  --simplesearch-background-color: #2d2d2d;
+  --simplesearch-text-color: #e0e0e0;
+
+  /* サジェスチョン関連 */
+  --suggestions-result-background-color: #2d2d2d;
+  --suggestions-result-text-color: #e0e0e0;
+  --suggestions-special-label-color: #999;
+
+  /* ベクターメニュー関連 */
+  --vectormenu-background-color: #252525;
+  --vectormenu-hover-background-color: #333;
+  --vectormenu-ul-background-color: #2d2d2d;
+  --vectormenu-ul-border-color: #555;
+  --vectormenu-link-color: #e0e0e0;
+
+  /* コード関連 */
+  --code-text-color: #e0e0e0;
+  --code-background-color: #2d2d2d;
+  --code-border-color: #555;
+
+  /* OOUIウィジェット関連 */
+  --ooui-input-background-color: #2d2d2d;
+  --ooui-input-text-color: #e0e0e0;
+  --ooui-button-background-color: #333;
+  --ooui-button-border-color: #555;
+  --ooui-button-text-color: #e0e0e0;
+  --ooui-button-hover-background-color: #404040;
+
+  /* WikiEditorツールバー関連 */
+  --wikieditor-toolbar-background-color: #252525;
+  --wikieditor-border-color: #555;
+
+  /* フッターリスト関連 */
+  --footer-list-color: #e0e0e0;
+
+  /* ギャラリー・TOC・警告関連 */
+  --gallery-border-color: #555;
+  --gallery-background-color: #252525;
+
+  /* ポップアップ関連 */
+  --popup-background-color: #2d2d2d;
+  --popup-text-color: #e0e0e0;
+  --popup-border-color: #555;
+
+  /* メタデータ関連 */
+  --metadata-background-color: #252525;
+  --metadata-text-color: #e0e0e0;
+  --metadata-border-color: #555;
+  --metadata-th-background-color: #333;
+
+  /* タグマルチセレクト関連 */
+  --tagmultiselect-background-color: #2d2d2d;
+  --tagmultiselect-border-color: #555;
+
+  /* RCフィルター関連 */
+  --rcfilters-background-color: #2d2d2d;
+  --rcfilters-text-color: #e0e0e0;
+
+  /* ドロップダウン関連 */
+  --dropdown-background-color: #2d2d2d;
+  --dropdown-text-color: #e0e0e0;
+  --dropdown-border-color: #555;
+  --dropdown-hover-background-color: #333;
+
+  /* ページ履歴選択関連 */
+  --pagehistory-selected-background-color: #1a3d5f;
+  --pagehistory-selected-outline-color: #6da3ff;
+  --pagehistory-selected-text-color: #e0e0e0;
+
+  /* 投稿編集通知関連 */
+  --postedit-background-color: #1e4d3e;
+  --postedit-text-color: #e0e0e0;
+  --postedit-border-color: #2ea083;
+
+  /* 通知関連 */
+  --notification-background-color: #2d2d2d;
+
+  /* 検索プロファイルタブ関連 */
+  --searchprofile-background-color: #252525;
+  --searchoptions-background-color: #2d2d2d;
+  --results-info-color: #e0e0e0;
+
+  /* 文字挿入ボタン関連 */
+  --charinsert-button-hover-background-color: rgba(255,255,255,0.1);
+
+  /* SMW Callout関連 */
+  --smw-callout-warning-background: #3d3520;
+
+  /* サムネイル関連 */
+  --thumbinner-background-color: #252525;
+  --thumbinner-border-color: #555;
+
+  /* ===================================
+     手動ダークモード時のOOUIアイコン反転設定
+     ユーザーが手動でダークモードを選択した場合も、
+     アイコンを白色に反転させて視認性を確保
+     =================================== */
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: invert(1) !important;
+  }
 }

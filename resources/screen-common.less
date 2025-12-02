@@ -1,6 +1,8 @@
 /* Common styling for the Fluent skin */
 
 @import 'variables.less';
+@import 'common-styles.less';
+@import 'theme-toggle.less';
 
 @font-face {
 	font-family: FabricIcons;
@@ -99,7 +101,13 @@ body {
 				padding-left: 44px;
 				padding-right: 32px;
 				font-family: 'Segoe UI Web (West European)','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,'Helvetica Neue',sans-serif;
+				color: #323130 !important;
+				caret-color: #323130;
 				&:focus-visible { outline: 0; }
+				&::placeholder {
+					color: #605E5C;
+					opacity: 0.8;
+				}
 			}
 			input#searchInput[type="search"]::-webkit-search-cancel-button {
 				-webkit-appearance: none;
@@ -292,6 +300,10 @@ body {
 
 .mw-body-content {
 	padding-bottom: 1em;
+
+	/* User Add */
+	.mw-category-group { font-family: 'Droid Sans', "Droid Serif" !important;}
+	.mw-body-content { font-family: "Droid Sans", "Droid Serif" !important;}
 }
 
 
@@ -315,6 +327,7 @@ body {
 		padding-left: 16px;
 		margin: 0;
 		font-size: 14px;
+		color: var(--nav-text-color);
 	}
 	ul {
 		list-style-type: none;
@@ -626,14 +639,10 @@ ul.gallery {
 }
 
 table.wikitable  {
-	border-collapse: collapse;
+	border:0;
 	background: var(--wikitable-background-color);
 	> tr > th, > tr > td, > * > tr > th, > * > tr > td {
 		padding: 0.4em;
-		border-bottom: 1px solid;
-	}
-	> thead > tr > th, > thead > tr > td, > * > thead > tr > th, > * > thead > tr > td {
-		border-color: #8a8886;
 	}
 	> tr > th, > * > tr > th {
 		font-weight: 600;
@@ -643,9 +652,6 @@ table.wikitable  {
 	> tr > td, > * > tr > td {
 		border-color: var(--wikitable-td-border-color);
 	}
-	&.filehistory > tbody > tr:first-child {
-		border-color: #8a8886;
-	}table.wikitable.filehistory > tbody > tr:first-child{border-color:#8a8886}
 }
 
 table.mw_metadata {
@@ -687,7 +693,7 @@ li.gallerybox div.thumb {
 	background-color: var(--file-img-background-color);
 	transition: background-color 0.32s;
 	background-image:
-	   linear-gradient(45deg, var(--file-img-background-color) 25%, transparent 25%), 
+	   linear-gradient(45deg, var(--file-img-background-color) 25%, transparent 25%),
 	   linear-gradient(135deg, var(--file-img-background-color) 25%, transparent 25%),
 	   linear-gradient(45deg, transparent 75%, var(--file-img-background-color) 75%),
 	   linear-gradient(135deg, transparent 75%, var(--file-img-background-color) 75%);
@@ -697,7 +703,7 @@ li.gallerybox div.thumb {
 		background: none;
 		background-color: var(--file-img-hover-background-color);
 		background-image:
-		   linear-gradient(45deg, var(--file-img-background-color) 25%, transparent 25%), 
+		   linear-gradient(45deg, var(--file-img-background-color) 25%, transparent 25%),
 		   linear-gradient(135deg, var(--file-img-background-color) 25%, transparent 25%),
 		   linear-gradient(45deg, transparent 75%, var(--file-img-background-color) 75%),
 		   linear-gradient(135deg, transparent 75%, var(--file-img-background-color) 75%);
@@ -743,4 +749,1324 @@ li.gallerybox div.thumb {
 }
 .oo-ui-menuSelectWidget, .mw-rcfilters-ui-menuSelectWidget {
 	z-index: 700 !important;
+}
+
+
+/* User Add */
+.oo-ui-windowManager-modal > .oo-ui-dialog,
+.ve-ui-overlay-global {
+	z-index: 1001;
+}
+
+body > .oo-ui-windowManager,
+.oo-ui-defaultOverlay {
+	z-index: 1001;
+}
+
+@media screen {
+	// .ve-active {
+	// 	// Hide action button when VE is active
+	// 	#cosmos-articleHeader-actions {
+	// 		display: none;
+	// 	}
+	// }
+
+	// @media ( min-width: 851px ) {
+	// 	.ve-init-mw-desktopArticleTarget-toolbar {
+	// 		margin: -1.125em -2em 0;
+	// 	}
+ //
+	// 	.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+	// 		top: 3.475em;
+	// 	}
+ //
+	// 	.ve-init-mw-desktopArticleTarget .ve-init-mw-target-surface .ve-ce-documentNode,
+	// 	.ve-init-mw-desktopArticleTarget .ve-init-mw-target-surface .ve-ui-surface-placeholder {
+	// 		padding-right: 2em;
+	// 		padding-left: 2em;
+	// 		height: auto !important;
+	// 		min-height: 100vh;
+	// 	}
+	// }
+
+	// @media ( min-width: 851px ) and ( max-width: 1099px ) {
+	// 	.ve-init-mw-desktopArticleTarget-toolbar {
+	// 		margin-top: -0.285em;
+	// 	}
+	// }
+
+	// @media ( max-width: 850px ) {
+	// 	.ve-init-mw-desktopArticleTarget-toolbar {
+	// 		margin: -0.125em -0.45em 0;
+	// 	}
+	//
+	// 	.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+	// 		top: 0;
+	// 	}
+	// }
+
+	// .ve-init-mw-desktopArticleTarget .CodeMirror {
+	// 	padding: 0 2em;
+	// }
+
+	.ve-ui-surface {
+		max-height: 80vh !important;
+		height: calc(100vh - 3.475em) !important; /* 全画面高さから200pxを引いた値 */
+		overflow-y: auto !important;
+	}
+
+	.ve-init-mw-desktopArticleTarget-toolbar {
+		margin: 1em 0em 0;
+	}
+
+	.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+		top: 3.475em;
+	}
+
+	.ve-ui-toolbar-floating > .oo-ui-windowManager-modal > .oo-ui-dialog,
+	.ve-ui-toolbar-floating > .oo-ui-defaultOverlay {
+		z-index: 1010;
+	}
+
+	.ve-ui-toolbar-floating > .oo-ui-windowManager,
+	.ve-ui-toolbar-floating > .ve-ui-overlay-global {
+		z-index: 1010;
+	}
+
+	.ve-init-mw-desktopArticleTarget .ve-init-mw-target-surface .ve-ce-documentNode,
+	.ve-init-mw-desktopArticleTarget .ve-init-mw-target-surface .ve-ui-surface-placeholder {
+		padding-right: 2em;
+		padding-left: 2em;
+		height: auto !important;
+		min-height: 100vh;
+	}
+
+	.ve-init-mw-desktopArticleTarget-editableContent {
+		overflow: visible !important;
+	}
+}
+
+// User Add
+/* ダイアログ全体のベーススタイル */
+.oo-ui-window-frame {
+    background-color: #ffffff;
+}
+
+/* ===================================
+   ライトモード（デフォルト）のOOUIメニュースタイル
+   =================================== */
+/* タブバー全体 - ライトモード */
+.oo-ui-menuLayout-menu {
+    background-color: #f8f9fa !important;
+}
+
+.oo-ui-window-frame {
+    /* ドロップエリアのテキスト */
+    .oo-ui-selectFileWidget-dropTarget {
+        color: #202124 !important;
+    }
+
+    /* チェックボックス周りのテキスト */
+    .oo-ui-fieldLayout-body {
+        color: #202124 !important;
+    }
+
+    /* 説明文のテキスト */
+    .oo-ui-fieldLayout-header,
+    .oo-ui-labelElement-label,
+    .oo-ui-fieldLayout-field {
+        color: #202124 !important;
+    }
+
+    /* リンクテキスト */
+    a {
+        color: #0645ad !important;
+
+        &:hover {
+            color: #0b0080 !important;
+            text-decoration: underline;
+        }
+    }
+
+    /* プレースホルダーテキスト */
+    ::placeholder {
+        color: #757575 !important;
+    }
+}
+
+/* タブのテキスト */
+.oo-ui-tabOptionWidget {
+    color: #202124 !important;
+
+    &.oo-ui-optionWidget-selected {
+        color: #000000 !important;
+    }
+}
+
+/* タブの選択状態 */
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+    background-color: #f8f9fa !important;
+    color: #202124 !important;
+
+    &.oo-ui-optionWidget-selected {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border-bottom-color: #ffffff !important;
+    }
+}
+
+/* ダイアログのヘッダー部分 */
+.oo-ui-processDialog-navigation {
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #a2a9b1 !important;
+
+    /* タイトル */
+    .oo-ui-processDialog-location {
+        color: #202124 !important;
+    }
+
+    /* 閉じるボタン */
+    .oo-ui-buttonElement-button {
+        background-color: transparent !important;
+
+        .oo-ui-icon-close {
+            opacity: 0.8;
+        }
+
+        &:hover {
+            background-color: #e8eaed !important;
+        }
+    }
+}
+
+/* アクションボタンエリア */
+.oo-ui-processDialog-actions {
+    background-color: #f8f9fa !important;
+    border-top: 1px solid #a2a9b1 !important;
+}
+
+/* メインコンテンツエリア */
+.oo-ui-window-body {
+    background-color: #ffffff !important;
+}
+
+/* アップロードボタン */
+.oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
+    background-color: #0645ad !important;
+    color: #ffffff !important;
+    border-color: #0645ad !important;
+
+    &:hover {
+        background-color: #0b0080 !important;
+        border-color: #0b0080 !important;
+    }
+
+    /* 無効状態 */
+    &[aria-disabled="true"] {
+        background-color: #e8eaed !important;
+        color: #a2a9b1 !important;
+        border-color: #c8c6c4 !important;
+    }
+}
+
+/* アウトラインセレクトウィジェット（サイドバーメニュー） */
+.oo-ui-panelLayout {
+    background-color: #f8f9fa !important;
+    color: #202124 !important;
+}
+
+.oo-ui-outlineSelectWidget {
+    background-color: #f8f9fa !important;
+    color: #202124 !important;
+}
+
+.oo-ui-outlineOptionWidget {
+    background-color: transparent !important;
+    color: #202124 !important;
+    border-color: transparent !important;
+
+    &:hover {
+        background-color: #e8eaed !important;
+    }
+
+    &.oo-ui-optionWidget-selected {
+        background-color: #e8eaed !important;
+        color: #000000 !important;
+    }
+
+    .oo-ui-labelElement-label {
+        color: #202124 !important;
+    }
+
+    &.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+        color: #000000 !important;
+    }
+}
+
+/* メニューオプション */
+.oo-ui-menuOptionWidget {
+    background-color: transparent !important;
+    color: #202124 !important;
+
+    &:hover, &.oo-ui-optionWidget-highlighted {
+        background-color: #e8eaed !important;
+    }
+
+    &.oo-ui-optionWidget-selected {
+        background-color: #e8eaed !important;
+        color: #000000 !important;
+    }
+}
+
+/* ===================================
+   ダークモード時のスタイル
+   =================================== */
+@media (prefers-color-scheme: dark) {
+    /* タブバー全体 */
+    .oo-ui-menuLayout-menu {
+        background-color: #333333 !important;
+    }
+
+    .oo-ui-window-frame {
+        /* ドロップエリアのテキスト */
+        .oo-ui-selectFileWidget-dropTarget {
+            color: #e0e0e0 !important;
+        }
+
+        /* チェックボックス周りのテキスト */
+        .oo-ui-fieldLayout-body {
+            color: #e0e0e0 !important;
+        }
+
+        /* 説明文のテキスト */
+        .oo-ui-fieldLayout-header,
+        .oo-ui-labelElement-label,
+        .oo-ui-fieldLayout-field {
+            color: #e0e0e0 !important;
+        }
+
+        /* リンクテキスト */
+        a {
+            color: #6ea8fe !important;
+
+            &:hover {
+                color: #8bb9fe !important;
+                text-decoration: underline;
+            }
+        }
+
+        /* プレースホルダーテキスト */
+        ::placeholder {
+            color: #808080 !important;
+        }
+    }
+
+    /* タブのテキスト */
+    .oo-ui-tabOptionWidget {
+        color: #e0e0e0 !important;
+
+        &.oo-ui-optionWidget-selected {
+            color: #ffffff !important;
+        }
+    }
+
+    /* タブの選択状態 */
+    .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+        background-color: #333333 !important;
+        color: #e0e0e0 !important;
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #292929 !important;
+            color: #ffffff !important;
+            border-bottom-color: #292929 !important;
+        }
+    }
+
+    /* ダイアログのヘッダー部分 */
+    .oo-ui-processDialog-navigation {
+        background-color: #333333 !important;
+        border-bottom: 1px solid #404040 !important;
+
+        /* タイトル */
+        .oo-ui-processDialog-location {
+            color: #e0e0e0 !important;
+        }
+
+        /* 閉じるボタン */
+        .oo-ui-buttonElement-button {
+            background-color: transparent !important;
+
+            .oo-ui-icon-close {
+                opacity: 0.8;
+                filter: invert(1);
+            }
+
+            &:hover {
+                background-color: #404040 !important;
+            }
+        }
+    }
+
+    /* アクションボタンエリア */
+    .oo-ui-processDialog-actions {
+        background-color: #333333 !important;
+        border-top: 1px solid #404040 !important;
+    }
+
+    /* メインコンテンツエリア */
+    .oo-ui-window-body {
+        background-color: #292929 !important;
+    }
+
+    /* アップロードボタン */
+    .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
+        background-color: #2185d0 !important;
+        color: #ffffff !important;
+        border-color: #2185d0 !important;
+
+        &:hover {
+            background-color: #1678c2 !important;
+            border-color: #1678c2 !important;
+        }
+
+        /* 無効状態 */
+        &[aria-disabled="true"] {
+            background-color: #333333 !important;
+            color: #808080 !important;
+            border-color: #404040 !important;
+        }
+    }
+
+    /* アウトラインセレクトウィジェット（サイドバーメニュー） */
+    .oo-ui-panelLayout {
+        background-color: #252525 !important;
+        color: #e0e0e0 !important;
+    }
+
+    .oo-ui-outlineSelectWidget {
+        background-color: #252525 !important;
+        color: #e0e0e0 !important;
+    }
+
+    .oo-ui-outlineOptionWidget {
+        background-color: transparent !important;
+        color: #e0e0e0 !important;
+        border-color: transparent !important;
+
+        &:hover {
+            background-color: #333333 !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #333333 !important;
+            color: #ffffff !important;
+        }
+
+        .oo-ui-labelElement-label {
+            color: #e0e0e0 !important;
+        }
+
+        &.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+            color: #ffffff !important;
+        }
+    }
+
+    /* メニューオプション */
+    .oo-ui-menuOptionWidget {
+        background-color: transparent !important;
+        color: #e0e0e0 !important;
+
+        &:hover, &.oo-ui-optionWidget-highlighted {
+            background-color: #333333 !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #333333 !important;
+            color: #ffffff !important;
+        }
+    }
+}
+
+/* ===================================
+   明示的なライトモード（body.theme-light）のOOUIスタイル
+   =================================== */
+body.theme-light,
+html.theme-light {
+    /* タブバー全体 - ライトモード */
+    .oo-ui-menuLayout-menu {
+        background-color: #f8f9fa !important;
+    }
+
+    .oo-ui-window-frame {
+        /* ドロップエリアのテキスト */
+        .oo-ui-selectFileWidget-dropTarget {
+            color: #202124 !important;
+        }
+
+        /* チェックボックス周りのテキスト */
+        .oo-ui-fieldLayout-body {
+            color: #202124 !important;
+        }
+
+        /* 説明文のテキスト */
+        .oo-ui-fieldLayout-header,
+        .oo-ui-labelElement-label,
+        .oo-ui-fieldLayout-field {
+            color: #202124 !important;
+        }
+
+        /* リンクテキスト */
+        a {
+            color: #0645ad !important;
+
+            &:hover {
+                color: #0b0080 !important;
+                text-decoration: underline;
+            }
+        }
+
+        /* プレースホルダーテキスト */
+        ::placeholder {
+            color: #757575 !important;
+        }
+    }
+
+    /* タブのテキスト */
+    .oo-ui-tabOptionWidget {
+        color: #202124 !important;
+
+        &.oo-ui-optionWidget-selected {
+            color: #000000 !important;
+        }
+    }
+
+    /* タブの選択状態 */
+    .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+        background-color: #f8f9fa !important;
+        color: #202124 !important;
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border-bottom-color: #ffffff !important;
+        }
+    }
+
+    /* ダイアログのヘッダー部分 */
+    .oo-ui-processDialog-navigation {
+        background-color: #f8f9fa !important;
+        border-bottom: 1px solid #a2a9b1 !important;
+
+        /* タイトル */
+        .oo-ui-processDialog-location {
+            color: #202124 !important;
+        }
+
+        /* 閉じるボタン */
+        .oo-ui-buttonElement-button {
+            background-color: transparent !important;
+
+            .oo-ui-icon-close {
+                opacity: 0.8;
+            }
+
+            &:hover {
+                background-color: #e8eaed !important;
+            }
+        }
+    }
+
+    /* アクションボタンエリア */
+    .oo-ui-processDialog-actions {
+        background-color: #f8f9fa !important;
+        border-top: 1px solid #a2a9b1 !important;
+    }
+
+    /* メインコンテンツエリア */
+    .oo-ui-window-body {
+        background-color: #ffffff !important;
+    }
+
+    /* アップロードボタン */
+    .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
+        background-color: #0645ad !important;
+        color: #ffffff !important;
+        border-color: #0645ad !important;
+
+        &:hover {
+            background-color: #0b0080 !important;
+            border-color: #0b0080 !important;
+        }
+
+        /* 無効状態 */
+        &[aria-disabled="true"] {
+            background-color: #e8eaed !important;
+            color: #a2a9b1 !important;
+            border-color: #c8c6c4 !important;
+        }
+    }
+
+    /* アウトラインセレクトウィジェット（サイドバーメニュー） */
+    .oo-ui-panelLayout {
+        background-color: #f8f9fa !important;
+        color: #202124 !important;
+    }
+
+    .oo-ui-outlineSelectWidget {
+        background-color: #f8f9fa !important;
+        color: #202124 !important;
+    }
+
+    .oo-ui-outlineOptionWidget {
+        background-color: transparent !important;
+        color: #202124 !important;
+        border-color: transparent !important;
+
+        &:hover {
+            background-color: #e8eaed !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #e8eaed !important;
+            color: #000000 !important;
+        }
+
+        .oo-ui-labelElement-label {
+            color: #202124 !important;
+        }
+
+        &.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+            color: #000000 !important;
+        }
+    }
+
+    /* メニューオプション */
+    .oo-ui-menuOptionWidget {
+        background-color: transparent !important;
+        color: #202124 !important;
+
+        &:hover, &.oo-ui-optionWidget-highlighted {
+            background-color: #e8eaed !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #e8eaed !important;
+            color: #000000 !important;
+        }
+    }
+}
+
+/* ===================================
+   明示的なダークモード（body.theme-dark）のOOUIスタイル
+   =================================== */
+body.theme-dark,
+html.theme-dark {
+    /* タブバー全体 */
+    .oo-ui-menuLayout-menu {
+        background-color: #333333 !important;
+    }
+
+    .oo-ui-window-frame {
+        /* ドロップエリアのテキスト */
+        .oo-ui-selectFileWidget-dropTarget {
+            color: #e0e0e0 !important;
+        }
+
+        /* チェックボックス周りのテキスト */
+        .oo-ui-fieldLayout-body {
+            color: #e0e0e0 !important;
+        }
+
+        /* 説明文のテキスト */
+        .oo-ui-fieldLayout-header,
+        .oo-ui-labelElement-label,
+        .oo-ui-fieldLayout-field {
+            color: #e0e0e0 !important;
+        }
+
+        /* リンクテキスト */
+        a {
+            color: #6ea8fe !important;
+
+            &:hover {
+                color: #8bb9fe !important;
+                text-decoration: underline;
+            }
+        }
+
+        /* プレースホルダーテキスト */
+        ::placeholder {
+            color: #808080 !important;
+        }
+    }
+
+    /* タブのテキスト */
+    .oo-ui-tabOptionWidget {
+        color: #e0e0e0 !important;
+
+        &.oo-ui-optionWidget-selected {
+            color: #ffffff !important;
+        }
+    }
+
+    /* タブの選択状態 */
+    .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+        background-color: #333333 !important;
+        color: #e0e0e0 !important;
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #292929 !important;
+            color: #ffffff !important;
+            border-bottom-color: #292929 !important;
+        }
+    }
+
+    /* ダイアログのヘッダー部分 */
+    .oo-ui-processDialog-navigation {
+        background-color: #333333 !important;
+        border-bottom: 1px solid #404040 !important;
+
+        /* タイトル */
+        .oo-ui-processDialog-location {
+            color: #e0e0e0 !important;
+        }
+
+        /* 閉じるボタン */
+        .oo-ui-buttonElement-button {
+            background-color: transparent !important;
+
+            .oo-ui-icon-close {
+                opacity: 0.8;
+                filter: invert(1);
+            }
+
+            &:hover {
+                background-color: #404040 !important;
+            }
+        }
+    }
+
+    /* アクションボタンエリア */
+    .oo-ui-processDialog-actions {
+        background-color: #333333 !important;
+        border-top: 1px solid #404040 !important;
+    }
+
+    /* メインコンテンツエリア */
+    .oo-ui-window-body {
+        background-color: #292929 !important;
+    }
+
+    /* アップロードボタン */
+    .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
+        background-color: #2185d0 !important;
+        color: #ffffff !important;
+        border-color: #2185d0 !important;
+
+        &:hover {
+            background-color: #1678c2 !important;
+            border-color: #1678c2 !important;
+        }
+
+        /* 無効状態 */
+        &[aria-disabled="true"] {
+            background-color: #333333 !important;
+            color: #808080 !important;
+            border-color: #404040 !important;
+        }
+    }
+
+    /* アウトラインセレクトウィジェット（サイドバーメニュー） */
+    .oo-ui-panelLayout {
+        background-color: #252525 !important;
+        color: #e0e0e0 !important;
+    }
+
+    .oo-ui-outlineSelectWidget {
+        background-color: #252525 !important;
+        color: #e0e0e0 !important;
+    }
+
+    .oo-ui-outlineOptionWidget {
+        background-color: transparent !important;
+        color: #e0e0e0 !important;
+        border-color: transparent !important;
+
+        &:hover {
+            background-color: #333333 !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #333333 !important;
+            color: #ffffff !important;
+        }
+
+        .oo-ui-labelElement-label {
+            color: #e0e0e0 !important;
+        }
+
+        &.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+            color: #ffffff !important;
+        }
+    }
+
+    /* メニューオプション */
+    .oo-ui-menuOptionWidget {
+        background-color: transparent !important;
+        color: #e0e0e0 !important;
+
+        &:hover, &.oo-ui-optionWidget-highlighted {
+            background-color: #333333 !important;
+        }
+
+        &.oo-ui-optionWidget-selected {
+            background-color: #333333 !important;
+            color: #ffffff !important;
+        }
+    }
+}
+
+/* ライトモード時のスタイル */
+@media (prefers-color-scheme: light) {
+    /* ボディとコンテンツ */
+    body {
+        background: var(--body-background-color);
+    }
+
+    div#content {
+        background: var(--content-background-color);
+        color: var(--content-text-color);
+    }
+
+    div#content a {
+        color: var(--content-link-color);
+    }
+
+    div#content a:visited {
+        color: var(--content-link-visited-color);
+    }
+
+    div#content a.new, #p-personal a.new {
+        color: var(--content-link-new-color);
+    }
+
+    div#content h1, div#content h2, div#content h3,
+    div#content h4, div#content h5, div#content h6 {
+        color: var(--heading-color);
+    }
+
+    /* 編集エリア */
+    div#content textarea {
+        background: var(--textarea-background-color);
+        color: var(--textarea-text-color);
+        border: 1px solid var(--editoptions-border-color);
+    }
+
+    div#content .editOptions {
+        background: var(--editoptions-background-color);
+        color: var(--editoptions-text-color);
+        border: 1px solid var(--editoptions-border-color);
+        border-top: 0;
+    }
+
+    /* プリフォーマットテキスト */
+    div#content pre {
+        background-color: var(--pre-background-color);
+        color: var(--pre-text-color);
+        border: 1px solid var(--editoptions-border-color);
+    }
+
+    /* コード */
+    code {
+        color: var(--code-text-color);
+        background-color: var(--code-background-color);
+        border: 1px solid var(--code-border-color);
+        padding: 1px 4px;
+        border-radius: 2px;
+    }
+
+    /* テーブル */
+    .wikitable, .mw-datatable {
+        background-color: var(--wikitable-background-color);
+        color: var(--content-text-color);
+        border: 1px solid var(--editoptions-border-color);
+    }
+
+    .wikitable > tr > th, .wikitable > tr > td,
+    .wikitable > * > tr > th, .wikitable > * > tr > td,
+    .mw-datatable th, .mw-datatable td {
+        border: 1px solid var(--wikitable-td-border-color);
+    }
+
+    .wikitable > tr > th, .wikitable > * > tr > th,
+    .mw-datatable th {
+        background-color: var(--metadata-th-background-color);
+    }
+
+    .mw-datatable tr:hover td {
+        background-color: var(--editoptions-background-color);
+    }
+
+    /* 警告ボックス */
+    div#content .warningbox {
+        background-color: var(--warningbox-background-color);
+        color: var(--warningbox-text-color);
+        border: 1px solid var(--warningbox-border-color);
+        border-left-width: 3px;
+    }
+
+    /* パネル */
+    div#mw-panel {
+        background: var(--panel-background-color);
+    }
+
+    div#mw-panel div.portal div.body ul li a {
+        color: var(--panel-link-color);
+    }
+
+    div#mw-panel div.portal div.body ul li a:visited {
+        color: var(--panel-link-visited-color);
+    }
+
+    div#mw-panel div.portal div.body ul li a.new {
+        color: var(--panel-link-new-color);
+    }
+
+    /* ギャラリー・TOC */
+    li.gallerybox div.thumb, #filetoc, .toc, #toc, .mw-warning, .catlinks {
+        border: 1px solid var(--gallery-border-color);
+        background-color: var(--gallery-background-color);
+    }
+
+    /* サムネイル */
+    div.thumbinner {
+        background-color: var(--thumbinner-background-color);
+        border: 1px solid var(--thumbinner-border-color);
+    }
+
+    /* OOUIウィジェット - 基本 */
+    .oo-ui-window-frame {
+        background-color: #ffffff;
+    }
+
+    /* アップロードダイアログ */
+    .ve-ui-mwMediaDialog {
+        background-color: #ffffff;
+        color: #202124;
+    }
+
+    /* 入力フィールド */
+    .oo-ui-textInputWidget input,
+    .oo-ui-selectFileWidget-dropTarget {
+        background-color: var(--ooui-input-background-color) !important;
+        color: var(--ooui-input-text-color) !important;
+        border-color: var(--ooui-button-border-color) !important;
+    }
+
+    .oo-ui-textInputWidget .oo-ui-inputWidget-input {
+        background-color: var(--ooui-input-background-color) !important;
+        color: var(--ooui-input-text-color) !important;
+    }
+
+    /* ボタン */
+    .oo-ui-buttonElement-button {
+        background-color: var(--ooui-button-background-color) !important;
+        color: var(--ooui-button-text-color) !important;
+        border-color: var(--ooui-button-border-color) !important;
+    }
+
+    .oo-ui-buttonElement-button:hover {
+        background-color: var(--ooui-button-hover-background-color) !important;
+    }
+
+    .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+        background-color: var(--ooui-button-background-color) !important;
+        border-color: var(--ooui-button-border-color) !important;
+        color: var(--ooui-button-text-color) !important;
+    }
+
+    .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
+        background-color: var(--ooui-button-hover-background-color) !important;
+        border-color: var(--ooui-button-border-color) !important;
+    }
+
+    /* タブパネル */
+    .oo-ui-tabPanelLayout {
+        background-color: #ffffff !important;
+    }
+
+    .oo-ui-tabOptionWidget {
+        color: var(--content-text-color) !important;
+    }
+
+    .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+        color: var(--content-text-color) !important;
+        background-color: #ffffff !important;
+    }
+
+    /* メディア検索結果 */
+    .mw-widget-mediaResultWidget {
+        background-color: #ffffff !important;
+    }
+
+    .mw-widget-mediaResultWidget:hover {
+        background-color: var(--editoptions-background-color) !important;
+    }
+
+    /* ドロップダウンメニュー */
+    .oo-ui-menuSelectWidget {
+        background-color: var(--dropdown-background-color) !important;
+        border-color: var(--dropdown-border-color) !important;
+    }
+
+    .oo-ui-menuOptionWidget {
+        color: var(--dropdown-text-color) !important;
+    }
+
+    .oo-ui-menuOptionWidget.oo-ui-optionWidget-highlighted {
+        background-color: var(--dropdown-hover-background-color) !important;
+    }
+
+    .oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle {
+        background-color: var(--dropdown-background-color) !important;
+        color: var(--dropdown-text-color) !important;
+        border-color: var(--dropdown-border-color) !important;
+    }
+
+    .oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle:hover {
+        background-color: var(--dropdown-hover-background-color) !important;
+    }
+
+    /* ポップアップ */
+    .oo-ui-popupWidget-popup {
+        background-color: var(--popup-background-color) !important;
+        color: var(--popup-text-color) !important;
+        border-color: var(--popup-border-color) !important;
+    }
+
+    /* メタデータ */
+    .mw_metadata {
+        background-color: var(--metadata-background-color);
+        color: var(--metadata-text-color);
+        border: 1px solid var(--metadata-border-color) !important;
+    }
+
+    .mw_metadata > tr > th, .mw_metadata > tr > td,
+    .mw_metadata > * > tr > th, .mw_metadata > * > tr > td {
+        border: 1px solid var(--metadata-border-color) !important;
+        background-color: var(--metadata-background-color) !important;
+        color: var(--metadata-text-color) !important;
+    }
+
+    .mw_metadata > tr > th, .mw_metadata > * > tr > th {
+        background-color: var(--metadata-th-background-color) !important;
+    }
+
+    /* RCフィルター */
+    .mw-rcfilters-ui-cell, .mw-rcfilters-ui-itemMenuOptionWidget,
+    .mw-rcfilters-ui-filterMenuSectionOptionWidget,
+    .mw-rcfilters-ui-menuSelectWidget-footer,
+    .mw-rcfilters-ui-menuSelectWidget-footer-feedback {
+        background-color: var(--rcfilters-background-color) !important;
+        color: var(--rcfilters-text-color) !important;
+    }
+
+    .mw-rcfilters-ui-changesListWrapperWidget .mw-changeslist-legend {
+        background-color: var(--popup-background-color) !important;
+        color: var(--popup-text-color) !important;
+        border-color: var(--popup-border-color) !important;
+    }
+
+    /* タグマルチセレクト */
+    .oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagMultiselectWidget-handle {
+        background-color: var(--tagmultiselect-background-color);
+        border: 1px solid var(--tagmultiselect-border-color) !important;
+    }
+
+    /* WikiEditorツールバー */
+    .wikiEditor-ui-toolbar {
+        background-color: var(--wikieditor-toolbar-background-color);
+        border: 1px solid var(--wikieditor-border-color);
+    }
+
+    .wikiEditor-ui .wikiEditor-ui-top {
+        border-bottom: 1px solid var(--wikieditor-border-color) !important;
+    }
+
+    .wikiEditor-ui .wikiEditor-ui-view {
+        border: 1px solid var(--wikieditor-border-color) !important;
+    }
+
+    /* ページ履歴 */
+    #pagehistory li.selected {
+        background-color: var(--pagehistory-selected-background-color) !important;
+        outline: 1px dashed var(--pagehistory-selected-outline-color) !important;
+        color: var(--pagehistory-selected-text-color) !important;
+    }
+
+    /* 投稿編集通知 */
+    .postedit {
+        color: var(--postedit-text-color) !important;
+        background-color: var(--postedit-background-color) !important;
+        border-top: 2px solid var(--postedit-border-color) !important;
+    }
+
+    /* 通知 */
+    .mw-notification {
+        background-color: var(--notification-background-color) !important;
+        border: 1px solid var(--editoptions-border-color) !important;
+    }
+
+    /* 検索 */
+    .mw-search-profile-tabs {
+        background: var(--searchprofile-background-color);
+    }
+
+    #mw-searchoptions {
+        background: var(--searchoptions-background-color);
+    }
+
+    .results-info {
+        color: var(--results-info-color);
+    }
+
+    /* 検索サジェスチョン */
+    .suggestions-results, .suggestions-special {
+        background-color: var(--suggestions-result-background-color) !important;
+    }
+
+    .suggestions-results .suggestions-result,
+    .suggestions-special .special-query {
+        color: var(--suggestions-result-text-color) !important;
+    }
+
+    .suggestions-special .special-label {
+        color: var(--suggestions-special-label-color) !important;
+    }
+
+    /* フッター */
+    div#footer ul li {
+        color: var(--footer-list-color) !important;
+    }
+
+    /* ベクターメニュー */
+    div.vectorMenu, #mw-page-base {
+        background-color: var(--vectormenu-background-color);
+    }
+
+    div.vectorMenu:hover, div.vectorTabs li a:hover, .onhoverbg:hover {
+        background-color: var(--vectormenu-hover-background-color);
+    }
+
+    div.vectorMenu ul {
+        background-color: var(--vectormenu-ul-background-color);
+        border: solid 1px var(--vectormenu-ul-border-color);
+    }
+
+    div.vectorMenu li a, #p-personal a {
+        color: var(--vectormenu-link-color);
+    }
+
+    /* ダイアログのヘッダー */
+    .oo-ui-processDialog-navigation {
+        background-color: var(--editoptions-background-color) !important;
+        border-bottom: 1px solid var(--editoptions-border-color) !important;
+    }
+
+    .oo-ui-processDialog-navigation .oo-ui-processDialog-location {
+        color: var(--content-text-color) !important;
+    }
+
+    /* ダイアログのアクションエリア */
+    .oo-ui-processDialog-actions {
+        background-color: var(--editoptions-background-color) !important;
+        border-top: 1px solid var(--editoptions-border-color) !important;
+    }
+
+    /* ダイアログのメインコンテンツ */
+    .oo-ui-window-body {
+        background-color: var(--content-background-color) !important;
+    }
+
+    /* フィールドラベル */
+    .oo-ui-fieldLayout-body,
+    .oo-ui-fieldLayout-header,
+    .oo-ui-labelElement-label,
+    .oo-ui-fieldLayout-field {
+        color: var(--content-text-color) !important;
+    }
+
+    /* リンク */
+    .oo-ui-window-frame a {
+        color: var(--content-link-color) !important;
+    }
+
+    .oo-ui-window-frame a:hover {
+        color: var(--content-link-color) !important;
+        text-decoration: underline;
+    }
+
+    /* プライマリボタン */
+    .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
+        background-color: #0645ad !important;
+        color: #ffffff !important;
+        border-color: #0645ad !important;
+    }
+
+    .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button:hover {
+        background-color: #0b0080 !important;
+        border-color: #0b0080 !important;
+    }
+
+    /* チェックボックス */
+    .oo-ui-checkboxInputWidget [type='checkbox'] + span {
+        background-color: var(--ooui-input-background-color) !important;
+        border-color: var(--ooui-button-border-color) !important;
+    }
+}
+
+/* 共通のスタイル調整 */
+.oo-ui-window-frame {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* z-indexの調整 */
+.oo-ui-windowManager-modal,
+.oo-ui-defaultOverlay {
+    z-index: 1001 !important;
+}
+
+.ve-ui-overlay-global {
+    z-index: 1001 !important;
+}
+
+/* コンテンツエリアのz-index調整 */
+#content.mw-body {
+    z-index: auto !important;
+}
+
+/* 見出しとfigure要素の調整 */
+h1, h2, h3, h4, h5, h6,
+figure {
+    position: relative;
+    z-index: auto !important;
+}
+
+/* テーマ切り替え対応 - 検索ボックスの文字色 */
+body.theme-dark #fabric-heading #search-box form#p-search input#searchInput,
+html.theme-dark #fabric-heading #search-box form#p-search input#searchInput {
+	color: #F1F2F3 !important;
+	caret-color: #F1F2F3;
+
+	&::placeholder {
+		color: #C8C6C4;
+		opacity: 0.8;
+	}
+}
+
+body.theme-light #fabric-heading #search-box form#p-search input#searchInput,
+html.theme-light #fabric-heading #search-box form#p-search input#searchInput {
+	color: #323130 !important;
+	caret-color: #323130;
+
+	&::placeholder {
+		color: #605E5C;
+		opacity: 0.8;
+	}
+}
+
+/* 自動モード（デフォルト）の検索ボックス */
+body.theme-auto #fabric-heading #search-box form#p-search input#searchInput,
+html.theme-auto #fabric-heading #search-box form#p-search input#searchInput {
+	color: #323130 !important;
+	caret-color: #323130;
+
+	&::placeholder {
+		color: #605E5C;
+		opacity: 0.8;
+	}
+}
+
+/* 自動モード（デフォルト）+ OSがダークモードの場合 */
+@media (prefers-color-scheme: dark) {
+	body.theme-auto #fabric-heading #search-box form#p-search input#searchInput,
+	html.theme-auto #fabric-heading #search-box form#p-search input#searchInput {
+		color: #F1F2F3 !important;
+		caret-color: #F1F2F3;
+
+		&::placeholder {
+			color: #C8C6C4;
+			opacity: 0.8;
+		}
+	}
+}
+
+/* テーマ切り替え対応 - ヘッダーの背景色 */
+body.theme-dark #fabric-heading,
+html.theme-dark #fabric-heading {
+	background-color: var(--accent-color);
+}
+
+body.theme-light #fabric-heading,
+html.theme-light #fabric-heading {
+	background-color: #CF8B54;
+}
+
+body.theme-auto #fabric-heading,
+html.theme-auto #fabric-heading {
+	background-color: #CF8B54;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.theme-auto #fabric-heading,
+	html.theme-auto #fabric-heading {
+		background-color: var(--accent-color);
+	}
+}
+
+/* テーマ切り替え対応 - 検索アイコンの色 */
+body.theme-dark #fabric-heading #search-box form#p-search h3::after,
+html.theme-dark #fabric-heading #search-box form#p-search h3::after {
+	color: #FFFFFF;
+}
+
+body.theme-dark #fabric-heading #search-box form#p-search .clear-searchInput::after,
+html.theme-dark #fabric-heading #search-box form#p-search .clear-searchInput::after {
+	color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.theme-auto #fabric-heading #search-box form#p-search h3::after,
+	html.theme-auto #fabric-heading #search-box form#p-search h3::after {
+		color: #FFFFFF;
+	}
+
+	body.theme-auto #fabric-heading #search-box form#p-search .clear-searchInput::after,
+	html.theme-auto #fabric-heading #search-box form#p-search .clear-searchInput::after {
+		color: #FFFFFF;
+	}
+}
+
+/* テーマ切り替え対応 - 検索ボックスの背景色 */
+body.theme-dark #fabric-heading #search-box form#p-search,
+html.theme-dark #fabric-heading #search-box form#p-search {
+	background-color: var(--search-background-color);
+}
+
+body.theme-light #fabric-heading #search-box form#p-search,
+html.theme-light #fabric-heading #search-box form#p-search {
+	background-color: #E1DFDD;
+}
+
+body.theme-auto #fabric-heading #search-box form#p-search,
+html.theme-auto #fabric-heading #search-box form#p-search {
+	background-color: #E1DFDD;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.theme-auto #fabric-heading #search-box form#p-search,
+	html.theme-auto #fabric-heading #search-box form#p-search {
+		background-color: var(--search-background-color);
+	}
 }

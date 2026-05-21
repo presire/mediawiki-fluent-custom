@@ -1,43 +1,106 @@
-## <div align="center"><b><a href="README.md">English</a> | <a href="README-ja.md">日本語</a></b></div>
-
 <div align="center">
 
-[![download](https://img.shields.io/github/downloads/immewnity/mediawiki-fluent/total.svg?color=green)](https://github.com/immewnity/mediawiki-fluent/releases)
-[![Open issue](https://img.shields.io/github/issues/immewnity/mediawiki-fluent?color=red)](https://github.com/immewnity/mediawiki-fluent/issues)
-[![Closed issue](https://img.shields.io/github/issues-closed/immewnity/mediawiki-fluent?color=blue)](https://github.com/immewnity/mediawiki-fluent/issues)
+<b><a href="README.md">English</a> | <a href="README_JP.md">日本語</a></b>
 
 </div>
 
-# Fluent skin for MediaWiki
+# Fluent Custom - A Customized Fluent Skin for MediaWiki
 
-This is a [MediaWiki skin](https://www.mediawiki.org/wiki/Manual:Skins) based on [Microsoft's Fluent design system](https://en.wikipedia.org/wiki/Fluent_Design_System).
+> **This project is a customized fork of [immewnity/mediawiki-fluent](https://github.com/immewnity/mediawiki-fluent).**  
+> It is not the original skin, but an independently maintained, heavily modified version with additional features and enhancements.
 
-To install, place the skin in a "Fluent" folder in \skins and add `wfLoadSkin( 'Fluent' );` to LocalSettings.
+A heavily customized version of [immewnity/mediawiki-fluent](https://github.com/immewnity/mediawiki-fluent),  
+a [MediaWiki skin](https://www.mediawiki.org/wiki/Manual:Skins) based on [Microsoft's Fluent Design System](https://en.wikipedia.org/wiki/Fluent_Design_System).
 
-## Recent Updates
+This fork adds dark/light mode toggle, an enhanced table of contents with drag & drop, an image popup viewer,  
+WikiEditor integration, and extensive theme customization.  
 
-### Code Improvements
-* **`common-styles.less`** - Comprehensive light/dark mode styling system supporting three modes (light, dark, auto). Includes responsive design based on screen height (FHD, WQHD), enhanced syntax highlighting for code blocks with proper color schemes, modernized table styling with gradient headers and hover effects, redesigned table of contents with gradient backgrounds, and improved mathematical formula rendering with proper dark mode inversion filters.
+## Screenshots
 
-* **`theme-toggle.less`** - Complete theme switching UI with SVG icons (sun for light, moon for dark, monitor for auto mode). Fully integrated WikiEditor toolbar styling that adapts to all three theme modes, including proper icon color inversion, background adjustments, and special character palette dark mode support. Features smooth transitions and hover effects for better user experience.
+| Dark Mode | Light Mode |
+|:---------:|:----------:|
+| ![Dark Mode](screenshots/DarkMode.png) | ![Light Mode](screenshots/LightMode.png) |
 
-* **`main.js`** - Enhanced JavaScript functionality for improved user interactions, including better focus management for edit mode, smooth scrolling to content areas, dropdown menu toggles, sidebar expansion controls, and Visual Editor surface adjustments. Added automatic image display switching between light and dark modes.
+## Features
 
-* **`screen-common.less`** - Improved responsive design support with better mobile/tablet layouts and adaptive spacing.
+### Dark / Light Mode Toggle
+- Manual toggle button in the header toolbar
+- Automatic detection of system color scheme (`prefers-color-scheme`)
+- User preference persisted in `localStorage`
+- Smooth transition between themes
+- Support for per-theme images via `.dark-mode-image` / `.light-mode-image` CSS classes
 
-* **`variables.less`** - Refined theme color variables and consistent design tokens for easier customization and maintenance.
+### Enhanced Table of Contents (TOC)
+- **Drag & Drop** - Freely reposition the TOC anywhere on screen
+- **Resize** - Drag left or bottom edge to resize (min 200px, max 50vw / 80vh)
+- **Minimize / Restore** - Collapse the TOC to a compact bar
+- **Persistent State** - Position, size, and minimized state saved in `localStorage`
+- **Reset Button** - One-click reset to default position and size
+- **Smart Scrolling** - Smooth scroll to sections with proper offset handling
 
-## Known issues
+### Image Popup Viewer
+- Click any content image to open a full-screen overlay
+- **Mouse wheel zoom** from 0.5x to 5x (0.1x increments)
+- **Click & drag** to pan zoomed images
+- Close via ESC key, overlay click, or close button
+- Automatic full-size image URL resolution from thumbnails
 
-* Have only tested in 1.35, known issue in 1.39 - needs to be migrated to [SkinMustache](https://www.mediawiki.org/wiki/Manual:How_to_make_a_MediaWiki_skin/Migrating_SkinTemplate_based_skins_to_SkinMustache)
-* Theme colors are hardcoded, should give a way to set this via LocalSettings
-* Special:Preferences, Special:RecentChanges, and similar special pages are missing proper font and dark mode styles
+### WikiEditor Integration
+- **PageUp / PageDown** key handling in the source editor
+- Auto-focus on editor textarea when editing
+- Proper scroll management for long articles
+- VisualEditor (VE) activation support
 
-## Desired improvements
+### Theme System
+- 400+ CSS custom properties (`--variable-name`) for comprehensive theming
+- Custom accent colors (Light: `#CF8B54` / Dark: `#8B5A3C`)
+- Dedicated color schemes for search, navigation, content, editor, and tables
+- Syntax highlighting color theme for code blocks
 
-* Some shadows and animations could be useful to better fit the Fluent design language
-* Font and dark mode styles for SemanticMediaWiki
+### Extension Integration
+- **Echo** - Styled notification badges
+- **VisualEditor** - Adapted editor surface and toolbar
+
+### Other Enhancements
+- Japanese localization (`ja.json`)
+- Mobile responsive design (breakpoint: 750px)
+- Gravatar user avatar support (configurable)
+- Smart anchor navigation with browser history support
+- Print stylesheet
+
+## Installation
+
+1. Download or clone this repository into the `skins/Fluent` directory of your MediaWiki installation:
+   ```bash
+   cd /path/to/mediawiki/skins
+   git clone https://github.com/presire/mediawiki-fluent-custom.git Fluent
+   ```
+
+2. Add the following line to your `LocalSettings.php`:
+   ```php
+   wfLoadSkin( 'Fluent' );
+   ```
+
+3. (Optional) To disable Gravatar avatars:
+   ```php
+   $wgFluentDisableGravatar = true;
+   ```
+
+## Configuration
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `$wgFluentDisableGravatar` | boolean | `false` | Disable Gravatar user avatars |
+
+## Requirements
+
+- MediaWiki >= 1.35
+
+## Credits
+
+- **Original skin**: [immewnity/mediawiki-fluent](https://github.com/immewnity/mediawiki-fluent) by [Matthew Verive (immewnity)](https://github.com/immewnity)
+- **Customizations**: [presire](https://github.com/presire)
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+[MIT License](LICENSE)

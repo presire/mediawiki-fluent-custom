@@ -1,6 +1,6 @@
 {
 	"name": "Fluent",
-	"version": "0.50",
+	"version": "0.70",
 	"author": "immewnity",
 	"url": "https://www.mediawiki.org/wiki/Skin:Fluent",
 	"descriptionmsg": "fluent-desc",
@@ -23,7 +23,7 @@
 	},
 	"ResourceModules": {
 		"skins.fluent": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"features": [
 				"normalize",
 				"elements",
@@ -60,8 +60,9 @@
 		"remoteSkinPath": "Fluent"
 	},
 	"ResourceModuleSkinStyles": {
-		"example": {
-			"+ext.echo.styles.badge": "resources/extensions/echo.styles.badge.less"
+		"fluent": {
+			"+ext.echo.styles.badge": "resources/extensions/echo.styles.badge.less",
+			"+ext.visualEditor.base": "resources/extensions/ext.visualEditor.less"
 		}
 	},
 	"AutoloadClasses": {

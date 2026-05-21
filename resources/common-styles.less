@@ -4,15 +4,30 @@
    =================================== */
 
 /* ===================================
-   基本スタイル（共通）
+   外部ファイルのインポート
+   =================================== */
+@import 'syntaxhighlight-colors.less';
+@import 'toc-styles.less';
+
+/* ===================================
+   共通スタイル(モード非依存)
    =================================== */
 
+/* 基本フォント設定 */
 .mw-editfont-monospace {
 	font-size: 15px !important;
 	font-family: monospace !important;
 }
 
-/* 画面の縦サイズがFHD以下の場合 */
+.mw-body-content {
+	font-family: "Droid Sans" !important;
+}
+
+.mw-content-ltr {
+	font-family: "Droid Sans" !important;
+}
+
+/* レスポンシブ - 画面サイズ別フォント設定 */
 @media screen and (max-height: 880px) {
 	.mw-body-content {
 		line-height: 1.3;
@@ -23,7 +38,6 @@
 	}
 }
 
-/* 画面の縦サイズがFHDを超える場合 */
 @media screen and (min-height: 881px) and (max-height: 1240px) {
 	.mw-body-content {
 		line-height: 1.2;
@@ -34,7 +48,6 @@
 	}
 }
 
-/* 画面の縦サイズがWQHDを超える場合 */
 @media screen and (min-height: 1241px) {
 	.mw-body-content {
 		line-height: 1.5;
@@ -45,12 +58,168 @@
 	}
 }
 
-/* ConfirmEdit QuestyCaptcha -- on Create Account */
+/* ===================================
+   画像クリックポップアップ機能
+   =================================== */
+
+/* 画像にカーソルを設定 */
+.mw-file-element,
+.mw-body-content img {
+	cursor: pointer;
+}
+
+/* ポップアップオーバーレイ */
+#image-popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.85);
+	z-index: 99999;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	animation: fadeIn 0.2s ease;
+}
+
+#image-popup-overlay.active {
+	display: flex;
+}
+
+/* ポップアップコンテナ */
+#image-popup-container {
+	position: relative;
+	max-width: 95vw;
+	max-height: 95vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	animation: zoomIn 0.3s ease;
+}
+
+/* ポップアップ画像 */
+#image-popup-container img {
+	max-width: 100%;
+	max-height: 90vh;
+	object-fit: contain;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+	border-radius: 4px;
+	cursor: grab;
+	opacity: 1 !important;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+#image-popup-container img:active {
+	cursor: grabbing;
+}
+
+/* 閉じるボタン */
+#image-popup-close {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background-color: rgba(255, 255, 255, 0.9);
+	color: #333;
+	border: none;
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	z-index: 100000;
+}
+
+#image-popup-close:hover {
+	background-color: #ff4444;
+	color: white;
+	transform: scale(1.1);
+}
+
+/* 元に戻すボタン */
+#image-popup-reset {
+	position: fixed;
+	top: 20px;
+	right: 70px;
+	background-color: rgba(255, 255, 255, 0.9);
+	color: #333;
+	border: none;
+	border-radius: 18px;
+	padding: 8px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	z-index: 100000;
+	font-family: 'Segoe UI', 'Droid Sans', sans-serif;
+}
+
+#image-popup-reset:hover {
+	background-color: #4a90e2;
+	color: white;
+	transform: scale(1.05);
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes zoomIn {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* ローディングインジケーター */
+#image-popup-loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 18px;
+	display: none;
+}
+
+#image-popup-loading.active {
+	display: block;
+}
+
+/* ===================================
+   以下、既存のスタイル
+   =================================== */
+
+/* ConfirmEdit QuestyCaptcha */
 .htmlform-tip + .mw-htmlform-field-HTMLInfoField {
 	color: red;
 }
 
-/* ConfirmEdit QuestyCaptcha -- on Edit page + add a URL */
 label[for=wpCaptchaWord] {
 	color: green;
 	font-weight: bold;
@@ -58,180 +227,139 @@ label[for=wpCaptchaWord] {
 	font-style: italic;
 }
 
-.mw-body-content {
-	font-family: "Droid Sans" !important;
+/* 見出しh2の基本スタイル - TOCスタイルの背景を適用 */
+/* 目次のh2を除外 */
+.mw-parser-output > h2,
+.mw-body-content > h2:not(#mw-toc-heading) {
+    font-size: 24px !important;
+    font-weight: 800;
+    padding: 16px 20px 16px 30px;
+    margin: 32px 0 20px 0;
+    display: block;
+    width: 97.5%;
+    clear: both;
+    position: relative;
+    border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
-/* ===================================
-   見出しのスタイル（ライトモード/デフォルト）
-   =================================== */
-
-/* タイトルページ */
-.firstHeading {
-	font-family: "Segoe UI", -apple-system, system-ui, sans-serif !important;
-	text-align: center;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-left: 4px solid #4299e1;
-	border-right: 4px solid #4299e1;
-	border-radius: 12px;
-	padding: 16px 24px;
-	margin: 16px auto;
-	width: fit-content;
-	min-width: 75%;
-	max-width: 90%;
-	background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 25%, #e8f0ff 75%, #e0ebff 100%);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-	color: #1a365d;
-	transition: all 0.3s ease;
+/* 見出しh3の基本スタイル - 斜めアクセント */
+/* idもclassも指定されていないh3要素のみに適用 */
+h3:not([class]):not([id]) {
+    font-size: 20px !important;
+    font-weight: 600;
+    padding: 12px 16px 12px 30px;
+    margin: 24px 0 16px 0;
+    display: block;
+    width: 100%;
+    clear: both;
+    position: relative;
 }
 
-.firstHeading:hover {
-	border-left-color: #3182ce;
-	border-right-color: #3182ce;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-	transform: translateY(-1px);
+h3:not([class]):not([id])::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 15px;
+    background: linear-gradient(135deg, #4299e1 0%, #8ab4f8 100%);
+    transform: skewX(-10deg);
+    transform-origin: top left;
 }
 
+/* 見出しh4の基本スタイル - TOCスタイルの背景を適用 */
 h4 {
-	font-size: 18px !important;
-	position: relative;
-	display: inline-block;
+    font-size: 20px !important;
+    font-weight: 700;
+    padding: 12px 16px;
+    margin: 16px 0 12px 0;
+    display: block;
+    width: fit-content;
+    clear: both;
+    position: relative;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
-h4::after {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 1px;
-	background-color: rgba(30, 30, 30, 0.5);
+/* 見出しh5の基本スタイル - 枠線で囲む */
+h5 {
+    font-size: 18px !important;
+    font-weight: 600;
+    padding: 8px 12px;
+    margin: 12px 0 10px 0;
+    display: inline-block;
+    clear: both;
+    position: relative;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 h5 .mw-headline {
-	font-size: 16px !important;
-	border: solid 1px rgba(30, 30, 30, 0.7);
-	border-radius: 5px;
-	padding: 1px 3px;
-	margin: 5px;
+    font-size: inherit !important;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
-/* ===================================
-   コードとプリフォーマットテキスト（ライトモード/デフォルト）
-   =================================== */
-
-/* 通常のpreタグの設定 */
-pre {
-	color: #202020;
-	background: linear-gradient(to bottom right, rgb(250, 250, 250), white);
-	border: solid 2px rgb(150, 150, 250);
-	border-radius: 5px;
-	font-family: "DejaVu Sans Mono" !important;
+/* 見出しh6の基本スタイル - 下線のみでシンプルに */
+h6 {
+    font-size: 16px !important;
+    font-weight: 600;
+    padding: 4px 8px 4px 0;
+    margin: 10px 0 8px 0;
+    display: inline-block;
+    clear: both;
+    position: relative;
+    border-bottom: 2px solid;
+    transition: all 0.3s ease;
 }
 
-/* mw-highlightクラス内のpreタグの設定 */
-.mw-highlight > pre {
-	color: #202020;
-	background: linear-gradient(to bottom right, rgb(250, 250, 250), white);
-	border: solid 3px rgb(100, 150, 100);
-	border-radius: 5px;
+h6 .mw-headline {
+    font-size: inherit !important;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
-/* ===================================
-   SyntaxHighlight - ライトモード/デフォルト
-   =================================== */
-
-/* プリプロセッサディレクティブ (#include, #define等) */
-.mw-highlight .cp {   /* Comment.Preproc */
-	color: #d63384 !important;
-	font-weight: 600 !important;
-	font-style: normal !important;
-}
-
-code {
-	color: #e8f4f8 !important;
-	font-weight: bold;
-	font-family: "DejaVu Sans Mono" !important;
-	background-color: rgba(41, 92, 194, 1.0) !important;
-	border-color: rgba(100, 150, 255, 0.4) !important;
-	border-radius: 5px;
-	padding: 1px 5px;
-}
-
-/* codeタグ内のMediaWiki外のリンク */
-code a.external {
-	font-weight: bold;
-	color: #ffa500 !important;
-}
-
-/* ===================================
-   テーブルのスタイル（ライトモード/デフォルト）
-   =================================== */
-
-/* 表のキャプション */
-.wikitable > caption {
-	background: linear-gradient(180deg, #2B579A 0%, #2B579A 20%, #366DC2 60%, #366DC2 100%);
-	color: white;
-	padding: 8px;
-	font-weight: bold;
-	text-align: center;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border: 1px solid #2B579A;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
+/* テーブルの基本設定 */
 table {
 	border-collapse: collapse;
-	border: solid 2px #303030;
-	background-color: #fefefe !important;
 	text-align: center;
-}
-
-.wikitable th {
-	color: rgb(250, 250, 250) !important;
-	font-weight: bold;
-	text-align: center !important;
-	border: solid 1px rgb(50, 50, 50);
-	background: linear-gradient(to bottom, #3a5080 0%, #2a4070 100%) !important;
-}
-
-/* ホバー時の強調表示 */
-.wikitable th:hover {
-	color: rgb(250, 250, 250) !important;
-	background: linear-gradient(to bottom, #4a6090 0%, #3a5080 100%);
+	/* 画面サイズに応じて横幅を自動調整（画面幅の一定範囲内で自動調整） */
+	width: auto;
+	min-width: 20%;
+	max-width: 90%;
+	table-layout: auto;
 }
 
 td {
 	text-align: left;
-	border: solid 1px rgb(50, 50, 50);
-	color: #202020;
 }
 
-/* 表の縦罫線のスタイル */
-tr > td:first-child {
-	border-left: 1px solid #303030;
-}
-
-tr > td:last-child {
-	border-right: 1px solid #303030;
-}
-
-/* 表の横罫線のスタイル */
-tr:first-child > td {
-	border-top: 1px solid #303030;
-}
-
-tr:last-child > td {
-	border-bottom: 1px solid #303030;
-}
-
-/* 結合セルの境界線 */
 .wikitable td[rowspan] {
 	border: solid 1px rgb(50, 50, 50);
 }
 
-/* キャプションがない場合、テーブルの上端を丸くする */
+/* 表の縦罫線・横罫線 */
+tr > td:first-child {
+	border-left: 1px solid;
+}
+
+tr > td:last-child {
+	border-right: 1px solid;
+}
+
+tr:first-child > td {
+	border-top: 1px solid;
+}
+
+tr:last-child > td {
+	border-bottom: 1px solid;
+}
+
+/* キャプションがない場合のテーブル上端 */
 .wikitable:not(:has(caption)) > tr:first-child th,
 .wikitable:not(:has(caption)) > * > tr:first-child th {
 	border-top: none !important;
@@ -249,199 +377,73 @@ tr:last-child > td {
 	border-top-right-radius: 10px;
 }
 
-/* キャプションがある場合、キャプションの上端を丸くする */
-.wikitable:has(caption) caption {
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+.wikitable:not(:has(caption)) > tbody > tr:last-child > td:first-child {
+	border-bottom-left-radius: 10px;
 }
 
-/* ===================================
-   リンクのスタイル
-   =================================== */
+.wikitable:not(:has(caption)) > tbody > tr:last-child > td:last-child {
+	border-bottom-right-radius: 10px;
+}
 
-/* MediaWiki内のリンク */
-a.interwiki {
+/* WikiTableの基本構造 */
+.wikitable th {
 	font-weight: bold;
+	text-align: center !important;
+	border: solid 1px rgb(50, 50, 50);
 }
 
-/* MediaWiki外のリンク */
-.mw-parser-output a.external {
-	font-weight: bold;
+/* カテゴリの変更 */
+.catlinks {
+	border-radius: 5px;
 }
 
-a.external {
-	font-weight: bold;
+.mw-normal-catlinks {
+	border: solid 1px rgba(250, 250, 250, 0.5);
+	padding: 10px 10px;
 }
 
-/* テーブル内のMediaWiki外のリンク */
-table.wikitable td a {
-	font-weight: bold;
-}
-
-.mw-parser-output a.new:visited {
-	font-weight: bold;
-}
-
-/* ===================================
-   カテゴリのスタイル（ライトモード/デフォルト）
-   =================================== */
-
+/* カテゴリリンク */
 .catlinks a {
-	font-size: 14px;
 	font-weight: bold;
 }
 
 .catlinks ul {
-	font-size: 14px;
-	font-weight: bold;
-}
-
-/* カテゴリの変更 */
-.mw-normal-catlinks {
-	border: solid 1px rgba(250, 250, 250, 0.5);
-	border-radius: 5px;
-	padding: 10px 10px;
-}
-
-/* ===================================
-   目次（TOC）のスタイル（ライトモード/デフォルト）
-   =================================== */
-
-#toc,
-.toc {
-	border: none;
-	background: linear-gradient(135deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-	padding: 1.5rem;
-	margin: 1.5rem 0;
-	border-radius: 16px;
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-/* 目次のタイトル全体 */
-#toc #mw-toc-heading,
-.toc .toctitle h2 {
-	color: #ffffff !important;
-	font-weight: 700;
-	font-size: 1.4rem;
-	margin-bottom: 1.2rem;
-	text-shadow: 2px 2px 4px rgb(0, 0, 0);
-}
-
-/* 非表示リンクのスタイル */
-.toctoggle,
-.toctoggle a {
-	color: #ffffff !important;
-	font-weight: bold;
-	background-color: transparent;
-	padding: 0.1rem 0.1rem 0.0rem 0.1rem;
-	border-radius: 2px;
-	font-size: 0.9rem;
-	transition: all 0.3s ease;
-	text-decoration: underline;
-}
-
-.toctoggle:hover,
-.toctoggle a:hover {
-	color: #ff7e00 !important;
-	background-color: #ffffff;
-}
-
-/* 目次の「非表示」リンク */
-.toc .toctogglelabel {
-	color: #ffffff;
-	background-color: transparent;
-	background-blend-mode: lighten;
-	padding: 0.1rem 0.1rem 0.0rem 0.1rem;
-	border-radius: 2px;
-	font-size: 0.9rem;
-	transition: all 0.3s ease;
-	text-decoration: underline;
-}
-
-.toc .toctogglelabel:hover {
-	color: #ff7e00;
-	background-color: #ffffff;
-	background-blend-mode: lighten;
-}
-
-/* 目次のリストスタイル */
-.toc ul {
-	background-color: rgba(255, 255, 255, 0.95);
-	border-radius: 12px;
-	padding: 1rem 0.5rem;
-	margin: 0.5rem 0 0 0;
-	list-style: none;
-	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.toc li {
-	padding: 0.4rem 0.8rem;
-	margin: 0.2rem 0;
-	border-radius: 8px;
-	transition: all 0.2s ease;
-}
-
-.toc li:hover {
-	background-color: rgba(255, 255, 255, 0.4);
-}
-
-/* 目次番号のスタイル */
-.toc li > a > span.tocnumber,
-.toc-number {
-	color: #805080;
-	font-weight: 700;
-	margin-right: 0.8rem;
-	min-width: 2.5rem;
-	display: inline-block;
-	text-align: right;
-}
-
-.toc li > a:hover > span.tocnumber,
-.toc a:hover .toc-number {
-	color: #ffffff !important;
-}
-
-/* 目次テキストのスタイル */
-.toc a {
-	color: #2a2a2a;
-	text-decoration: none;
-	font-weight: 500;
 	display: flex;
-	align-items: center;
-	padding: 0.2rem 0.5rem;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+
+.catlinks ul li {
+	display: inline-block;
+}
+
+.catlinks ul li a {
+	display: inline-block;
+	padding: 0.4em 0.9em;
+	background-color: rgba(240, 240, 240, 0.8);
+	border: 1px solid rgba(200, 200, 200, 0.6);
 	border-radius: 6px;
+	font-weight: 500;
+	font-size: 1.2em;
+	color: #444;
+	text-decoration: none;
 	transition: all 0.2s ease;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.toc a:hover {
-	color: #ffffff !important;
-	background: linear-gradient(45deg, #4158D0, #C850C0);
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-	transform: translateX(4px);
+.catlinks ul li a:hover {
+	background-color: rgba(230, 230, 230, 1);
+	border-color: rgba(180, 180, 180, 0.8);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transform: translateY(-1px);
 }
 
-.toc a:active {
-	color: #ffffff;
-	background: linear-gradient(45deg, #C850C0, #FFCC70);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-	transition: all 0.1s ease;
-}
 
-/* ===================================
-   数式のスタイル（ライトモード/デフォルト）
-   =================================== */
-
-.mwe-math-fallback-image-inline,
-.mwe-math-fallback-image-display {
-	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
-}
-
-pre .mwe-math-fallback-image-inline,
-pre .mwe-math-fallback-image-display {
-	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
-}
-
-th .mwe-math-element {
+/* 数式要素 */
+.mwe-math-element {
 	background-color: inherit;
 	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
 }
@@ -450,20 +452,7 @@ td .mwe-math-element {
 	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
 }
 
-/* 数式画像（PNG形式）のスタイル */
-.mwe-math-fallback-image-inline,
-.mwe-math-fallback-image-display,
-img.mwe-math-fallback-image-inline,
-img.mwe-math-fallback-image-display {
-	/* ライトモードでは通常表示（黒文字） */
-	filter: none;
-	background-color: transparent;
-}
-
-/* ===================================
-   Extension:AmazonSearch
-   =================================== */
-
+/* Extension:AmazonSearch */
 DIV.amazonsearch {
 	clear: both;
 	width: 100%;
@@ -526,309 +515,511 @@ DIV.amazonsearch UL LI.shoplinkamazon {
 }
 
 /* ===================================
-   ダークモード用のスタイル（システム設定に従う場合）
+   ライトモード専用スタイル
    =================================== */
 
-@media (prefers-color-scheme: dark) {
-	html:not(.theme-light):not(.theme-dark),
-	body:not(.theme-light):not(.theme-dark) {
-		/* SyntaxHighlight - キーワードの色を明るく */
-		.mw-highlight .k,     /* Keyword */
-		.mw-highlight .kd,    /* Keyword.Declaration */
-		.mw-highlight .kt,    /* Keyword.Type */
-		.mw-highlight .kn,    /* Keyword.Namespace */
-		.mw-highlight .kp,    /* Keyword.Pseudo */
-		.mw-highlight .kr,    /* Keyword.Reserved */
-		.mw-highlight .nc,    /* Name.Class */
-		.mw-highlight .bp {   /* Name.Builtin.Pseudo */
-			color: #6ea8fe !important;
-		}
+body.theme-light,
+html.theme-light {
+	/* ボディ背景 */
+	.mw-body {
+		background-color: #ffffff !important;
+	}
 
-		.mw-highlight .kt {
-			color: #8bb9fe !important;
-		}
+	/* タイトル見出し (.firstHeading) */
+	.firstHeading {
+		font-family: "Segoe UI", -apple-system, system-ui, sans-serif !important;
+		text-align: center;
+		position: relative;
+		overflow: visible;
 
-		.mw-highlight .nc {
-			color: #66d9ef !important;
-		}
+		border: 1px solid rgba(255, 200, 150, 0.5);
+		border-left: 4px solid #ffb875;
+		border-right: 4px solid #ffb875;
+		border-radius: 12px;
+		padding: 16px 24px;
+		margin: 16px auto;
+		width: fit-content;
+		min-width: 75%;
+		max-width: 90%;
 
-		.mw-highlight .nb,    /* Name.Builtin */
-		.mw-highlight .ni {   /* Name.Entity */
-			color: #8bb9ae !important;
-		}
+		/* 明るいオレンジのグラデーション背景 */
+		background: linear-gradient(135deg, #ffb875 0%, #ffc689 25%, #ffd49d 75%, #ffe2b1 100%);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+		color: #5a3a1a;
+		transition: all 0.3s ease;
+		z-index: 1;
 
-		.mw-highlight .c,     /* Comment */
-		.mw-highlight .cm,    /* Comment.Multiline */
-		.mw-highlight .c1,    /* Comment.Single */
-		.mw-highlight .cs {   /* Comment.Special */
-			color: #9ca3af !important;
-			font-style: italic;
-		}
+		animation: backgroundGlowLight 90s ease-in-out infinite;
+	}
 
-		.mw-highlight .cp {   /* Comment.Preproc */
-			color: #ff79c6 !important;
-			font-weight: 600 !important;
-			font-style: normal !important;
+	@keyframes backgroundGlowLight {
+		0%, 45%, 55%, 100% {
+			background: linear-gradient(135deg, #ffb875 0%, #ffc689 25%, #ffd49d 75%, #ffe2b1 100%);
 		}
+		50% {
+			background: linear-gradient(135deg, #ffc48a 0%, #ffd29e 25%, #ffe0b2 75%, #ffeec6 100%);
+		}
+	}
 
-		.mw-highlight .s,     /* String */
-		.mw-highlight .s1,    /* String.Single */
-		.mw-highlight .s2,    /* String.Double */
-		.mw-highlight .sb,    /* String.Backtick */
-		.mw-highlight .sc,    /* String.Char */
-		.mw-highlight .sd {   /* String.Doc */
-			color: #9cdc9c !important;
-			font-weight: 500 !important;
-		}
+	.firstHeading::before {
+		content: '';
+		position: absolute;
+		width: 0;
+		height: 0;
+		border-left: 40px solid transparent;
+		border-right: 40px solid transparent;
+		border-bottom: 70px solid rgba(230, 120, 50, 0.7);  /* 濃いオレンジに変更 */
+		left: -50px;
+		top: 10%;
+		z-index: 0;
+		filter: drop-shadow(0 0 8px rgba(230, 120, 50, 0.8));  /* 濃いオレンジに変更 */
+		animation: triangleMoveLight 3s ease-in-out 1 forwards;
+	}
 
-		.mw-highlight .m,     /* Number */
-		.mw-highlight .mf,    /* Number.Float */
-		.mw-highlight .mh,    /* Number.Hex */
-		.mw-highlight .mi,    /* Number.Integer */
-		.mw-highlight .mo {   /* Number.Oct */
-			color: #ff9e64 !important;
+	@keyframes triangleMoveLight {
+		0% {
+			left: -50px;
+			top: 10%;
+			opacity: 0;
+			transform: rotate(0deg);
 		}
+		20%, 80% {
+			opacity: 1;
+		}
+		100% {
+			left: 100%;
+			top: 40%;
+			opacity: 0;
+			transform: rotate(180deg);
+		}
+	}
 
-		.mw-highlight .nf,    /* Name.Function */
-		.mw-highlight .fm {   /* Name.Function.Magic */
-			color: #7dd3fc !important;
-		}
+	.firstHeading::after {
+		content: '';
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		background: rgba(180, 100, 180, 0.6);
+		border-radius: 8px;
+		right: -60px;
+		bottom: 15%;
+		z-index: 0;
+		filter: drop-shadow(0 0 10px rgba(180, 100, 180, 0.7));
+		animation: squareMoveLight 3.5s ease-in-out 0.3s 1 forwards;
+	}
 
-		.mw-highlight .nv,    /* Name.Variable */
-		.mw-highlight .vi,    /* Name.Variable.Instance */
-		.mw-highlight .vg {   /* Name.Variable.Global */
-			color: #e0e0e0 !important;
+	@keyframes squareMoveLight {
+		0% {
+			right: -60px;
+			bottom: 15%;
+			opacity: 0;
+			transform: rotate(0deg) scale(1);
 		}
+		20%, 80% {
+			opacity: 1;
+		}
+		100% {
+			right: 100%;
+			bottom: 50%;
+			opacity: 0;
+			transform: rotate(-120deg) scale(0.5);
+		}
+	}
 
-		.mw-highlight .o,     /* Operator */
-		.mw-highlight .ow {   /* Operator.Word */
-			color: #ff79c6 !important;
-		}
+	.firstHeading:hover {
+		border-left-color: #ffc689;
+		border-right-color: #ffc689;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
 
-		.firstHeading {
-			border-left-color: #4a7ac0;
-			border-right-color: #4a7ac0;
-			background: linear-gradient(135deg, #1a2a4a 0%, #203050 25%, #253555 75%, #2a3a5a 100%);
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-			color: #b8d4f1;
-		}
+	/* h2 - TOCスタイルの青系グラデーション適用 */
+	/* 目次のh2を除外 */
+	.mw-parser-output > h2,
+	.mw-body-content > h2:not(#mw-toc-heading) {
+		background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 50%, #FFDAB9 100%);
+		border: 2px solid #D4A574;
+		box-shadow: 0 6px 20px rgba(212, 165, 116, 0.25),
+		            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		color: #8B4513;
+	}
 
-		.firstHeading:hover {
-			border-left-color: #5a8ad0;
-			border-right-color: #5a8ad0;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-		}
+	.mw-parser-output > h2:hover,
+	.mw-body-content > h2:not(#mw-toc-heading):hover {
+		box-shadow: 0 8px 24px rgba(212, 165, 116, 0.35),
+		            inset 0 1px 0 rgba(255, 255, 255, 0.7);
+		transform: translateY(-2px);
+	}
 
-		h4::after {
-			background-color: rgba(200, 200, 200, 0.5);
-		}
+	h3 {
+		color: #1a365d;
+	}
 
-		h5 .mw-headline {
-			border-color: rgba(200, 200, 200, 0.5);
-		}
+	h3::before {
+		background: linear-gradient(135deg, #4299e1 0%, #8ab4f8 100%);
+	}
 
-		pre {
-			color: #e0e0e0;
-			background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
-			border-color: rgb(100, 100, 200);
-		}
+	/* h4 - TOCスタイルの暖色系グラデーション適用（少し薄めに） */
+	h4 {
+		background: linear-gradient(135deg,
+		            rgba(255, 248, 231, 0.7) 0%,
+		            rgba(255, 228, 181, 0.7) 50%,
+		            rgba(255, 218, 185, 0.7) 100%);
+		border: 2px solid rgba(212, 165, 116, 0.6);
+		box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2),
+		            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+		color: #A0522D;
+	}
 
-		.mw-highlight > pre {
-			color: #e0e0e0;
-			background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
-			border-color: rgb(80, 120, 80);
-		}
+	h4:hover {
+		box-shadow: 0 6px 16px rgba(212, 165, 116, 0.3),
+		            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		transform: translateY(-1px);
+	}
 
-		code {
-			color: #e8f4f8;
-			background-color: rgba(41, 92, 194, 0.8);
-			border-color: rgba(100, 150, 255, 0.4);
-		}
+	/* h5 - パターン2: 枠線で囲む（同じ色） */
+	h5 {
+		border: 2px solid #D4A574;
+		color: #654321;
+		background-color: rgba(255, 248, 231, 0.15);
+	}
 
-		code a.external {
-			color: #ffb84d !important;
-		}
+	h5:hover {
+		border-color: #B8860B;
+		background-color: rgba(255, 248, 231, 0.25);
+		box-shadow: 0 2px 8px rgba(212, 165, 116, 0.2);
+	}
 
-		.wikitable > caption {
-			background: linear-gradient(180deg, #1B4779 0%, #1B4779 20%, #2555A2 60%, #2555A2 100%);
-			color: #f0f0f0;
-			border-color: #1B4779;
-		}
+	h5 .mw-headline {
+		border: none;
+		margin: 0;
+	}
 
-		table {
-			border-color: #505050;
-			background-color: #2a2a2a !important;
-		}
+	/* h6 - 下線のみでシンプルに（h5より控えめ） */
+	h6 {
+		border-bottom-color: #D4A574;
+		color: #7a5a3a;
+	}
 
-		.wikitable th {
-			color: #f0f0f0 !important;
-			border-color: #606060;
-			background: linear-gradient(to bottom, #3a5080 0%, #2a4070 100%);
-		}
+	h6:hover {
+		border-bottom-color: #B8860B;
+		color: #654321;
+	}
 
-		.wikitable th:hover {
-			color: #f0f0f0 !important;
-			background: linear-gradient(to bottom, #4a6090 0%, #3a5080 100%);
-		}
+	h6 .mw-headline {
+		border: none;
+		margin: 0;
+	}
 
-		td {
-			border-color: #606060;
-			color: #e0e0e0;
-		}
+	ul li::marker {
+		color: #4a5568 !important;
+	}
 
-		tr > td:first-child {
-			border-left-color: #505050;
-		}
+	/* pre */
+	pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
+		color: #101010;
+		background: linear-gradient(to bottom right, #fdfdfd, #ffffff);
+		border: solid 3px rgb(100, 100, 200);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
+	}
 
-		tr > td:last-child {
-			border-right-color: #505050;
-		}
+	/* シンタックスハイライト */
+	.mw-highlight > pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
+		color: #101010;
+		background: linear-gradient(to bottom right, #fdfdfd, #ffffff);
+		border-color: rgb(80, 120, 80);
+		border: solid 3px rgb(100, 150, 100);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
+	}
 
-		tr:first-child > td {
-			border-top-color: #505050;
-		}
+	/* シンタックスハイライト - テキスト */
+	.mw-highlight-lang-text > pre {
+		font-family: "DejaVu Sans Mono" !important;
+		color: #101010;
+		background: linear-gradient(to bottom right, #fdfdfd, #ffffff);
+		border: solid 3px rgb(100, 100, 200);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
+	}
 
-		tr:last-child > td {
-			border-bottom-color: #505050;
-		}
+	code {
+		color: #e8f4f8 !important;
+		font-weight: bold !important;
+		font-family: "DejaVu Sans Mono" !important;
+		background-color: rgba(0, 36, 247, 0.9) !important;
+		border-color: rgba(100, 150, 255, 0.4) !important;
+		border-radius: 5px;
+		padding: 1px 5px;
+	}
 
-		.wikitable td[rowspan] {
-			border-color: #606060;
-		}
+	code a.external {
+		color: #ffb84d !important;
+	}
 
-		.mw-normal-catlinks {
-			border-color: rgba(100, 100, 100, 0.5);
-		}
+	.wikitable > caption {
+		background: linear-gradient(180deg, #4a90e2 0%, #4a90e2 20%, #5ba3f5 60%, #5ba3f5 100%);
+		color: #ffffff;
+		border-color: #4a90e2;
+		padding: 8px;
+		font-weight: bold;
+		text-align: center;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+		border: 1px solid #5ba3f5;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
 
-		#toc,
-		.toc {
-			background: linear-gradient(135deg, #2a3a80 0%, #7a3080 46%, #c08850 100%);
-			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-		}
+	table {
+		border: solid 2px #cbd5e0;
+		background-color: #ffffff !important;
+	}
 
-		#toc #mw-toc-heading,
-		.toc .toctitle h2 {
-			color: #f0f0f0 !important;
-		}
+	.wikitable th {
+		color: #1a365d !important;
+		border-color: #98a2b0 !important;
+		background: linear-gradient(to bottom, #e0ebff 0%, #d0e0ff 100%);
+	}
 
-		.toctoggle,
-		.toctoggle a {
-			color: #f0f0f0 !important;
-		}
+	.wikitable th:hover {
+		color: #1a365d !important;
+		background: linear-gradient(to bottom, #d0e0ff 0%, #c0d5ff 100%);
+	}
 
-		.toctoggle:hover,
-		.toctoggle a:hover {
-			color: #ffb84d !important;
-			background-color: #3a3a3a;
-		}
+	td {
+		border: solid 1px #a0a0a0 !important;
+		border-color: #cbd5e0;
+	}
 
-		.toc .toctogglelabel {
-			color: #f0f0f0;
-		}
+	tr > td:first-child {
+		border-left-color: #cbd5e0;
+	}
 
-		.toc .toctogglelabel:hover {
-			color: #ffb84d;
-			background-color: #3a3a3a;
-		}
+	tr > td:last-child {
+		border-right-color: #cbd5e0;
+	}
 
-		.toc ul {
-			background-color: #2a2a2a;
-		}
+	tr:first-child > td {
+		border-top-color: #cbd5e0;
+	}
 
-		.toc li > a > span.tocnumber,
-		.toc-number {
-			color: #b080b0;
-		}
+	tr:last-child > td {
+		border-bottom-color: #cbd5e0;
+	}
 
-		.toc li > a:hover > span.tocnumber,
-		.toc a:hover .toc-number {
-			color: #f0f0f0 !important;
-		}
+	/* 表の行：カスタム背景色（ライトモード） */
+	/* 強調表示用の行 */
+	tr.row-highlight > td {
+		background-color: #fff9e6 !important; /* 淡い黄色 */
+	}
 
-		.toc a {
-			color: #d0d0d0;
-		}
+	/* 重要情報用の行 */
+	tr.row-important > td {
+		background-color: #ffe6e6 !important; /* 淡い赤 */
+	}
 
-		.toc a:hover {
-			color: #f0f0f0 !important;
-			background: linear-gradient(45deg, #2a3a80, #7a3080);
-		}
+	/* 成功・完了を示す行 */
+	tr.row-success > td {
+		background-color: #e6f7e6 !important; /* 淡い緑 */
+	}
 
-		.toc a:active {
-			color: #f0f0f0;
-			background: linear-gradient(45deg, #7a3080, #c08850);
-		}
+	/* 情報・注意を示す行 */
+	tr.row-info > td {
+		background-color: #e6f2ff !important; /* 淡い青 */
+	}
 
-		.mwe-math-fallback-image-inline,
-		.mwe-math-fallback-image-display {
-			background-color: rgba(255, 255, 255, 0.1);
-		}
+	/* 警告を示す行 */
+	tr.row-warning > td {
+		background-color: #fff3e0 !important; /* 淡いオレンジ */
+	}
 
-		.mwe-math-fallback-image-inline,
-		.mwe-math-fallback-image-display,
-		img.mwe-math-fallback-image-inline,
-		img.mwe-math-fallback-image-display {
-			filter: invert(1) hue-rotate(180deg);
-			background-color: transparent;
-		}
+	/* グレーアウト・無効を示す行 */
+	tr.row-disabled > td {
+		background-color: #f5f5f5 !important; /* グレー */
+		color: #999999 !important;
+	}
 
-		table .mwe-math-fallback-image-inline,
-		table .mwe-math-fallback-image-display,
-		table img.mwe-math-fallback-image-inline,
-		table img.mwe-math-fallback-image-display {
-			filter: invert(1) hue-rotate(180deg);
-		}
+	.wikitable td[rowspan] {
+		border: solid 1px rgb(50, 50, 50);
+	}
+
+	.wikitable:not(:has(caption)) > tr:first-child th,
+	.wikitable:not(:has(caption)) > * > tr:first-child th {
+		border-top: none !important;
+	}
+
+	.wikitable:not(:has(caption)) > tr:first-child th:first-child,
+	.wikitable:not(:has(caption)) > * > tr:first-child th:first-child {
+		border-left: none !important;
+		border-top-left-radius: 10px;
+	}
+
+	.wikitable:not(:has(caption)) > tr:first-child th:last-child,
+	.wikitable:not(:has(caption)) > * > tr:first-child th:last-child {
+		border-right: none !important;
+		border-top-right-radius: 10px;
+	}
+
+	.wikitable:has(caption) caption {
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+
+	.mw-normal-catlinks {
+		border-color: rgba(100, 100, 100, 0.3);
+	}
+
+	.catlinks ul li a {
+		background-color: rgba(245, 245, 245, 0.9);
+		border-color: rgba(210, 210, 210, 0.7);
+		color: #555;
+	}
+
+	.catlinks ul li a:hover {
+		background-color: rgba(235, 235, 235, 1);
+		border-color: rgba(190, 190, 190, 0.9);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+	}
+
+	.mwe-math-fallback-image-inline,
+	.mwe-math-fallback-image-display,
+	img.mwe-math-fallback-image-inline,
+	img.mwe-math-fallback-image-display {
+		filter: none;
+		background-color: transparent;
 	}
 }
 
 /* ===================================
-   強制ダークモード用のスタイル（.theme-darkクラス）
+   ダークモード専用スタイル
    =================================== */
 
-html.theme-dark,
-body.theme-dark {
-	.mw-highlight .k, .mw-highlight .kd, .mw-highlight .kt,
-	.mw-highlight .kn, .mw-highlight .kp, .mw-highlight .kr,
-	.mw-highlight .nc, .mw-highlight .bp {
-		color: #6ea8fe !important;
+body.theme-dark,
+html.theme-dark {
+	.mw-body {
+		background-color: #262626 !important;
 	}
-
-	.mw-highlight .kt { color: #8bb9fe !important; }
-	.mw-highlight .nc { color: #66d9ef !important; }
-	.mw-highlight .nb, .mw-highlight .ni { color: #8bb9ae !important; }
-
-	.mw-highlight .c, .mw-highlight .cm, .mw-highlight .c1, .mw-highlight .cs {
-		color: #9ca3af !important;
-		font-style: italic;
-	}
-
-	.mw-highlight .cp {
-		color: #ff79c6 !important;
-		font-weight: 600 !important;
-		font-style: normal !important;
-	}
-
-	.mw-highlight .s, .mw-highlight .s1, .mw-highlight .s2,
-	.mw-highlight .sb, .mw-highlight .sc, .mw-highlight .sd {
-		color: #9cdc9c !important;
-		font-weight: 500 !important;
-	}
-
-	.mw-highlight .m, .mw-highlight .mf, .mw-highlight .mh,
-	.mw-highlight .mi, .mw-highlight .mo {
-		color: #ff9e64 !important;
-	}
-
-	.mw-highlight .nf, .mw-highlight .fm { color: #7dd3fc !important; }
-	.mw-highlight .nv, .mw-highlight .vi, .mw-highlight .vg { color: #e0e0e0 !important; }
-	.mw-highlight .o, .mw-highlight .ow { color: #ff79c6 !important; }
 
 	.firstHeading {
-		border-left-color: #4a7ac0;
-		border-right-color: #4a7ac0;
+		font-family: "Segoe UI", -apple-system, system-ui, sans-serif !important;
+		text-align: center;
+		position: relative;
+		overflow: visible;  /* hidden → visible に変更 */
+
+		border: 1px solid rgba(100, 150, 255, 0.2);
+		border-left: 4px solid #4a7ac0;
+		border-right: 4px solid #4a7ac0;
+		border-radius: 12px;
+		padding: 16px 24px;
+		margin: 16px auto;
+		width: fit-content;
+		min-width: 75%;
+		max-width: 90%;
+
 		background: linear-gradient(135deg, #1a2a4a 0%, #203050 25%, #253555 75%, #2a3a5a 100%);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 		color: #b8d4f1;
+		transition: all 0.3s ease;
+		z-index: 1;
+
+		animation: backgroundGlowDark 90s ease-in-out infinite;
+	}
+
+	@keyframes backgroundGlowDark {
+		0%, 45%, 55%, 100% {
+			background: linear-gradient(135deg, #1a2a4a 0%, #203050 25%, #253555 75%, #2a3a5a 100%);
+		}
+		50% {
+			background: linear-gradient(135deg, #1f3055 0%, #25385b 25%, #2a3d61 75%, #2f4266 100%);
+		}
+	}
+
+	.firstHeading::before {
+		content: '';
+		position: absolute;
+		width: 0;
+		height: 0;
+		border-left: 40px solid transparent;
+		border-right: 40px solid transparent;
+		border-bottom: 70px solid rgba(96, 165, 250, 0.3);
+		left: -50px;
+		top: 10%;
+		z-index: 0;
+		filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.4));
+		animation: triangleMoveDark 3s ease-in-out 1 forwards;
+	}
+
+	@keyframes triangleMoveDark {
+		0% {
+			left: -50px;
+			top: 10%;
+			opacity: 0;
+			transform: rotate(0deg);
+			filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.4));
+		}
+		20%, 80% {
+			opacity: 1;
+		}
+		50% {
+			filter: drop-shadow(0 0 15px rgba(96, 165, 250, 0.6));
+		}
+		100% {
+			left: 100%;
+			top: 40%;
+			opacity: 0;
+			transform: rotate(180deg);
+			filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.4));
+		}
+	}
+
+	.firstHeading::after {
+		content: '';
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		background: rgba(167, 139, 250, 0.25);
+		border-radius: 8px;
+		right: -60px;
+		bottom: 15%;
+		z-index: 0;
+		filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
+		animation: squareMoveDark 3.5s ease-in-out 0.3s 1 forwards;
+	}
+
+	@keyframes squareMoveDark {
+		0% {
+			right: -60px;
+			bottom: 15%;
+			opacity: 0;
+			transform: rotate(0deg) scale(1);
+			filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
+		}
+		20%, 80% {
+			opacity: 1;
+		}
+		50% {
+			filter: drop-shadow(0 0 18px rgba(167, 139, 250, 0.7));
+		}
+		100% {
+			right: 100%;
+			bottom: 50%;
+			opacity: 0;
+			transform: rotate(-120deg) scale(0.5);
+			filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
+		}
 	}
 
 	.firstHeading:hover {
@@ -837,37 +1028,157 @@ body.theme-dark {
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 	}
 
-	h4::after { background-color: rgba(200, 200, 200, 0.5); }
-	h5 .mw-headline { border-color: rgba(200, 200, 200, 0.5); }
-
-	pre {
+	/* h2 - TOCスタイルの青系グラデーション適用 */
+	/* 目次のh2を除外 */
+	.mw-parser-output > h2,
+	.mw-body-content > h2:not(#mw-toc-heading) {
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+		border: 2px solid #5a8fa8;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 		color: #e0e0e0;
-		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
-		border-color: rgb(100, 100, 200);
 	}
 
+	.mw-parser-output > h2:hover,
+	.mw-body-content > h2:not(#mw-toc-heading):hover {
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+		transform: translateY(-2px);
+		border-color: #6ba3c0;
+	}
+
+	h3 {
+		color: #e0e0e0;
+	}
+
+	h3::before {
+		background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+	}
+
+	/* h4 - TOCスタイルの青系グラデーション適用（少し薄めに） */
+	h4 {
+		background: linear-gradient(135deg,
+		            rgba(26, 26, 46, 0.7) 0%,
+		            rgba(22, 33, 62, 0.7) 50%,
+		            rgba(15, 52, 96, 0.7) 100%);
+		border: 2px solid rgba(90, 143, 168, 0.6);
+		box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+		color: #a0aec0;
+	}
+
+	h4:hover {
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+		transform: translateY(-1px);
+		border-color: rgba(107, 163, 192, 0.7);
+	}
+
+	/* h5 - パターン2: 枠線で囲む（同じ色） */
+	h5 {
+		border: 2px solid #5a8fa8;
+		color: #cbd5e0;
+		background-color: rgba(26, 26, 46, 0.3);
+	}
+
+	h5:hover {
+		border-color: #6ba3c0;
+		background-color: rgba(26, 26, 46, 0.5);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	h5 .mw-headline {
+		border: none;
+		margin: 0;
+	}
+
+	/* h6 - 下線のみでシンプルに（h5より控えめ） */
+	h6 {
+		border-bottom-color: #5a8fa8;
+		color: #a0b5c5;
+	}
+
+	h6:hover {
+		border-bottom-color: #6ba3c0;
+		color: #cbd5e0;
+	}
+
+	h6 .mw-headline {
+		border: none;
+		margin: 0;
+	}
+
+	ul li::marker {
+		color: #b0b0b0 !important;
+	}
+
+	/* pre */
+	pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
+		color: #e0e0e0;
+		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
+		border: solid 3px rgb(100, 100, 200);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
+	}
+
+	/* シンタックスハイライト */
 	.mw-highlight > pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
 		color: #e0e0e0;
 		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
 		border-color: rgb(80, 120, 80);
+		border: solid 3px rgb(100, 150, 100);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
+	}
+
+	/* シンタックスハイライト - テキスト */
+	.mw-highlight-lang-text > pre {
+		font-family: "DejaVu Sans Mono" !important;
+		color: #e0e0e0;
+		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
+		border: solid 3px rgb(100, 100, 200);
+		border-radius: 5px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		display: block;
 	}
 
 	code {
-		color: #e8f4f8;
-		background-color: rgba(41, 92, 194, 0.8);
-		border-color: rgba(100, 150, 255, 0.4);
+		color: #e8f4f8 !important;
+		font-weight: bold !important;
+		font-family: "DejaVu Sans Mono" !important;
+		background-color: rgba(41, 92, 194, 0.8) !important;
+		border-color: rgba(100, 150, 255, 0.4) !important;
+		border-radius: 5px;
+		padding: 1px 5px;
 	}
 
-	code a.external { color: #ffb84d !important; }
+	code a.external {
+		color: #ffb84d !important;
+	}
 
 	.wikitable > caption {
 		background: linear-gradient(180deg, #1B4779 0%, #1B4779 20%, #2555A2 60%, #2555A2 100%);
 		color: #f0f0f0;
 		border-color: #1B4779;
+		padding: 8px;
+		font-weight: bold;
+		text-align: center;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+		border: 1px solid #2B579A;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	}
 
 	table {
-		border-color: #505050;
+		border: solid 2px #505050;
 		background-color: #2a2a2a !important;
 	}
 
@@ -882,46 +1193,74 @@ body.theme-dark {
 		background: linear-gradient(to bottom, #4a6090 0%, #3a5080 100%);
 	}
 
-	td { border-color: #606060; color: #e0e0e0; }
-	tr > td:first-child { border-left-color: #505050; }
-	tr > td:last-child { border-right-color: #505050; }
-	tr:first-child > td { border-top-color: #505050; }
-	tr:last-child > td { border-bottom-color: #505050; }
-	.wikitable td[rowspan] { border-color: #606060; }
-
-	.mw-normal-catlinks { border-color: rgba(100, 100, 100, 0.5); }
-
-	#toc, .toc {
-		background: linear-gradient(135deg, #2a3a80 0%, #7a3080 46%, #c08850 100%);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	td {
+		border: solid 1px #e0e0e0 !important;
+		border-color: #606060;
 	}
 
-	#toc #mw-toc-heading, .toc .toctitle h2 { color: #f0f0f0 !important; }
-	.toctoggle, .toctoggle a { color: #f0f0f0 !important; }
-
-	.toctoggle:hover, .toctoggle a:hover {
-		color: #ffb84d !important;
-		background-color: #3a3a3a;
+	tr > td:first-child {
+		border-left-color: #505050;
 	}
 
-	.toc .toctogglelabel { color: #f0f0f0; }
-
-	.toc .toctogglelabel:hover {
-		color: #ffb84d;
-		background-color: #3a3a3a;
+	tr > td:last-child {
+		border-right-color: #505050;
 	}
 
-	.toc ul { background-color: #2a2a2a; }
-	.toc li > a > span.tocnumber, .toc-number { color: #b080b0; }
-	.toc li > a:hover > span.tocnumber, .toc a:hover .toc-number { color: #f0f0f0 !important; }
-	.toc a { color: #d0d0d0; }
-	.toc a:hover {
-		color: #f0f0f0 !important;
-		background: linear-gradient(45deg, #2a3a80, #7a3080);
+	tr:first-child > td {
+		border-top-color: #505050;
 	}
-	.toc a:active {
-		color: #f0f0f0;
-		background: linear-gradient(45deg, #7a3080, #c08850);
+
+	tr:last-child > td {
+		border-bottom-color: #505050;
+	}
+
+	/* 表の行：カスタム背景色（ダークモード） */
+	/* 強調表示用の行 */
+	tr.row-highlight > td {
+		background-color: #3d3520 !important; /* 暗めの黄色系 */
+	}
+
+	/* 重要情報用の行 */
+	tr.row-important > td {
+		background-color: #4a2525 !important; /* 暗めの赤系 */
+	}
+
+	/* 成功・完了を示す行 */
+	tr.row-success > td {
+		background-color: #253525 !important; /* 暗めの緑系 */
+	}
+
+	/* 情報・注意を示す行 */
+	tr.row-info > td {
+		background-color: #1a2d3d !important; /* 暗めの青系 */
+	}
+
+	/* 警告を示す行 */
+	tr.row-warning > td {
+		background-color: #3d2f1a !important; /* 暗めのオレンジ系 */
+	}
+
+	/* グレーアウト・無効を示す行 */
+	tr.row-disabled > td {
+		background-color: #7a7a7a !important; /* より明るいグレー */
+		color: #cccccc !important;
+	}
+
+	.mw-normal-catlinks {
+		border-color: rgba(100, 100, 100, 0.5);
+	}
+
+	.catlinks ul li a {
+		background-color: rgba(60, 60, 60, 0.7);
+		border-color: rgba(100, 100, 100, 0.6);
+		color: #d0d0d0;
+	}
+
+	.catlinks ul li a:hover {
+		background-color: rgba(75, 75, 75, 0.9);
+		border-color: rgba(120, 120, 120, 0.8);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+		color: #e5e5e5;
 	}
 
 	.mwe-math-fallback-image-inline,
@@ -939,46 +1278,5 @@ body.theme-dark {
 	table img.mwe-math-fallback-image-display {
 		filter: invert(1) hue-rotate(180deg);
 		background-color: transparent;
-	}
-}
-
-/* ===================================
-   強制ライトモード用のスタイル（.theme-lightクラス）
-   =================================== */
-
-html.theme-light,
-body.theme-light {
-	/* 表のセルの文字色を黒に */
-	td {
-		color: #202020 !important;
-	}
-
-	/* その他のライトモード用スタイルは既存のデフォルトスタイルを使用 */
-}
-
-/* ===================================
-   強制ダークモード用の追加スタイル（.theme-darkクラス）
-   =================================== */
-
-html.theme-dark td,
-body.theme-dark td {
-	color: #e0e0e0 !important;
-}
-
-/* ===================================
-   自動モード用のスタイル（.theme-autoクラス）
-   =================================== */
-
-/* 自動モード + ライトモード（デフォルト） */
-html.theme-auto td,
-body.theme-auto td {
-	color: #202020;
-}
-
-/* 自動モード + OSがダークモードの場合 */
-@media (prefers-color-scheme: dark) {
-	html.theme-auto td,
-	body.theme-auto td {
-		color: #e0e0e0;
 	}
 }

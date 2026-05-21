@@ -1,0 +1,158 @@
+/* ===================================
+   SyntaxHighlight 色設定ファイル
+   ライトモード、ダークモードに対応
+   =================================== */
+
+/* ===================================	*/
+/*   強制ライトモード						*/
+/*   デフォルトのライトモードスタイルを継承	*/
+/* =================================== 	*/
+html.theme-light,
+body.theme-light {
+	/* プリプロセッサディレクティブ (#include, #define等) */
+	.mw-highlight .cp {   /* Comment.Preproc */
+		color: #d63384 !important;
+		font-weight: 600 !important;
+		font-style: normal !important;
+	}
+
+	/* QML言語固有のスタイル */
+	.mw-highlight-lang-qml .nx {
+		color: #0066cc; /* 識別子 - 青 */
+	}
+
+	.mw-highlight-lang-qml .p {
+		color: #666666; /* 句読点 - グレー */
+	}
+
+	.mw-highlight-lang-qml .mi {
+		color: #ac4fc6; /* 数値 - 紫 */
+	}
+
+	.mw-highlight-lang-qml .kc {
+		color: #cc0000; /* キーワード定数 - 赤 */
+	}
+}
+
+/* ===================================	*/
+/*   強制ダークモード						*/
+/* =================================== 	*/
+html.theme-dark,
+body.theme-dark {
+	/* SyntaxHighlight - キーワードの色を明るく */
+	.mw-highlight .k,     /* Keyword */
+	.mw-highlight .kd,    /* Keyword.Declaration */
+	.mw-highlight .kt,    /* Keyword.Type */
+	.mw-highlight .kn,    /* Keyword.Namespace */
+	.mw-highlight .kp,    /* Keyword.Pseudo */
+	.mw-highlight .kr,    /* Keyword.Reserved */
+	.mw-highlight .nc,    /* Name.Class */
+	.mw-highlight .bp {   /* Name.Builtin.Pseudo */
+		color: #6ea8fe !important;
+	}
+
+	.mw-highlight .kt {
+		color: #8bb9fe !important;
+	}
+
+	.mw-highlight .nc {
+		color: #66d9ef !important;
+	}
+
+	.mw-highlight .nb,    /* Name.Builtin */
+	.mw-highlight .ni {   /* Name.Entity */
+		color: #8bb9ae !important;
+	}
+
+	.mw-highlight .c,     /* Comment */
+	.mw-highlight .cm,    /* Comment.Multiline */
+	.mw-highlight .c1,    /* Comment.Single */
+	.mw-highlight .cs {   /* Comment.Special */
+		color: #9ca3af !important;
+		font-style: italic;
+	}
+
+	.mw-highlight .cp {   /* Comment.Preproc */
+		color: #ff79c6 !important;
+		font-weight: 600 !important;
+		font-style: normal !important;
+	}
+
+	.mw-highlight .s,     /* String */
+	.mw-highlight .s1,    /* String.Single */
+	.mw-highlight .s2,    /* String.Double */
+	.mw-highlight .sb,    /* String.Backtick */
+	.mw-highlight .sc,    /* String.Char */
+	.mw-highlight .sd {   /* String.Doc */
+		color: #9cdc9c !important;
+		font-weight: 500 !important;
+	}
+
+	.mw-highlight .m,     /* Number */
+	.mw-highlight .mf,    /* Number.Float */
+	.mw-highlight .mh,    /* Number.Hex */
+	.mw-highlight .mi,    /* Number.Integer */
+	.mw-highlight .mo {   /* Number.Oct */
+		color: #ff9e64 !important;
+	}
+
+	.mw-highlight .nf,    /* Name.Function */
+	.mw-highlight .fm {   /* Name.Function.Magic */
+		color: #7dd3fc !important;
+	}
+
+	.mw-highlight .nv,    /* Name.Variable */
+	.mw-highlight .vi,    /* Name.Variable.Instance */
+	.mw-highlight .vg {   /* Name.Variable.Global */
+		color: #e0e0e0 !important;
+	}
+
+	.mw-highlight .o,     /* Operator */
+	.mw-highlight .ow {   /* Operator.Word */
+		color: #ff79c6 !important;
+	}
+
+	/* テキストファイル固有のスタイル */
+	// .mw-highlight-lang-text {
+	// 	font-family: "DejaVu Sans Mono" !important;
+	// 	color: #e0e0e0;
+	// 	background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
+	// 	border: solid 3px rgb(100, 100, 200);
+	// 	border-radius: 5px;
+	// }
+
+	/* INIファイル固有のスタイル */
+	.mw-highlight-lang-ini .na {
+		color: #ba55d3;
+	}
+
+	.mw-highlight-lang-ini .s {
+		color: #aaaa00 !important;
+	}
+
+	/* QML言語固有のスタイル */
+	.mw-highlight-lang-qml .nx {
+		color: #0066cc; /* 識別子 - 青 */
+	}
+
+	.mw-highlight-lang-qml .p {
+		color: #666666; /* 句読点 - グレー */
+	}
+
+	.mw-highlight-lang-qml .mi {
+		color: #ac4fc6; /* 数値 - 紫 */
+	}
+
+	.mw-highlight-lang-qml .kc {
+		color: #cc0000; /* キーワード定数 - 赤 */
+	}
+
+	/* Python言語固有のスタイル */
+	.mw-highlight-lang-python .nn {
+		color: #dd0099 !important;
+	}
+
+	.mw-highlight-lang-python .nb {
+		color: #00ff5f !important;
+	}
+}

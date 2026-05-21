@@ -55,11 +55,6 @@
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>');
 }
 
-/* 自動モード時のアイコン（モニター） */
-.theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23323130" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
-}
-
 /* モバイルでの調整 */
 @media (max-width: 1000px) {
   .theme-toggle-button {
@@ -72,24 +67,6 @@
 body.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
 html.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
-}
-
-body.theme-dark .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before,
-html.theme-dark .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
-}
-
-/* 自動モード + OSダークモード時のアイコン色調整 */
-@media (prefers-color-scheme: dark) {
-  body.theme-auto .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
-  html.theme-auto .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
-  }
-
-  body.theme-auto .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before,
-  html.theme-auto .theme-toggle-button[data-theme="auto"] .theme-toggle-icon::before {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>');
-  }
 }
 
 /* ============================================
@@ -222,115 +199,6 @@ html.theme-dark {
 }
 
 /* ============================================
-   自動モード専用のWikiEditorスタイル
-   システムのカラースキームに基づいて完全に分離
-   ============================================ */
-
-/* 自動モード + システムがライトテーマの場合 */
-@media (prefers-color-scheme: light) {
-  body.theme-auto,
-  html.theme-auto {
-    .wikiEditor-ui-toolbar,
-    .wikiEditor-ui .wikiEditor-ui-top,
-    .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
-      background: #f5f5f5 !important;
-      background-color: #f5f5f5 !important;
-      background-image: none !important;
-    }
-
-    .wikiEditor-ui-toolbar .sections,
-    .wikiEditor-ui-toolbar .group,
-    .wikiEditor-ui-toolbar .group-insert,
-    .wikiEditor-ui-toolbar .group-format {
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
-    }
-
-    /* アイコンを黒に */
-    .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .oo-ui-icon-bold,
-    .wikiEditor-ui-toolbar .oo-ui-icon-italic,
-    .wikiEditor-ui-toolbar .oo-ui-icon-link,
-    .wikiEditor-ui-toolbar .oo-ui-icon-reference,
-    .wikiEditor-ui-toolbar .oo-ui-icon-image,
-    .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
-      filter: brightness(0) saturate(100%) !important;
-      opacity: 0.87 !important;
-    }
-
-    /* テキストを黒に */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
-      color: #202124 !important;
-    }
-
-    /* ホバー時 */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
-      opacity: 1 !important;
-    }
-
-    /* アクティブ状態のボタン */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
-      background-color: rgba(0, 0, 0, 0.05) !important;
-    }
-  }
-}
-
-/* 自動モード + システムがダークテーマの場合 */
-@media (prefers-color-scheme: dark) {
-  body.theme-auto,
-  html.theme-auto {
-    .wikiEditor-ui-toolbar,
-    .wikiEditor-ui .wikiEditor-ui-top,
-    .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
-      background: #2d2d2d !important;
-      background-color: #2d2d2d !important;
-      background-image: none !important;
-    }
-
-    .wikiEditor-ui-toolbar .sections,
-    .wikiEditor-ui-toolbar .group,
-    .wikiEditor-ui-toolbar .group-insert,
-    .wikiEditor-ui-toolbar .group-format {
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
-    }
-
-    /* アイコンを白に */
-    .wikiEditor-ui-toolbar .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .oo-ui-icon-bold,
-    .wikiEditor-ui-toolbar .oo-ui-icon-italic,
-    .wikiEditor-ui-toolbar .oo-ui-icon-link,
-    .wikiEditor-ui-toolbar .oo-ui-icon-reference,
-    .wikiEditor-ui-toolbar .oo-ui-icon-image,
-    .wikiEditor-ui-toolbar .group .tool .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .group-insert .tool .oo-ui-iconElement-icon,
-    .wikiEditor-ui-toolbar .group-format .tool .oo-ui-iconElement-icon {
-      filter: brightness(0) saturate(100%) invert(1) !important;
-      opacity: 0.87 !important;
-    }
-
-    /* テキストを白に */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement-button {
-      color: #e0e0e0 !important;
-    }
-
-    /* ホバー時 */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement:hover .oo-ui-iconElement-icon {
-      opacity: 1 !important;
-    }
-
-    /* アクティブ状態のボタン */
-    .wikiEditor-ui-toolbar .oo-ui-buttonElement-active .oo-ui-buttonElement-button {
-      background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-  }
-}
-
-/* ============================================
    WikiEditor共通スタイル（すべてのモードで適用）
    ============================================ */
 
@@ -363,24 +231,164 @@ html.theme-dark .index div[role="option"]:focus {
   color: #000000 !important;
 }
 
-/* 自動モード + システムがダークテーマの場合 */
-@media (prefers-color-scheme: dark) {
-  body.theme-auto .pages span,
-  html.theme-auto .pages span {
-    color: #ffffff !important;
+/* ============================================
+   ダークモード専用のjQuery UIダイアログスタイル
+   ============================================ */
+
+body.theme-dark,
+html.theme-dark {
+  /* ダイアログ本体 */
+  .ui-dialog {
+    background-color: #2d2d2d !important;
+    border: 1px solid #505050 !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
   }
 
-  /* カテゴリーインデックスのホバー効果 */
-  body.theme-auto .index div[role="option"]:hover,
-  html.theme-auto .index div[role="option"]:hover {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+  /* タイトルバー */
+  .ui-dialog-titlebar {
+    background: linear-gradient(to bottom, #3a3a3a 0%, #2d2d2d 100%) !important;
+    border-bottom: 1px solid #505050 !important;
+    color: #e0e0e0 !important;
   }
 
-  /* フォーカス時も同様のスタイルを適用 */
-  body.theme-auto .index div[role="option"]:focus,
-  html.theme-auto .index div[role="option"]:focus {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+  .ui-dialog-title {
+    color: #e0e0e0 !important;
+    font-weight: 600 !important;
+  }
+
+  /* 閉じるボタン */
+  .ui-dialog-titlebar-close {
+    background-color: transparent !important;
+    border: none !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .ui-icon {
+      background-image: none !important;
+      filter: brightness(0) saturate(100%) invert(1) !important;
+    }
+  }
+
+  /* コンテンツエリア */
+  .ui-dialog-content {
+    background-color: #262626 !important;
+    color: #e0e0e0 !important;
+  }
+
+  /* WikiEditorダイアログ内のフィールド */
+  .wikiEditor-toolbar-dialog {
+    fieldset {
+      border: 1px solid #404040 !important;
+      background-color: transparent !important;
+    }
+
+    label {
+      color: #e0e0e0 !important;
+    }
+
+    input[type="text"],
+    select {
+      background-color: #1a1a1a !important;
+      border: 1px solid #505050 !important;
+      color: #e0e0e0 !important;
+
+      &:focus {
+        border-color: #4a9eff !important;
+        outline: none !important;
+        box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2) !important;
+      }
+
+      &::placeholder {
+        color: #808080 !important;
+      }
+    }
+
+    select {
+      background-image: linear-gradient(45deg, transparent 50%, #e0e0e0 50%),
+                        linear-gradient(135deg, #e0e0e0 50%, transparent 50%) !important;
+      background-position: calc(100% - 15px) calc(1em),
+                          calc(100% - 10px) calc(1em) !important;
+      background-size: 5px 5px, 5px 5px !important;
+      background-repeat: no-repeat !important;
+      padding-right: 30px !important;
+
+      /* ブラウザデフォルトの矢印を非表示 */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      option {
+        background-color: #2d2d2d !important;
+        color: #e0e0e0 !important;
+      }
+    }
+
+    /* ヘルプリンク */
+    .wikieditor-toolbar-file-alt-help {
+      color: #6ea8fe !important;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline !important;
+        color: #8bb9fe !important;
+      }
+    }
+
+    /* オプションコンテナ */
+    .wikieditor-toolbar-file-options {
+      background-color: transparent !important;
+    }
+
+    /* フィールドラッパー */
+    .wikieditor-toolbar-field-wrapper {
+      margin-bottom: 12px !important;
+    }
+  }
+
+  /* ボタンパネル */
+  .ui-dialog-buttonpane {
+    background-color: #2d2d2d !important;
+    border-top: 1px solid #505050 !important;
+  }
+
+  /* ボタン */
+  .ui-button {
+    background: linear-gradient(to bottom, #3d3d3d 0%, #323232 100%) !important;
+    border: 1px solid #505050 !important;
+    color: #e0e0e0 !important;
+    font-weight: 500 !important;
+
+    &:hover {
+      background: linear-gradient(to bottom, #454545 0%, #3a3a3a 100%) !important;
+      border-color: #606060 !important;
+    }
+
+    &:active {
+      background: linear-gradient(to bottom, #2a2a2a 0%, #202020 100%) !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* プライマリボタン（最初のボタン）のスタイル */
+    &:first-child {
+      background: linear-gradient(to bottom, #2185d0 0%, #1678c2 100%) !important;
+      border-color: #2185d0 !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background: linear-gradient(to bottom, #2a93db 0%, #1f82cc 100%) !important;
+        border-color: #2a93db !important;
+      }
+
+      &:active {
+        background: linear-gradient(to bottom, #1678c2 0%, #136bb3 100%) !important;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  .ui-button-text {
+    color: inherit !important;
   }
 }

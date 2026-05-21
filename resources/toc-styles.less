@@ -1,0 +1,771 @@
+/* ===================================
+   目次 (Table of Contents) スタイル
+   ライトモード/ダークモード対応
+   右上固定表示(フローティング)版
+   ドラッグ&ドロップ対応
+   最小化対応
+   =================================== */
+
+/* ===================================
+   共通スタイル (モード非依存)
+   =================================== */
+
+/* トグルチェックボックス (非表示) */
+#toctogglecheckbox {
+	display: none;
+}
+
+/* 目次のコンテナ - 基本構造(フローティング + ドラッグ対応 + リサイズ対応 + 最小化対応) */
+#toc,
+.toc {
+	/* フローティング表示の設定 */
+	position: fixed;
+	top: 80px; 			/* ヘッダーの下に配置 */
+	right: 20px; 		/* 右端から20pxの位置 */
+	z-index: 1000; 		/* 他の要素より上に表示 */
+	max-height: 80vh; 	/* 画面の高さの80%まで */
+	overflow-y: hidden; /* コンテナ自体はスクロールしない */
+
+	/* デザイン設定 */
+	border-radius: 10px;
+	padding: 16px;
+	padding-left: 24px;		/* リサイズハンドルのためのスペースを確保 */
+	padding-bottom: 24px; 	/* 下部リサイズハンドルのためのスペースを確保 */
+	margin: 0; 				/* フローティング時はmarginを0に */
+	display: flex; 			/* flexboxレイアウトに変更 */
+	flex-direction: column; /* 縦方向に配置 */
+	width: 20%; 			/* 初期幅を設定 */
+	min-width: 300px; 		/* 最小幅 */
+	max-width: 50vw; 		/* 最大幅は画面の1/2 */
+	height: 500px; 			/* 初期高さを設定 */
+	min-height: 300px; 		/* 最小高さ */
+	font-family: 'Segoe UI', -apple-system, system-ui, sans-serif;
+	transition: box-shadow 0.3s ease, height 0.3s ease, width 0.3s ease; /* 最小化アニメーション用 */
+	resize: none; 			/* ブラウザのデフォルトリサイズを無効化 */
+}
+
+/* 最小化状態のスタイル */
+#toc.toc-minimized,
+.toc.toc-minimized {
+	height: auto !important; 			/* 高さを自動調整 */
+	min-height: auto !important; 		/* 最小高さ制限を解除 */
+	padding-bottom: 16px !important; 	/* 下部パディングを通常に戻す */
+}
+
+/* 左端リサイズハンドル */
+#toc::before,
+.toc::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 8px;
+	cursor: ew-resize;
+	z-index: 10;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	transition: background-color 0.2s ease;
+}
+
+/* 下端リサイズハンドル */
+#toc::after,
+.toc::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 8px;
+	cursor: ns-resize;
+	z-index: 10;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	transition: background-color 0.2s ease;
+}
+
+/* 最小化時はリサイズハンドルを無効化 */
+#toc.toc-minimized::after,
+.toc.toc-minimized::after {
+	display: none;
+}
+
+/* リサイズハンドルのホバー効果 */
+#toc:hover::before,
+.toc:hover::before,
+#toc:hover::after,
+.toc:hover::after {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* リサイズ中のスタイル */
+#toc.toc-resizing,
+.toc.toc-resizing {
+	user-select: none;
+	transition: none;
+}
+
+#toc.toc-resizing::before,
+.toc.toc-resizing::before,
+#toc.toc-resizing::after,
+.toc.toc-resizing::after {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* ドラッグ中のスタイル */
+#toc.toc-dragging,
+.toc.toc-dragging {
+	cursor: grabbing !important;
+	user-select: none;
+	opacity: 0.9;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3) !important;
+	transition: none; /* ドラッグ中はtransitionを無効化 */
+}
+
+/* ドラッグ中は内部のすべての要素のカーソルを grabbing に */
+#toc.toc-dragging *,
+.toc.toc-dragging * {
+	cursor: grabbing !important;
+}
+
+/* 目次タイトル */
+.toctitle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	padding-bottom: 10px;
+	gap: 16px; 			/* 要素間のスペース */
+	position: relative; /* リセットボタンの配置用 */
+	flex-shrink: 0; 	/* タイトルは縮小しない */
+}
+
+/* 最小化時はタイトルの下部マージンを減らす */
+#toc.toc-minimized .toctitle,
+.toc.toc-minimized .toctitle {
+	margin-bottom: 0;
+}
+
+/* ドラッグハンドルのスタイル */
+.toctitle[data-draggable="true"] {
+	cursor: move;
+	cursor: grab;
+}
+
+.toctitle[data-draggable="true"]:active {
+	cursor: grabbing;
+}
+
+/* ドラッグハンドルのビジュアルヒント */
+.toctitle[data-draggable="true"]::before {
+	content: '⋮⋮';
+	position: absolute;
+	left: -8px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 14px;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	letter-spacing: -2px;
+}
+
+#toc:hover .toctitle[data-draggable="true"]::before,
+.toc:hover .toctitle[data-draggable="true"]::before {
+	opacity: 0.4;
+}
+
+#toc #mw-toc-heading,
+.toc .toctitle h2 {
+	font-size: 1.3em;
+	font-weight: 600;
+	flex: 1 1 auto; 	/* 残りのスペースを占める */
+	min-width: 0; 		/* flex shrinkを有効にする */
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 0.5px;
+}
+
+/* トグルボタンのコンテナ */
+.toctogglespan {
+	display: flex;
+	align-items: center;
+	flex: 0 0 auto; /* 内容に応じた固定幅 */
+	margin-left: 0; /* gap で制御するため削除 */
+}
+
+/* トグルラベル - 基本スタイル */
+.toctogglelabel {
+	cursor: pointer;
+	font-size: 0.85em;
+	padding: 6px 12px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+	user-select: none;
+	font-weight: 500;
+	border: 1px solid transparent;
+	white-space: nowrap; /* 折り返しを防ぐ */
+}
+
+.toctogglelabel::before {
+	content: '[非表示]';
+}
+
+#toctogglecheckbox:checked ~ .toctitle .toctogglelabel::before {
+	content: '[表示]';
+}
+
+/* 目次のリスト全体 */
+.toc ul {
+	list-style: none;
+	margin: 0;
+	padding: 10px;
+	border-radius: 8px;
+	transition: all 0.3s ease;
+	overflow-y: auto; 	/* リスト部分のみスクロール可能に */
+	flex: 1 1 auto; 	/* 残りのスペースを占める */
+	min-height: 0; 		/* flexboxでのスクロールに必要 */
+
+	/* スクロールバーのスタイル */
+	scrollbar-width: thin;
+}
+
+/* Webkit系ブラウザのスクロールバーカスタマイズ */
+.toc ul::-webkit-scrollbar {
+	width: 8px;
+}
+
+.toc ul::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+
+.toc ul::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+.toc ul::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.toc li {
+	margin: 0;
+	padding: 0;
+	line-height: 1.6;
+}
+
+/* 最小化時はリストを非表示（デスクトップのみ） */
+@media screen and (min-width: 769px) {
+	/* デスクトップでは最小化クラスでリストを制御 */
+	#toc.toc-minimized ul,
+	.toc.toc-minimized ul {
+		display: none;
+	}
+
+	/* デスクトップでは従来のチェックボックス動作を無効化 */
+	#toctogglecheckbox:checked ~ ul {
+		display: block;
+	}
+
+	#toc.toc-minimized #toctogglecheckbox:checked ~ ul,
+	.toc.toc-minimized #toctogglecheckbox:checked ~ ul {
+		display: none;
+	}
+}
+
+/* 目次のリンク - 基本構造 */
+.toc a {
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	padding: 8px 12px;
+	border-radius: 6px;
+	transition: all 0.25s ease;
+	margin: 2px 0;
+}
+
+/* 目次番号 */
+.toc li > a > span.tocnumber,
+.toc-number {
+	font-weight: 700;
+	margin-right: 10px;
+	min-width: 35px;
+	display: inline-block;
+	text-align: right;
+	transition: all 0.25s ease;
+}
+
+/* 目次テキスト */
+.toc li > a > span.toctext {
+	flex: 1;
+}
+
+/* 階層構造 - 基本インデント */
+.toc .toclevel-1 {
+	font-weight: 500;
+}
+
+.toc .toclevel-2 {
+	padding-left: 8px;
+	margin-left: 20px;
+	// font-size: 0.95em;
+}
+
+.toc .toclevel-3 {
+	padding-left: 8px;
+	margin-left: 40px;
+	// font-size: 0.9em;
+}
+
+.toc .toclevel-4 {
+	padding-left: 8px;
+	margin-left: 60px;
+	// font-size: 0.88em;
+}
+
+/* 階層の左ボーダー */
+.toc .toclevel-2,
+.toc .toclevel-3,
+.toc .toclevel-4 {
+	border-left-width: 3px;
+	border-left-style: solid;
+	transition: border-color 0.25s ease;
+}
+
+/* リセットボタンのスタイル(JavaScriptで追加される) */
+.toc-reset-button:hover {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toc-reset-button:active {
+	transform: scale(0.95) !important;
+}
+
+/* ===================================
+   ライトモードスタイル
+   =================================== */
+
+body.theme-light,
+html.theme-light {
+	/* 目次のコンテナ - ライトモード */
+	#toc,
+	.toc {
+		background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 50%, #FFDAB9 100%);
+		border: 2px solid #D4A574;
+		box-shadow: 0 6px 20px rgba(212, 165, 116, 0.25),
+		            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	}
+
+	/* ドラッグハンドルのヒント - ライトモード */
+	.toctitle[data-draggable="true"]::before {
+		color: #D4A574;
+	}
+
+	/* リサイズハンドルのホバー効果 - ライトモード */
+	#toc:hover::before,
+	.toc:hover::before,
+	#toc:hover::after,
+	.toc:hover::after {
+		background-color: rgba(212, 165, 116, 0.2);
+	}
+
+	#toc.toc-resizing::before,
+	.toc.toc-resizing::before,
+	#toc.toc-resizing::after,
+	.toc.toc-resizing::after {
+		background-color: rgba(212, 165, 116, 0.4);
+	}
+
+	/* スクロールバー - ライトモード */
+	.toc ul::-webkit-scrollbar-track {
+		background: rgba(212, 165, 116, 0.1);
+	}
+
+	.toc ul::-webkit-scrollbar-thumb {
+		background: rgba(212, 165, 116, 0.4);
+	}
+
+	.toc ul::-webkit-scrollbar-thumb:hover {
+		background: rgba(212, 165, 116, 0.6);
+	}
+
+	/* 目次タイトル - ライトモード */
+	#toc #mw-toc-heading,
+	.toc .toctitle h2 {
+		color: #8B4513 !important;
+		border-bottom: 2px solid #D4A574;
+		text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+	}
+
+	/* トグルラベル - ライトモード */
+	.toctogglelabel {
+		color: #A0522D !important;
+		background-color: rgba(210, 180, 140, 0.3);
+		border-color: #D4A574;
+	}
+
+	.toctogglelabel:hover {
+		color: #8B4513 !important;
+		background-color: rgba(210, 180, 140, 0.5);
+		border-color: #B8860B;
+		box-shadow: 0 2px 8px rgba(212, 165, 116, 0.4);
+	}
+
+	/* 目次のリスト全体 - ライトモード */
+	.toc ul {
+		background-color: rgba(255, 255, 255, 0.5);
+		border: 1px solid rgba(212, 165, 116, 0.3);
+	}
+
+	/* 目次のリンク - ライトモード */
+	.toc a {
+		color: #654321;
+	}
+
+	.toc a:hover {
+		color: #3E2723 !important;
+		background: linear-gradient(90deg,
+		            rgba(255, 193, 7, 0.2),
+		            rgba(255, 160, 0, 0.15));
+		box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+		transform: translateX(4px);
+	}
+
+	.toc a:active {
+		background: linear-gradient(90deg,
+		            rgba(255, 193, 7, 0.35),
+		            rgba(255, 160, 0, 0.3));
+	}
+
+	/* 目次番号 - ライトモード */
+	.toc li > a > span.tocnumber,
+	.toc-number {
+		color: #D2691E;
+		font-weight: 700;
+	}
+
+	.toc li > a:hover > span.tocnumber,
+	.toc a:hover .toc-number {
+		color: #A0522D !important;
+	}
+
+	/* 階層の左ボーダー - ライトモード */
+	.toc .toclevel-2,
+	.toc .toclevel-3,
+	.toc .toclevel-4 {
+		border-left-color: rgba(212, 165, 116, 0.4);
+	}
+
+	.toc .toclevel-2:hover,
+	.toc .toclevel-3:hover,
+	.toc .toclevel-4:hover {
+		border-left-color: #D4A574;
+	}
+
+	/* フォーカス状態 - ライトモード */
+	.toc a:focus {
+		outline: 2px solid #D2691E;
+		outline-offset: 2px;
+	}
+
+	.toc a:focus-visible {
+		box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.25);
+	}
+}
+
+/* ===================================
+   ダークモードスタイル
+   =================================== */
+
+body.theme-dark,
+html.theme-dark {
+	/* 目次のコンテナ - ダークモード */
+	#toc,
+	.toc {
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+		border: 2px solid #5a8fa8;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+	}
+
+	/* ドラッグハンドルのヒント - ダークモード */
+	.toctitle[data-draggable="true"]::before {
+		color: #5a8fa8;
+	}
+
+	/* リサイズハンドルのホバー効果 - ダークモード */
+	#toc:hover::before,
+	.toc:hover::before,
+	#toc:hover::after,
+	.toc:hover::after {
+		background-color: rgba(90, 143, 168, 0.2);
+	}
+
+	#toc.toc-resizing::before,
+	.toc.toc-resizing::before,
+	#toc.toc-resizing::after,
+	.toc.toc-resizing::after {
+		background-color: rgba(90, 143, 168, 0.4);
+	}
+
+	/* スクロールバー - ダークモード */
+	.toc ul::-webkit-scrollbar-track {
+		background: rgba(90, 143, 168, 0.1);
+	}
+
+	.toc ul::-webkit-scrollbar-thumb {
+		background: rgba(90, 143, 168, 0.4);
+	}
+
+	.toc ul::-webkit-scrollbar-thumb:hover {
+		background: rgba(90, 143, 168, 0.6);
+	}
+
+	/* 目次タイトル - ダークモード */
+	#toc #mw-toc-heading,
+	.toc .toctitle h2 {
+		color: #e0e0e0 !important;
+		border-bottom: 2px solid #5a8fa8;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	}
+
+	/* トグルラベル - ダークモード */
+	.toctogglelabel {
+		color: #a0aec0 !important;
+		background-color: rgba(90, 143, 168, 0.2);
+		border-color: #5a8fa8;
+	}
+
+	.toctogglelabel:hover {
+		color: #e0e0e0 !important;
+		background-color: rgba(90, 143, 168, 0.35);
+		border-color: #6ba3c0;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	.toc-reset-button {
+		color: #e0e0e0 !important;
+		font-weight: 700;
+	}
+
+	/* 目次のリスト全体 - ダークモード */
+	.toc ul {
+		background-color: rgba(10, 20, 40, 0.5);
+		border: 1px solid rgba(90, 143, 168, 0.3);
+	}
+
+	/* 目次のリンク - ダークモード */
+	div#content .toc a {
+		color: #e0e0e0;
+	}
+
+	div#content .toc a:hover {
+		color: #E0935C !important;
+		background: linear-gradient(90deg,
+		            rgba(74, 85, 104, 0.4),
+		            rgba(113, 128, 150, 0.3));
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		transform: translateX(5px);
+	}
+
+	div#content .toc a:active {
+		background: linear-gradient(90deg,
+		            rgba(74, 85, 104, 0.6),
+		            rgba(113, 128, 150, 0.5));
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	}
+
+	/* 目次番号 - ダークモード */
+	div#content .toc li > a > span.tocnumber,
+	.toc-number {
+		color: #a0aec0;
+		font-weight: 700;
+		text-shadow: none;
+	}
+
+	div#content .toc li > a:hover > span.tocnumber,
+	div#content .toc a:hover .toc-number {
+		color: #E0935C !important;
+		text-shadow: none;
+	}
+
+	/* 階層の左ボーダー - ダークモード */
+	.toc .toclevel-2,
+	.toc .toclevel-3,
+	.toc .toclevel-4 {
+		border-left-color: rgba(90, 143, 168, 0.4);
+	}
+
+	.toc .toclevel-2:hover,
+	.toc .toclevel-3:hover,
+	.toc .toclevel-4:hover {
+		border-left-color: rgba(107, 163, 192, 0.7);
+		box-shadow: none;
+	}
+
+	/* フォーカス状態 - ダークモード */
+	.toc a:focus {
+		outline: 2px solid #6ba3c0;
+		outline-offset: 2px;
+	}
+
+	.toc a:focus-visible {
+		box-shadow: 0 0 0 4px rgba(107, 163, 192, 0.3);
+	}
+}
+
+/* ===================================
+   レスポンシブ対応
+   =================================== */
+
+/* タブレット表示 */
+@media screen and (max-width: 1024px) {
+	#toc,
+	.toc {
+		width: 280px;
+		right: 15px;
+		top: 70px;
+	}
+}
+
+/* スマートフォン表示:通常表示に戻す(ドラッグ機能無効) */
+@media screen and (max-width: 768px) {
+	#toc,
+	.toc {
+		/* フローティングを解除 */
+		position: relative;
+		top: auto;
+		right: auto;
+		z-index: auto;
+		transform: none !important; /* ドラッグによる移動をリセット */
+
+		/* 通常の表示に戻す */
+		min-width: unset;
+		width: 100%;
+		margin: 1em 0;
+		max-height: none;
+		height: auto; 			/* 高さも自動に戻す */
+		overflow-y: visible;
+		padding-left: 16px; 	/* 左パディングを元に戻す */
+		padding-bottom: 16px; 	/* 下パディングを元に戻す */
+	}
+
+	/* リサイズハンドルを無効化 */
+	#toc::before,
+	.toc::before,
+	#toc::after,
+	.toc::after {
+		display: none;
+	}
+
+	/* ドラッグハンドルを無効化 */
+	.toctitle[data-draggable="true"] {
+		cursor: default;
+	}
+
+	.toctitle[data-draggable="true"]::before {
+		display: none;
+	}
+
+	/* リセットボタンを非表示 */
+	.toc-reset-button {
+		display: none !important;
+	}
+
+	.toc .toclevel-2 {
+		margin-left: 15px;
+	}
+
+	.toc .toclevel-3 {
+		margin-left: 30px;
+	}
+
+	.toc .toclevel-4 {
+		margin-left: 45px;
+	}
+
+	/* モバイルでは従来の非表示動作に戻す */
+	#toctogglecheckbox:checked ~ ul {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	#toc,
+	.toc {
+		padding: 12px;
+	}
+
+	#toc #mw-toc-heading,
+	.toc .toctitle h2 {
+		font-size: 1.1em;
+	}
+
+	.toctitle {
+		gap: 8px; /* モバイルではgapを狭める */
+	}
+
+	.toc a {
+		padding: 6px 8px;
+		font-size: 0.95em;
+	}
+
+	.toc li > a > span.tocnumber,
+	.toc-number {
+		min-width: 28px;
+		margin-right: 8px;
+	}
+}
+
+/* ===================================
+   印刷用スタイル
+   =================================== */
+
+@media print {
+	#toc,
+	.toc {
+		/* 印刷時は通常表示に戻す */
+		position: relative !important;
+		top: auto !important;
+		right: auto !important;
+		float: none !important;
+		width: 100% !important;
+		max-height: none !important;
+		height: auto !important;
+		overflow: visible !important;
+		transform: none !important;
+		padding-left: 16px !important; 		/* 左パディングを元に戻す */
+		padding-bottom: 16px !important; 	/* 下パディングを元に戻す */
+
+		background: white !important;
+		border: 1px solid #ccc !important;
+		box-shadow: none !important;
+	}
+
+	/* リサイズハンドルを非表示 */
+	#toc::before,
+	.toc::before,
+	#toc::after,
+	.toc::after {
+		display: none !important;
+	}
+
+	.toc a {
+		color: black !important;
+	}
+
+	.toctogglelabel,
+	.toc-reset-button {
+		display: none !important;
+	}
+
+	.toctitle[data-draggable="true"]::before {
+		display: none !important;
+	}
+
+	/* 印刷時は目次を常に表示 */
+	#toc.toc-minimized ul,
+	.toc.toc-minimized ul {
+		display: block !important;
+	}
+}

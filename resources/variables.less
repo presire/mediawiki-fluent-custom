@@ -203,17 +203,21 @@
    ライトモード用のインジケーター・アイコン
    プルダウンの下矢印を黒に設定（デフォルト）
    =================================== */
-.oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
-.oo-ui-icon-expand, .oo-ui-icon-collapse,
-.oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
-.oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
-  filter: none !important;
+body.theme-light,
+html.theme-light {
+  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
+  .oo-ui-icon-expand, .oo-ui-icon-collapse,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
+  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
+    filter: none !important;
+  }
 }
 
 /* ===================================
    ダークモード用のCSS変数
    =================================== */
-@media (prefers-color-scheme: dark) {
+body.theme-dark,
+html.theme-dark {
   :root {
     /* アクセントカラー（ダークモード用に調整） */
     --accent-color: #8B5A3C;
@@ -1259,16 +1263,4 @@ html.theme-dark {
   /* サムネイル関連 */
   --thumbinner-background-color: #252525;
   --thumbinner-border-color: #555;
-
-  /* ===================================
-     手動ダークモード時のOOUIアイコン反転設定
-     ユーザーが手動でダークモードを選択した場合も、
-     アイコンを白色に反転させて視認性を確保
-     =================================== */
-  .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
-  .oo-ui-icon-expand, .oo-ui-icon-collapse,
-  .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
-  .oo-ui-textInputWidget.oo-ui-widget-enabled > .oo-ui-iconElement-icon {
-    filter: invert(1) !important;
-  }
 }

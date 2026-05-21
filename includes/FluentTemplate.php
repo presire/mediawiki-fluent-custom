@@ -17,6 +17,11 @@ class FluentTemplate extends BaseTemplate {
 		$html .= Html::rawElement( 'header', [ 'id' => 'fabric-heading' ],
 				$this->getLogo() .
 				Html::rawElement(
+					'nav',
+					[ 'id' => 'header-nav-tools' ],
+					$this->getHeaderNavigation()
+				) .
+				Html::rawElement(
 					'div',
 					[ 'id' => 'search-box' ],
 					$this->getSearch()
@@ -97,7 +102,7 @@ class FluentTemplate extends BaseTemplate {
 					$this->getFooterBlock()
 				)
 			) .
-			Html::rawElement( 'nav', [ 'id' => 'mw-navigation' ],
+			Html::rawElement( 'nav', [ 'id' => 'mw-navigation', 'class' => 'nav-minimized' ],
 				// Site navigation/sidebar
 				Html::rawElement(
 					'div',
@@ -112,7 +117,6 @@ class FluentTemplate extends BaseTemplate {
 			)
 		);
 
-		$html .= $this->getTrail();
 		$html .= Html::closeElement( 'body' );
 		$html .= Html::closeElement( 'html' );
 
@@ -144,8 +148,9 @@ class FluentTemplate extends BaseTemplate {
 			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' )
 		);
 		if ( !$imageOnly ) {
-			$language = $this->getSkin()->getLanguage();
-			$siteTitle = $language->convert( $this->getMsg( 'sitetitle' )->escaped() );
+			$siteTitle = MediaWikiServices::getInstance()->
+				getLanguageConverterFactory()->
+				getLanguageConverter()->convert( $this->getMsg( 'sitetitle' )->escaped() );
 
 			$html .= Html::rawElement(
 				'a',
@@ -199,6 +204,60 @@ class FluentTemplate extends BaseTemplate {
 	}
 
 	/**
+	 * Generates header navigation dropdowns from sidebar content
+	 * @return string html
+	 */
+	protected function getHeaderNavigation() {
+		$html = '';
+
+		$sidebar = $this->getSidebar();
+		$sidebar['SEARCH'] = false;
+		$sidebar['TOOLBOX'] = true;
+		$sidebar['LANGUAGES'] = true;
+
+		foreach ( $sidebar as $name => $content ) {
+			if ( $content === false ) {
+				continue;
+			}
+			// Numeric strings gets an integer when set as key, cast back - T73639
+			$name = (string)$name;
+
+			switch ( $name ) {
+				case 'SEARCH':
+					break;
+				case 'TOOLBOX':
+					$html .= $this->getHeaderDropdown( 'tb', $this->data['sidebar']['TOOLBOX'], 'toolbox' );
+					break;
+				case 'LANGUAGES':
+					if ( $this->data['language_urls'] !== false ) {
+						$html .= $this->getHeaderDropdown( 'lang', $this->data['language_urls'], 'otherlanguages' );
+					}
+					break;
+				default:
+					// @phan-suppress-next-line SecurityCheck-DoubleEscaped
+					$html .= $this->getHeaderDropdown( $name, $content['content'] );
+					break;
+			}
+		}
+		return $html;
+	}
+
+	/**
+	 * Generates a single header dropdown portlet
+	 *
+	 * @param string $name
+	 * @param array|string $content
+	 * @param null|string|array $msg
+	 * @return string html
+	 */
+	protected function getHeaderDropdown( $name, $content, $msg = null ) {
+		return $this->getPortlet( $name, $content, $msg, [
+			'class' => 'mw-portlet header-dropdown',
+			'body-class' => 'mw-portlet-body header-dropdown-body',
+		] );
+	}
+
+	/**
 	 * Generates the sidebar
 	 * Set the elements to true to allow them to be part of the sidebar
 	 * Or get rid of this entirely, and take the specific bits to use wherever you actually want them
@@ -228,7 +287,7 @@ class FluentTemplate extends BaseTemplate {
 					$html .= $this->getSearch();
 					break;
 				case 'TOOLBOX':
-					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
+					$html .= $this->getPortlet( 'tb', $this->data['sidebar']['TOOLBOX'], 'toolbox' );
 					break;
 				case 'LANGUAGES':
 					$html .= $this->getLanguageLinks();
@@ -386,6 +445,37 @@ class FluentTemplate extends BaseTemplate {
 		}
 
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
+
+
+
+
+
+
+		$html .= Html::rawElement(
+			'div',
+			[ 'id' => 'p-dark-toggle', 'class' => 'mw-portlet' ],
+			Html::rawElement(
+				'div',
+				[ 'id' => 'menu-dark-toggle', 'class' => 'mw-portlet-body' ],
+				Html::rawElement(
+					'ul',
+					[ 'id' => 'ul-dark-toggle' ],
+					Html::rawElement(
+						'li',
+						[ 'id' => 'li-dark-toggle' ],
+						Html::rawElement(
+							'a',
+							[ "id" => "a-dark-toggle", "title" => "Toggle dark mode" ],
+							"Toggle dark mode"
+						)
+					)
+				)
+			)
+		);
+
+
+
+
 
 		$html .= Html::closeElement( 'div' );
 
@@ -620,7 +710,6 @@ class FluentTemplate extends BaseTemplate {
 	 *   practice we currently only check if it is or isn't 'iconsfirst'
 	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
 	 *   as in id='f-whatever' vs id='footer-whatever'
-	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
 	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
 	 *   nested array
 	 *
@@ -633,12 +722,11 @@ class FluentTemplate extends BaseTemplate {
 			'class' => 'mw-footer',
 			'order' => 'iconsfirst',
 			'link-prefix' => 'footer',
-			'icon-style' => 'icononly',
 			'link-style' => null
 		];
 		'@phan-var array{id:string,class:string,order:string,link-prefix:string,icon-style:string,link-style:?string} $options';
 
-		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
+		$validFooterIcons = $this->get('footericons');
 		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
 
 		$html = '';

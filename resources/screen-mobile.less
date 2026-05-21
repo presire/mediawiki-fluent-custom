@@ -2,6 +2,11 @@
 
 @import "variables.less";
 
+/* Mobile: hide header nav dropdowns, restore sidebar behaviour */
+#header-nav-tools {
+	display: none;
+}
+
 #fabric-heading {
 	#user-tools {
 		width: calc( @icon-width * 2);
@@ -289,6 +294,29 @@ div.tleft {
 		&::after {
 			left: 12px;
 			text-indent: 0px;
+		}
+	}
+}
+
+/* Reset nav-minimized styles for mobile sidebar */
+nav#mw-navigation.nav-minimized {
+	#site-navigation {
+		h3 {
+			display: none;
+		}
+		li a {
+			padding: 8px 8px 8px 48px;
+			text-align: left;
+			span {
+				display: none;
+			}
+			&::after {
+				position: absolute;
+				left: 16px;
+				top: 10px;
+				display: block;
+				margin: 0;
+			}
 		}
 	}
 }

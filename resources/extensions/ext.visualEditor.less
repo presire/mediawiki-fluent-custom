@@ -1,0 +1,89 @@
+/**
+ * Visual Editor styles for Fluent skin
+ * This file provides necessary styles for Visual Editor integration
+ */
+
+html.ve-activated {
+	// Ensure Visual Editor content is properly displayed
+	.ve-ce-surface {
+		background: transparent;
+	}
+
+	// Style for the Visual Editor toolbar
+	.ve-ui-overlay-global {
+		z-index: 1000;
+	}
+
+	// Ensure proper spacing for edit surface
+	.ve-ce-documentNode {
+		padding: 1em;
+	}
+
+	// Hide elements that should not be visible in edit mode
+	.mw-editsection {
+		display: none;
+	}
+
+	// Style for placeholder slugs
+	.ve-ce-branchNode-blockSlug,
+	body p.ve-ce-branchNode-newSlug {
+		background-color: rgba(0, 0, 0, 0.05);
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	// Dark theme support (if Fluent has dark theme)
+	&.theme-dark,
+	&[data-theme="dark"] {
+		.ve-ce-branchNode-blockSlug,
+		body p.ve-ce-branchNode-newSlug {
+			background-color: rgba(241, 247, 251, 0.1);
+
+			&:hover {
+				background-color: rgba(241, 247, 251, 0.15);
+			}
+		}
+	}
+
+	// Ensure proper display of content
+	.mw-body-content {
+		min-height: 300px;
+	}
+
+	// Hide edit buttons that conflict with VE
+	.ve-init-mw-desktopArticleTarget-editableContent {
+		.mw-editsection-bracket,
+		.mw-editsection-divider {
+			display: none;
+		}
+	}
+}
+
+// Styles for Visual Editor loading state
+html.ve-loading {
+	.ve-init-mw-target-surface {
+		opacity: 0.5;
+	}
+}
+
+// Ensure VE dialogs are properly displayed
+.oo-ui-windowManager-modal > .oo-ui-dialog {
+	z-index: 1001;
+}
+
+// Ensure VE toolbar is properly positioned
+.ve-init-mw-desktopArticleTarget-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: #fff;
+	border-bottom: 1px solid #c8c8c8;
+
+	html[data-theme="dark"] &,
+	html.theme-dark & {
+		background: #1a1a1a;
+		border-bottom-color: #444;
+	}
+}

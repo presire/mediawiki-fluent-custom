@@ -99,7 +99,13 @@ body {
 						white-space: nowrap;
 
 						&:hover {
-							background: var(--user-links-hover-background-color);
+							background: var(--user-links-hover-accent-background-color);
+							color: #fff;
+							text-decoration: none;
+						}
+						&:focus,
+						&:focus-visible {
+							background: var(--user-links-focus-background-color);
 							text-decoration: none;
 						}
 					}
@@ -282,7 +288,13 @@ body {
 					color: var(--user-links-text-color);
 					transition: 0.16s;
 					&:hover {
-						background: var(--user-links-hover-background-color);
+						background: var(--user-links-hover-accent-background-color);
+						color: #fff;
+						text-decoration: none;
+					}
+					&:focus,
+					&:focus-visible {
+						background: var(--user-links-focus-background-color);
 						text-decoration: none;
 					}
 				}

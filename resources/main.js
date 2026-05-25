@@ -1724,6 +1724,14 @@ $(document).ready(function() {
 		popupImg.alt = imgElement.alt || '画像';
 		popupImg.style.cursor = 'grab';
 
+		if (imgElement.classList.contains('mwe-math-fallback-image-inline')) {
+			popupImg.classList.add('mwe-math-fallback-image-inline');
+		}
+
+		if (imgElement.classList.contains('mwe-math-fallback-image-display')) {
+			popupImg.classList.add('mwe-math-fallback-image-display');
+		}
+
 		// 画像をコンテナに追加(閉じるボタンとリセットボタンの後に)
 		container.appendChild(popupImg);
 

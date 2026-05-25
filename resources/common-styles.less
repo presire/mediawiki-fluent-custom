@@ -113,6 +113,15 @@
 	-ms-user-select: none;
 }
 
+#image-popup-container img.mwe-math-fallback-image-inline,
+#image-popup-container img.mwe-math-fallback-image-display {
+	background-color: #fff;
+	padding: 0.35em 0.5em;
+	border-radius: 6px;
+	box-sizing: border-box;
+	filter: none !important;
+}
+
 #image-popup-container img:active {
 	cursor: grabbing;
 }
@@ -445,11 +454,26 @@ tr:last-child > td {
 /* 数式要素 */
 .mwe-math-element {
 	background-color: inherit;
-	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
 }
 
 td .mwe-math-element {
-	font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+}
+
+math {
+	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', math, serif !important;
+}
+
+mtext {
+	font-family: 'Latin Modern Roman', 'Times New Roman', serif !important;
+}
+
+/* 関数記号（sin, cos, log, limなど）をローマン体（正体）で表示 */
+math mi[mathvariant="normal"],
+math mi[mathvariant="roman"] {
+	font-style: normal !important;
+	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', math, serif !important;
 }
 
 /* Extension:AmazonSearch */

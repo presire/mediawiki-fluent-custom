@@ -773,6 +773,13 @@ $(document).ready(function() {
     let resizeStartY = 0;
     let resizeStartWidth = 0;
     let resizeStartHeight = 0;
+    let resizeStartOffsetX = 0;
+    let resizeStartOffsetY = 0;
+    let resizeStartLeft = 0;
+    let resizeStartRight = 0;
+    let resizeStartTop = 0;
+    let resizeStartBottom = 0;
+    const RESIZE_HANDLE_SIZE = 8;
 
     /**
      * 目次の高さを動的に調整
@@ -863,10 +870,16 @@ $(document).ready(function() {
         const toc = document.getElementById('toc') || document.querySelector('.toc');
         if (!toc) return;
 
+        if (toc.dataset.tocEnhancementsInitialized === 'true') {
+            return;
+        }
+
         // モバイル表示の場合は機能を無効化
         if (window.innerWidth <= 768) {
             return;
         }
+
+        toc.dataset.tocEnhancementsInitialized = 'true';
 
         // タイトル要素にドラッグ可能な属性を追加
         const tocTitle = toc.querySelector('.toctitle') || toc.querySelector('#mw-toc-heading')?.parentElement;
@@ -886,6 +899,8 @@ $(document).ready(function() {
 
         // リセットボタンを追加
         addResetButton(toc);
+
+        addResizeHandles(toc);
 
         // イベントリスナーの設定
         setupEventListeners(toc);
@@ -965,6 +980,22 @@ $(document).ready(function() {
                 // 最小化状態を保存
                 saveMinimizedState(this.checked);
             });
+        }
+    }
+
+    function addResizeHandles(toc) {
+        if (!toc.querySelector('.toc-resize-handle-top')) {
+            const topHandle = document.createElement('div');
+            topHandle.className = 'toc-resize-handle toc-resize-handle-top';
+            topHandle.setAttribute('aria-hidden', 'true');
+            toc.appendChild(topHandle);
+        }
+
+        if (!toc.querySelector('.toc-resize-handle-right')) {
+            const rightHandle = document.createElement('div');
+            rightHandle.className = 'toc-resize-handle toc-resize-handle-right';
+            rightHandle.setAttribute('aria-hidden', 'true');
+            toc.appendChild(rightHandle);
         }
     }
 
@@ -1105,44 +1136,62 @@ $(document).ready(function() {
     function resizeStart(e) {
         const toc = document.getElementById('toc') || document.querySelector('.toc');
         if (!toc) return;
+        if (toc.classList.contains('toc-minimized')) return;
 
         const rect = toc.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
         const clickY = e.clientY - rect.top;
+        const distances = {
+            left: clickX,
+            right: rect.width - clickX,
+            top: clickY,
+            bottom: rect.height - clickY
+        };
+        let nextResizeDirection = null;
 
-        // 左端8px以内のクリック → 横方向リサイズ
-        if (clickX <= 8) {
-            e.preventDefault();
-            e.stopPropagation();
+        if (distances.left <= RESIZE_HANDLE_SIZE) {
+            nextResizeDirection = 'left';
+        }
 
-            isResizing = true;
-            resizeDirection = 'horizontal';
-            resizeStartX = e.clientX;
-            resizeStartWidth = toc.offsetWidth;
+        if (distances.right <= RESIZE_HANDLE_SIZE &&
+            (nextResizeDirection === null || distances.right < distances[nextResizeDirection])) {
+            nextResizeDirection = 'right';
+        }
 
-            // リサイズ中のスタイルを追加
-            toc.classList.add('toc-resizing');
-            document.body.style.cursor = 'ew-resize';
-            document.body.style.userSelect = 'none';
+        if (distances.top <= RESIZE_HANDLE_SIZE &&
+            (nextResizeDirection === null || distances.top < distances[nextResizeDirection])) {
+            nextResizeDirection = 'top';
+        }
+
+        if (distances.bottom <= RESIZE_HANDLE_SIZE &&
+            (nextResizeDirection === null || distances.bottom < distances[nextResizeDirection])) {
+            nextResizeDirection = 'bottom';
+        }
+
+        if (!nextResizeDirection) {
             return;
         }
 
-        // 下端8px以内のクリック → 縦方向リサイズ
-        if (clickY >= rect.height - 8) {
-            e.preventDefault();
-            e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-            isResizing = true;
-            resizeDirection = 'vertical';
-            resizeStartY = e.clientY;
-            resizeStartHeight = toc.offsetHeight;
+        isResizing = true;
+        resizeDirection = nextResizeDirection;
+        resizeStartX = e.clientX;
+        resizeStartY = e.clientY;
+        resizeStartWidth = toc.offsetWidth;
+        resizeStartHeight = toc.offsetHeight;
+        resizeStartOffsetX = xOffset;
+        resizeStartOffsetY = yOffset;
+        resizeStartLeft = rect.left;
+        resizeStartRight = rect.right;
+        resizeStartTop = rect.top;
+        resizeStartBottom = rect.bottom;
 
-            // リサイズ中のスタイルを追加
-            toc.classList.add('toc-resizing');
-            document.body.style.cursor = 'ns-resize';
-            document.body.style.userSelect = 'none';
-            return;
-        }
+        // リサイズ中のスタイルを追加
+        toc.classList.add('toc-resizing');
+        document.body.style.cursor = (resizeDirection === 'left' || resizeDirection === 'right') ? 'ew-resize' : 'ns-resize';
+        document.body.style.userSelect = 'none';
     }
 
     /**
@@ -1156,41 +1205,50 @@ $(document).ready(function() {
         const toc = document.getElementById('toc') || document.querySelector('.toc');
         if (!toc) return;
 
-        if (resizeDirection === 'horizontal') {
-            // 横方向のリサイズ
-            // 左方向へのドラッグで幅を広げる(マウスが左に移動すると幅が増える)
-            const deltaX = resizeStartX - e.clientX;
+        if (resizeDirection === 'left' || resizeDirection === 'right') {
+            const deltaX = resizeDirection === 'left'
+                ? resizeStartX - e.clientX
+                : e.clientX - resizeStartX;
             let newWidth = resizeStartWidth + deltaX;
 
-            // 最小幅と最大幅の制限
-            const minWidth = 200;
-            const edgeMargin = 10; // 画面端からの余白
-
-            // 目次の現在位置を考慮して、画面左端までの距離を計算
-            const rect = toc.getBoundingClientRect();
-            const maxWidthByScreen = rect.right - edgeMargin; // 右端から左端(画面端+余白)までの距離
-            const maxWidthByHalf = window.innerWidth * 0.5; // 画面の1/2
+            const minWidth = 300;
+            const edgeMargin = 10;
+            const maxWidthByScreen = resizeDirection === 'left'
+                ? resizeStartRight - edgeMargin
+                : window.innerWidth - resizeStartLeft - edgeMargin;
+            const maxWidthByHalf = window.innerWidth * 0.5;
             const maxWidth = Math.min(maxWidthByScreen, maxWidthByHalf);
 
             newWidth = Math.max(minWidth, Math.min(newWidth, maxWidth));
             toc.style.width = newWidth + 'px';
-        } else if (resizeDirection === 'vertical') {
-            // 縦方向のリサイズ
-            // 下方向へのドラッグで高さを広げる
-            const deltaY = e.clientY - resizeStartY;
+
+            if (resizeDirection === 'right') {
+                const actualWidthDelta = newWidth - resizeStartWidth;
+                xOffset = resizeStartOffsetX + actualWidthDelta;
+                currentX = xOffset;
+                setTranslate(xOffset, yOffset, toc);
+            }
+        } else if (resizeDirection === 'top' || resizeDirection === 'bottom') {
+            const deltaY = resizeDirection === 'top'
+                ? resizeStartY - e.clientY
+                : e.clientY - resizeStartY;
             let newHeight = resizeStartHeight + deltaY;
 
-            // 最小高さと最大高さの制限
             const minHeight = 200;
-            const edgeMargin = 10; // 画面端からの余白
+            const edgeMargin = 10;
+            const maxHeightByScreen = resizeDirection === 'top'
+                ? resizeStartBottom - edgeMargin
+                : window.innerHeight - resizeStartTop - edgeMargin;
 
-            // 目次の現在位置を考慮して、画面下端までの距離を計算
-            const rect = toc.getBoundingClientRect();
-            const maxHeightByScreen = window.innerHeight - rect.top - edgeMargin; // 上端から画面下端(-余白)までの距離
-            const maxHeight = maxHeightByScreen;
-
-            newHeight = Math.max(minHeight, Math.min(newHeight, maxHeight));
+            newHeight = Math.max(minHeight, Math.min(newHeight, maxHeightByScreen));
             toc.style.height = newHeight + 'px';
+
+            if (resizeDirection === 'top') {
+                const actualHeightDelta = newHeight - resizeStartHeight;
+                yOffset = resizeStartOffsetY - actualHeightDelta;
+                currentY = yOffset;
+                setTranslate(xOffset, yOffset, toc);
+            }
         }
     }
 
@@ -1203,6 +1261,10 @@ $(document).ready(function() {
         const toc = document.getElementById('toc') || document.querySelector('.toc');
         if (!toc) return;
 
+        const resizedHorizontally = resizeDirection === 'left' || resizeDirection === 'right';
+        const resizedVertically = resizeDirection === 'top' || resizeDirection === 'bottom';
+        const movedDuringResize = resizeDirection === 'right' || resizeDirection === 'top';
+
         isResizing = false;
 
         // リサイズ中のスタイルを削除
@@ -1210,11 +1272,18 @@ $(document).ready(function() {
         document.body.style.cursor = '';
         document.body.style.userSelect = '';
 
+        constrainToViewport(toc);
+
         // サイズを保存
-        if (resizeDirection === 'horizontal') {
+        if (resizedHorizontally) {
             saveWidth(toc.offsetWidth);
-        } else if (resizeDirection === 'vertical') {
+        }
+        if (resizedVertically) {
             saveHeight(toc.offsetHeight);
+        }
+
+        if (movedDuringResize) {
+            savePosition();
         }
 
         resizeDirection = null;

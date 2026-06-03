@@ -9,6 +9,18 @@
 	src: url('fabricicons.woff');
 }
 
+@font-face {
+	font-family: 'FluentMath';
+	src: url('fonts/math/STIXTwoMath-Regular.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'FluentMathText';
+	src: url('fonts/math/STIXTwoText-Regular.woff2') format('woff2');
+	font-display: swap;
+}
+
 // To hide objects, but keep them accessible for screen-readers
 .hidden() {
 	position: absolute;
@@ -376,12 +388,16 @@ body {
 }
 
 #mw-main-content {
+	height: 100%;
+	overflow: auto;
+}
+
+.mw-main-content-inner {
 	padding: 1em;
 	padding-top: 0em;
 	padding-bottom: 0.5em;
 	box-sizing: border-box;
-	height: 100%;
-	overflow: auto;
+	width: 100%;
 }
 
 // 編集ページではスクロールコンテナの高さ制限を解除

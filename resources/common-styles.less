@@ -452,29 +452,44 @@ tr:last-child > td {
 
 
 /* 数式要素 */
-.mwe-math-element {
-	background-color: inherit;
-	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
-}
-
-td .mwe-math-element {
-	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
-}
+// .mwe-math-element {
+// 	background-color: inherit;
+// 	font-family: 'FluentMath', 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', 'Libertinus Math', math, serif !important;
+// 	//font-size: 1.0em;				/* MathJax */
+// 	//line-height: 0 !important;  	/* MathJax */
+// 	font-size: 1.15em;  			/* Native Math */
+// 	line-height: normal !important; /* Native Math */
+// }
+//
+// td .mwe-math-element {
+// 	font-family: 'FluentMath', 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', 'Libertinus Math', math, serif !important;
+// 	//font-size: 1.0em;				/* MathJax */
+// 	//line-height: 0 !important;	/* MathJax */
+// 	font-size: 1.15em;  			/* Native Math */
+// 	line-height: normal !important; /* Native Math */
+// }
+//
+// .mwe-math-element mjx-container[jax='CHTML'],
+// td .mwe-math-element mjx-container[jax='CHTML'] {
+// 	//line-height: 0 !important;  	/* MathJax */
+// 	line-height: normal !important; /* Native Math */
+// }
 
 math {
-	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', math, serif !important;
+	font-family: 'FluentMath', 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', 'Libertinus Math', math, serif !important;
 }
 
 mtext {
-	font-family: 'Latin Modern Roman', 'Times New Roman', serif !important;
+	font-family: 'FluentMathText', 'STIX Two Text', 'Noto Serif JP', 'Source Han Serif', 'Times New Roman', serif !important;
 }
 
 /* 関数記号（sin, cos, log, limなど）をローマン体（正体）で表示 */
 math mi[mathvariant="normal"],
 math mi[mathvariant="roman"] {
 	font-style: normal !important;
-	font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', math, serif !important;
+	font-family: 'FluentMath', 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', 'Libertinus Math', math, serif !important;
 }
+
 
 /* Extension:AmazonSearch */
 DIV.amazonsearch {

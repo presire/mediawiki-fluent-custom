@@ -70,36 +70,38 @@ class FluentTemplate extends BaseTemplate {
 					$this->getPageLinks()
 				) .
 				Html::rawElement( 'main', [ 'id' => 'mw-main-content' ],
-					$this->getIndicators() .
-					Html::rawElement( 'h1',
-						[
-							'class' => 'firstHeading',
-							'lang' => $this->get( 'pageLanguage' )
-						],
-						$this->get( 'title' )
-					) .
-					Html::rawElement( 'div', [ 'id' => 'siteSub' ],
-						$this->getMsg( 'tagline' )->parse()
-					) .
-					Html::rawElement( 'div', [ 'class' => 'mw-body-content' ],
-						Html::rawElement( 'div', [ 'id' => 'contentSub' ],
-							$this->getPageSubtitle() .
-							Html::rawElement(
-								'p',
-								[],
-								$this->get( 'undelete' )
-							)
+					Html::rawElement( 'div', [ 'class' => 'mw-main-content-inner' ],
+						$this->getIndicators() .
+						Html::rawElement( 'h1',
+							[
+								'class' => 'firstHeading',
+								'lang' => $this->get( 'pageLanguage' )
+							],
+							$this->get( 'title' )
 						) .
-						$this->get( 'bodycontent' ) .
-						$this->getClear() .
-						Html::rawElement( 'div', [ 'class' => 'printfooter' ],
-							$this->get( 'printfooter' )
+						Html::rawElement( 'div', [ 'id' => 'siteSub' ],
+							$this->getMsg( 'tagline' )->parse()
 						) .
-						$this->getCategoryLinks()
-					) .
-					$this->getDataAfterContent() .
-					$this->get( 'debughtml' ) .
-					$this->getFooterBlock()
+						Html::rawElement( 'div', [ 'class' => 'mw-body-content' ],
+							Html::rawElement( 'div', [ 'id' => 'contentSub' ],
+								$this->getPageSubtitle() .
+								Html::rawElement(
+									'p',
+									[],
+									$this->get( 'undelete' )
+								)
+							) .
+							$this->get( 'bodycontent' ) .
+							$this->getClear() .
+							Html::rawElement( 'div', [ 'class' => 'printfooter' ],
+								$this->get( 'printfooter' )
+							) .
+							$this->getCategoryLinks()
+						) .
+						$this->getDataAfterContent() .
+						$this->get( 'debughtml' ) .
+						$this->getFooterBlock()
+					)
 				)
 			) .
 			Html::rawElement( 'nav', [ 'id' => 'mw-navigation', 'class' => 'nav-minimized' ],

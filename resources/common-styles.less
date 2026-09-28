@@ -272,22 +272,25 @@ label[for=wpCaptchaWord] {
 	font-style: italic;
 }
 
-/* 見出しh2の基本スタイル - TOCスタイルの背景を適用 */
+/* 見出しh2の基本スタイル - 太い左アクセントバー付きの帯 */
 /* 目次のh2を除外 */
 .mw-parser-output > h2,
 .mw-parser-output > .mw-heading > h2,
 .mw-body-content > h2:not(#mw-toc-heading) {
     font-size: 24px !important;
     font-weight: 800;
-    padding: 16px 20px 16px 30px;
-    margin: 32px 0 20px 0;
+    letter-spacing: 0.02em;
+    padding: 14px 20px 14px 22px;
+    margin: 36px 0 20px 0;
     display: block;
     width: 97.5%;
     clear: both;
     position: relative;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    border-radius: 4px 12px 12px 4px;
+    border-left: 10px solid;
+    transition: border-color 0.25s ease;
 }
+
 
 /* 見出しh3の基本スタイル - 斜めアクセント */
 /* idもclassも指定されていないh3要素のみに適用 */
@@ -314,31 +317,40 @@ h3:not([class]):not([id])::before {
     transform-origin: top left;
 }
 
-/* 見出しh4の基本スタイル - TOCスタイルの背景を適用 */
+/* 見出しh4の基本スタイル - 左バー + 淡い背景 + 下線 */
 h4 {
     font-size: 20px !important;
     font-weight: 700;
-    padding: 12px 16px;
-    margin: 16px 0 12px 0;
+    padding: 8px 16px 8px 14px;
+    margin: 22px 0 12px 0;
     display: block;
-    width: fit-content;
+    width: 97.5%;
     clear: both;
     position: relative;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    border-left: 6px solid;
+    border-bottom: 1px solid;
+    border-radius: 0 8px 0 0;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/* 見出しh5の基本スタイル - 枠線で囲む */
+/* 見出しh5の基本スタイル - ◆マーカー付きタグ型 */
 h5 {
     font-size: 18px !important;
-    font-weight: 600;
-    padding: 8px 12px;
-    margin: 12px 0 10px 0;
+    font-weight: 700;
+    padding: 5px 14px 5px 12px;
+    margin: 16px 0 10px 0;
     display: inline-block;
     clear: both;
     position: relative;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    border: 2px solid;
+    border-radius: 999px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+h5::before {
+    content: '\25C6';
+    margin-right: 8px;
+    font-size: 0.8em;
 }
 
 h5 .mw-headline {
@@ -349,17 +361,22 @@ h5 .mw-headline {
     border: none;
 }
 
-/* 見出しh6の基本スタイル - 下線のみでシンプルに */
+/* 見出しh6の基本スタイル - ▸マーカー + 破線下線 */
 h6 {
     font-size: 16px !important;
-    font-weight: 600;
-    padding: 4px 8px 4px 0;
-    margin: 10px 0 8px 0;
+    font-weight: 700;
+    padding: 2px 8px 3px 0;
+    margin: 12px 0 8px 0;
     display: inline-block;
     clear: both;
     position: relative;
-    border-bottom: 2px solid;
-    transition: all 0.3s ease;
+    border-bottom: 2px dashed;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+h6::before {
+    content: '\25B8';
+    margin-right: 6px;
 }
 
 h6 .mw-headline {
@@ -707,25 +724,21 @@ DIV.amazonsearch UL LI.shoplinkamazon {
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	}
 
-	/* h2 - TOCスタイルの青系グラデーション適用 */
+	/* h2 - 太い左アクセントバー付きの帯 */
 	/* 目次のh2を除外 */
 	.mw-parser-output > h2,
 	.mw-parser-output > .mw-heading > h2,
 	.mw-body-content > h2:not(#mw-toc-heading) {
-		background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 50%, #FFDAB9 100%);
-		border: 2px solid #D4A574;
-		box-shadow: 0 6px 20px rgba(212, 165, 116, 0.25),
-		            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-		color: #8B4513;
+		background: linear-gradient(90deg, #FBE6D0 0%, #FDF3E8 60%, rgba(253, 243, 232, 0) 100%);
+		border-left-color: #CF8B54;
+		border-bottom: 2px solid #E8C7A4;
+		box-shadow: none;
 	}
 
 	.mw-parser-output > h2:hover,
-
 	.mw-parser-output > .mw-heading > h2:hover,
 	.mw-body-content > h2:not(#mw-toc-heading):hover {
-		box-shadow: 0 8px 24px rgba(212, 165, 116, 0.35),
-		            inset 0 1px 0 rgba(255, 255, 255, 0.7);
-		transform: translateY(-2px);
+		border-left-color: #B06A30;
 	}
 
 	h3 {
@@ -736,35 +749,51 @@ DIV.amazonsearch UL LI.shoplinkamazon {
 		background: linear-gradient(135deg, #4299e1 0%, #8ab4f8 100%);
 	}
 
-	/* h4 - TOCスタイルの暖色系グラデーション適用（少し薄めに） */
+
+	/* 見出し文字色 - screen-common.less の div#content hN より優先させる */
+	div#content .mw-parser-output > h2,
+	div#content .mw-parser-output > .mw-heading > h2,
+	div#content .mw-body-content > h2:not(#mw-toc-heading) {
+		color: #5A2A0C;
+	}
+
+	div#content h4 {
+		color: #6B3410;
+	}
+
+	div#content h5 {
+		color: #6B3410;
+	}
+
+	div#content h6 {
+		color: #3F2A1C;
+	}
+
+	/* h4 - 左バー + 淡い背景 + 下線 */
 	h4 {
-		background: linear-gradient(135deg,
-		            rgba(255, 248, 231, 0.7) 0%,
-		            rgba(255, 228, 181, 0.7) 50%,
-		            rgba(255, 218, 185, 0.7) 100%);
-		border: 2px solid rgba(212, 165, 116, 0.6);
-		box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2),
-		            inset 0 1px 0 rgba(255, 255, 255, 0.5);
-		color: #A0522D;
+		background: #FDF1E4;
+		border-left-color: #CF8B54;
+		border-bottom-color: #E6C3A0;
+		color: #6B3410;
 	}
 
 	h4:hover {
-		box-shadow: 0 6px 16px rgba(212, 165, 116, 0.3),
-		            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-		transform: translateY(-1px);
+		background: #FAE6D0;
 	}
 
-	/* h5 - パターン2: 枠線で囲む（同じ色） */
+	/* h5 - ◆マーカー付きタグ型 */
 	h5 {
-		border: 2px solid #D4A574;
-		color: #654321;
-		background-color: rgba(255, 248, 231, 0.15);
+		border-color: #CF8B54;
+		color: #6B3410;
+		background-color: #FDF1E4;
+	}
+
+	h5::before {
+		color: #C2703A;
 	}
 
 	h5:hover {
-		border-color: #B8860B;
-		background-color: rgba(255, 248, 231, 0.25);
-		box-shadow: 0 2px 8px rgba(212, 165, 116, 0.2);
+		background-color: #FAE6D0;
 	}
 
 	h5 .mw-headline {
@@ -772,15 +801,18 @@ DIV.amazonsearch UL LI.shoplinkamazon {
 		margin: 0;
 	}
 
-	/* h6 - 下線のみでシンプルに（h5より控えめ） */
+	/* h6 - ▸マーカー + 破線下線 */
 	h6 {
-		border-bottom-color: #D4A574;
-		color: #7a5a3a;
+		border-bottom-color: #C2703A;
+		color: #3F2A1C;
+	}
+
+	h6::before {
+		color: #C2703A;
 	}
 
 	h6:hover {
-		border-bottom-color: #B8860B;
-		color: #654321;
+		border-bottom-style: solid;
 	}
 
 	h6 .mw-headline {
@@ -1154,24 +1186,21 @@ html.skin-theme-clientpref-day {
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 	}
 
-	/* h2 - TOCスタイルの青系グラデーション適用 */
+	/* h2 - 太い左アクセントバー付きの帯 */
 	/* 目次のh2を除外 */
 	.mw-parser-output > h2,
 	.mw-parser-output > .mw-heading > h2,
 	.mw-body-content > h2:not(#mw-toc-heading) {
-		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-		border: 2px solid #5a8fa8;
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-		color: #e0e0e0;
+		background: linear-gradient(90deg, rgba(240, 168, 96, 0.18) 0%, rgba(240, 168, 96, 0.06) 60%, rgba(240, 168, 96, 0) 100%);
+		border-left-color: #F0A860;
+		border-bottom: 2px solid rgba(240, 168, 96, 0.35);
+		box-shadow: none;
 	}
 
 	.mw-parser-output > h2:hover,
-
 	.mw-parser-output > .mw-heading > h2:hover,
 	.mw-body-content > h2:not(#mw-toc-heading):hover {
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-		transform: translateY(-2px);
-		border-color: #6ba3c0;
+		border-left-color: #FFC285;
 	}
 
 	h3 {
@@ -1182,34 +1211,51 @@ html.skin-theme-clientpref-day {
 		background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
 	}
 
-	/* h4 - TOCスタイルの青系グラデーション適用（少し薄めに） */
+
+	/* 見出し文字色 - screen-common.less の div#content hN より優先させる */
+	div#content .mw-parser-output > h2,
+	div#content .mw-parser-output > .mw-heading > h2,
+	div#content .mw-body-content > h2:not(#mw-toc-heading) {
+		color: #FFE2C4;
+	}
+
+	div#content h4 {
+		color: #F7D4B0;
+	}
+
+	div#content h5 {
+		color: #F7D4B0;
+	}
+
+	div#content h6 {
+		color: #E6EAF0;
+	}
+
+	/* h4 - 左バー + 淡い背景 + 下線 */
 	h4 {
-		background: linear-gradient(135deg,
-		            rgba(26, 26, 46, 0.7) 0%,
-		            rgba(22, 33, 62, 0.7) 50%,
-		            rgba(15, 52, 96, 0.7) 100%);
-		border: 2px solid rgba(90, 143, 168, 0.6);
-		box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
-		color: #a0aec0;
+		background: rgba(240, 168, 96, 0.10);
+		border-left-color: #E0955A;
+		border-bottom-color: rgba(240, 168, 96, 0.35);
+		color: #F7D4B0;
 	}
 
 	h4:hover {
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-		transform: translateY(-1px);
-		border-color: rgba(107, 163, 192, 0.7);
+		background: rgba(240, 168, 96, 0.18);
 	}
 
-	/* h5 - パターン2: 枠線で囲む（同じ色） */
+	/* h5 - ◆マーカー付きタグ型 */
 	h5 {
-		border: 2px solid #5a8fa8;
-		color: #cbd5e0;
-		background-color: rgba(26, 26, 46, 0.3);
+		border-color: #E0955A;
+		color: #F7D4B0;
+		background-color: rgba(240, 168, 96, 0.08);
+	}
+
+	h5::before {
+		color: #F0A860;
 	}
 
 	h5:hover {
-		border-color: #6ba3c0;
-		background-color: rgba(26, 26, 46, 0.5);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		background-color: rgba(240, 168, 96, 0.16);
 	}
 
 	h5 .mw-headline {
@@ -1217,15 +1263,18 @@ html.skin-theme-clientpref-day {
 		margin: 0;
 	}
 
-	/* h6 - 下線のみでシンプルに（h5より控えめ） */
+	/* h6 - ▸マーカー + 破線下線 */
 	h6 {
-		border-bottom-color: #5a8fa8;
-		color: #a0b5c5;
+		border-bottom-color: #F0A860;
+		color: #E6EAF0;
+	}
+
+	h6::before {
+		color: #F0A860;
 	}
 
 	h6:hover {
-		border-bottom-color: #6ba3c0;
-		color: #cbd5e0;
+		border-bottom-style: solid;
 	}
 
 	h6 .mw-headline {

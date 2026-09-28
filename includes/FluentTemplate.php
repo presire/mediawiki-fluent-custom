@@ -1,6 +1,12 @@
 <?php
 
+namespace MediaWiki\Skin\Fluent;
+
+use BaseTemplate;
+use MediaWiki\Html\Html;
+use MediaWiki\Linker\Linker;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\Sanitizer;
 
 /**
  * BaseTemplate class for the Fluent skin
@@ -13,7 +19,6 @@ class FluentTemplate extends BaseTemplate {
 	 */
 	public function execute() {
 		$html = '';
-		$html .= $this->get( 'headelement' );
 		$html .= Html::rawElement( 'header', [ 'id' => 'fabric-heading' ],
 				$this->getLogo() .
 				Html::rawElement(
@@ -39,8 +44,8 @@ class FluentTemplate extends BaseTemplate {
 						[
 							'id' => 'theme-toggle',
 							'class' => 'theme-toggle-button',
-							'title' => 'Toggle theme',
-							'aria-label' => 'Toggle dark/light mode'
+							'title' => $this->getMsg( 'fluent-toggle-theme-label' )->text(),
+							'aria-label' => $this->getMsg( 'fluent-toggle-theme-label' )->text()
 						],
 						Html::rawElement(
 							'span',
@@ -50,10 +55,16 @@ class FluentTemplate extends BaseTemplate {
 					) .
 					Html::rawElement(
 						'button',
-						[ 'id' => 'user-icon', 'title' => 'User icon' ],
+						[
+							'id' => 'user-icon',
+							'title' => $this->getMsg( 'fluent-user-icon-label' )->text()
+						],
 						Html::rawElement(
 							'div',
-							[ 'id' => 'user-icon-img', 'style' => 'background-image: url("' . $this->getGravatarUrl() . '");' ]
+							[
+								'id' => 'user-icon-img',
+								'style' => 'background-image: url("' . $this->getGravatarUrl() . '");'
+							]
 						)
 					) .
 					$this->getUserLinks()
@@ -119,9 +130,7 @@ class FluentTemplate extends BaseTemplate {
 			)
 		);
 
-		$html .= Html::closeElement( 'body' );
-		$html .= Html::closeElement( 'html' );
-
+		// MW 1.43: Skin::outputPageFinal() が headElement()/tailElement() を自動付与する
 		echo $html;
 	}
 
@@ -345,7 +354,7 @@ class FluentTemplate extends BaseTemplate {
 		$rightNav = "";
 		// Namespaces: links for 'content' and 'talk' for namespaces with talkpages. Otherwise is just the content.
 		// Usually rendered as tabs on the top of the page.
-		if (count($this->data['content_navigation']['namespaces']) > 0) {
+		if ( count( $this->data['content_navigation']['namespaces'] ) > 0 ) {
 			$leftNav .= $this->getPortlet(
 				'namespaces',
 				$this->data['content_navigation']['namespaces']
@@ -354,7 +363,7 @@ class FluentTemplate extends BaseTemplate {
 		// Language variant options
 		$leftNav .= $this->getVariants();
 		// 'View' actions for the page: view, edit, view history, etc
-		if (count($this->data['content_navigation']['views']) > 0) {
+		if ( count( $this->data['content_navigation']['views'] ) > 0 ) {
 			$leftNav .= $this->getPortlet(
 				'views',
 				$this->data['content_navigation']['views']
@@ -362,18 +371,18 @@ class FluentTemplate extends BaseTemplate {
 		}
 		$html = Html::rawElement(
 			'div',
-			['role' => 'navigation', 'id' => 'topNav-left', 'class' => 'topNav-container'],
+			[ 'role' => 'navigation', 'id' => 'topNav-left', 'class' => 'topNav-container' ],
 			$leftNav
 		);
 		// Other actions for the page: move, delete, protect, everything else
-		if (count($this->data['content_navigation']['actions']) > 0) {
+		if ( count( $this->data['content_navigation']['actions'] ) > 0 ) {
 			$rightNav .= $this->getPortlet(
 				'actions',
 				$this->data['content_navigation']['actions']
 			);
 			$html .= Html::rawElement(
 				'div',
-				['role' => 'navigation', 'id' => 'topNav-right', 'class' => 'topNav-container'],
+				[ 'role' => 'navigation', 'id' => 'topNav-right', 'class' => 'topNav-container' ],
 				$rightNav
 			);
 		}
@@ -382,27 +391,31 @@ class FluentTemplate extends BaseTemplate {
 
 	/**
 	 * Generates URL for the user's Gravatar, or defaults to a generic face if no Gravatar
-	 * @param bool $disableGravatar Whether or not to use Gravatar
-	 * @return string html
+	 * @return string URL
 	 */
-    protected function getGravatarUrl() {
-	$skinConfig = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('Fluent');
-	$isGravatarEnabled = $skinConfig->get('FluentDisableGravatar');
-	$skin = $this->getSkin();
-	$genericFace =
-		$this->config->get( 'CanonicalServer' ) . $skin->getConfig()->get( 'StylePath' ) .
-		'/Fluent/resources/default-user.png';
-	if ( !$isGravatarEnabled ) {
-		return $genericFace;
-	} else {
-		$gravatarUrl =
-			'https://www.gravatar.com/avatar/' .
-			md5( strtolower( trim( $this->getSkin()->getUser()->getEmail() ) ) ) . '?d=' .
-			urlencode( $genericFace ) . '&s=' . 100;
+	protected function getGravatarUrl() {
+		$skinConfig = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Fluent' );
+		$isGravatarDisabled = (bool)$skinConfig->get( 'FluentDisableGravatar' );
+		$mainConfig = MediaWikiServices::getInstance()->getMainConfig();
+		$genericFace =
+			$mainConfig->get( 'CanonicalServer' ) . $mainConfig->get( 'StylePath' ) .
+			'/Fluent/resources/default-user.png';
+		if ( $isGravatarDisabled ) {
+			return $genericFace;
+		}
+		$user = $this->getSkin()->getUser();
+		// 匿名・メール未登録では外部リクエストを避けて既定画像を返す
+		if ( !$user || $user->isAnon() ) {
+			return $genericFace;
+		}
+		$email = strtolower( trim( $user->getEmail() ) );
+		if ( $email === '' ) {
+			return $genericFace;
+		}
 
-		return $gravatarUrl;
+		return 'https://www.gravatar.com/avatar/' . md5( $email ) .
+			'?d=' . urlencode( $genericFace ) . '&s=100';
 	}
-    }
 
 	/**
 	 * Generates user tools menu
@@ -448,11 +461,6 @@ class FluentTemplate extends BaseTemplate {
 
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
 
-
-
-
-
-
 		$html .= Html::rawElement(
 			'div',
 			[ 'id' => 'p-dark-toggle', 'class' => 'mw-portlet' ],
@@ -467,17 +475,16 @@ class FluentTemplate extends BaseTemplate {
 						[ 'id' => 'li-dark-toggle' ],
 						Html::rawElement(
 							'a',
-							[ "id" => "a-dark-toggle", "title" => "Toggle dark mode" ],
-							"Toggle dark mode"
+							[
+								'id' => 'a-dark-toggle',
+								'title' => $this->getMsg( 'fluent-toggle-dark-mode' )->text()
+							],
+							$this->getMsg( 'fluent-toggle-dark-mode' )->text()
 						)
 					)
 				)
 			)
 		);
-
-
-
-
 
 		$html .= Html::closeElement( 'div' );
 
@@ -518,7 +525,7 @@ class FluentTemplate extends BaseTemplate {
 	 * Generates category links, if any
 	 * @return string html
 	 */
-	protected  function getCategoryLinks() {
+	protected function getCategoryLinks() {
 		return $this->getIfExists( 'catlinks' );
 	}
 
@@ -590,6 +597,7 @@ class FluentTemplate extends BaseTemplate {
 			// old toolbox hook support (use: [ 'SkinTemplateToolboxEnd' => [ &$skin, true ] ])
 			'hooks' => ''
 		];
+		// phpcs:ignore Generic.Files.LineLength.TooLong
 		'@phan-var array{id:string,class:string|array,extra-classes:string|array,body-wrapper:string,body-id:?string,body-class:string,list-item:array,list-prepend:string, hooks:string|array} $options';
 
 		// Handle the different $msg possibilities
@@ -692,7 +700,7 @@ class FluentTemplate extends BaseTemplate {
 	protected function deprecatedHookHack( $hook, $hookOptions = [] ) {
 		$hookContents = '';
 		ob_start();
-		Hooks::run( $hook, $hookOptions );
+		MediaWikiServices::getInstance()->getHookContainer()->run( $hook, $hookOptions );
 		$hookContents = ob_get_contents();
 		ob_end_clean();
 		if ( !trim( $hookContents ) ) {
@@ -726,9 +734,10 @@ class FluentTemplate extends BaseTemplate {
 			'link-prefix' => 'footer',
 			'link-style' => null
 		];
+		// phpcs:ignore Generic.Files.LineLength.TooLong
 		'@phan-var array{id:string,class:string,order:string,link-prefix:string,icon-style:string,link-style:?string} $options';
 
-		$validFooterIcons = $this->get('footericons');
+		$validFooterIcons = $this->get( 'footericons' );
 		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
 
 		$html = '';

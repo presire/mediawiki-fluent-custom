@@ -65,7 +65,8 @@
 
 /* ダークモード適用時のアイコン色調整 */
 body.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
-html.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
+html.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before,
+html.skin-theme-clientpref-night .theme-toggle-button[data-theme="light"] .theme-toggle-icon::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>');
 }
 
@@ -96,8 +97,7 @@ html.theme-dark .theme-toggle-button[data-theme="light"] .theme-toggle-icon::bef
    ライトモード専用のWikiEditorスタイル
    ============================================ */
 
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-theme-toggle-1() {
   .wikiEditor-ui-toolbar,
   .wikiEditor-ui .wikiEditor-ui-top,
   .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
@@ -144,13 +144,22 @@ html.theme-light {
     background-color: rgba(0, 0, 0, 0.05) !important;
   }
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-theme-toggle-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-theme-toggle-1();
+	}
+}
 
 /* ============================================
    ダークモード専用のWikiEditorスタイル
    ============================================ */
 
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-theme-toggle-2() {
   .wikiEditor-ui-toolbar,
   .wikiEditor-ui .wikiEditor-ui-top,
   .wikiEditor-ui-toolbar .wikiEditor-ui-buttons {
@@ -197,6 +206,16 @@ html.theme-dark {
     background-color: rgba(255, 255, 255, 0.1) !important;
   }
 }
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-theme-toggle-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-theme-toggle-2();
+	}
+}
 
 /* ============================================
    WikiEditor共通スタイル（すべてのモードで適用）
@@ -212,21 +231,34 @@ html.theme-dark {
 
 /* ダークモード時の特殊文字を白色に */
 body.theme-dark .pages span,
-html.theme-dark .pages span {
+html.theme-dark .pages span,
+html.skin-theme-clientpref-night .pages span {
   color: #ffffff !important;
+}
+
+/* ダークモード時の特殊文字のホバー効果 */
+/* WikiEditorのホバー背景(Codexトークン)は上の白文字と別条件で決まり白地に白文字になり得るため、
+   カテゴリーインデックスと同じく背景を白、文字を黒に固定する */
+body.theme-dark .page-characters div span:hover,
+html.theme-dark .page-characters div span:hover,
+html.skin-theme-clientpref-night .page-characters div span:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
 /* ダークモード時のカテゴリーインデックスのホバー効果 */
 /* マウスカーソルが当たった時に背景を白、文字を黒にして視認性を確保 */
 body.theme-dark .index div[role="option"]:hover,
-html.theme-dark .index div[role="option"]:hover {
+html.theme-dark .index div[role="option"]:hover,
+html.skin-theme-clientpref-night .index div[role="option"]:hover {
   background-color: #ffffff !important;
   color: #000000 !important;
 }
 
 /* フォーカス時も同様のスタイルを適用 */
 body.theme-dark .index div[role="option"]:focus,
-html.theme-dark .index div[role="option"]:focus {
+html.theme-dark .index div[role="option"]:focus,
+html.skin-theme-clientpref-night .index div[role="option"]:focus {
   background-color: #ffffff !important;
   color: #000000 !important;
 }
@@ -235,8 +267,7 @@ html.theme-dark .index div[role="option"]:focus {
    ダークモード専用のjQuery UIダイアログスタイル
    ============================================ */
 
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-theme-toggle-3() {
   /* ダイアログ本体 */
   .ui-dialog {
     background-color: #2d2d2d !important;
@@ -391,4 +422,14 @@ html.theme-dark {
   .ui-button-text {
     color: inherit !important;
   }
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-theme-toggle-3();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-theme-toggle-3();
+	}
 }

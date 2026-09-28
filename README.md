@@ -26,7 +26,8 @@ WikiEditor integration, and extensive theme customization.
 ### Dark / Light Mode Toggle
 - Manual toggle button in the header toolbar
 - Automatic detection of system color scheme (`prefers-color-scheme`)
-- User preference persisted in `localStorage`
+- Integrated with MediaWiki core night mode (`skin-theme-clientpref-day/night/os`): the choice is kept in the client preference cookie for anonymous users and in the `fluent-theme` user option for logged-in users, and applied before first paint
+- Codex design tokens are exposed as CSS variables, so core and extension styles follow the theme
 - Smooth transition between themes
 - Support for per-theme images via `.dark-mode-image` / `.light-mode-image` CSS classes
 
@@ -43,6 +44,8 @@ WikiEditor integration, and extensive theme customization.
 - **Mouse wheel zoom** from 0.5x to 5x (0.1x increments)
 - **Click & drag** to pan zoomed images
 - Close via ESC key, overlay click, or close button
+- Accessible modal dialog (`role="dialog"`, focus trap, focus restore) with a link to the file description page
+- Images with a custom link (`link=`), external link, or inside `.noviewer` keep their normal link behavior; modifier-key clicks open links as usual
 - Automatic full-size image URL resolution from thumbnails
 
 ### WikiEditor Integration
@@ -60,6 +63,7 @@ WikiEditor integration, and extensive theme customization.
 ### Extension Integration
 - **Echo** - Styled notification badges
 - **VisualEditor** - Adapted editor surface and toolbar
+- **Popups**, **DiscussionTools**, **UniversalLanguageSelector**, **CodeMirror** - Theme / night mode adjustments via skin styles
 
 ### Other Enhancements
 - Japanese localization (`ja.json`)
@@ -94,7 +98,7 @@ WikiEditor integration, and extensive theme customization.
 
 ## Requirements
 
-- MediaWiki >= 1.35
+- MediaWiki >= 1.43
 
 ## Credits
 

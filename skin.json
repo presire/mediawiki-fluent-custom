@@ -5,16 +5,41 @@
 	"url": "https://www.mediawiki.org/wiki/Skin:Fluent",
 	"descriptionmsg": "fluent-desc",
 	"namemsg": "fluent",
-	"license-name": "CC0-1.0",
+	"license-name": "MIT",
 	"type": "skin",
 	"ConfigRegistry": {
 		"Fluent": "GlobalVarConfig::newInstance"
 	},
 	"requires": {
-		"MediaWiki": ">= 1.35.0"
+		"MediaWiki": ">= 1.43.0"
 	},
 	"ValidSkinNames": {
-		"fluent": "Fluent"
+		"fluent": {
+			"displayname": "Fluent",
+			"class": "MediaWiki\\Skin\\Fluent\\SkinFluent",
+			"args": [
+				{
+					"name": "fluent",
+					"template": "MediaWiki\\Skin\\Fluent\\FluentTemplate",
+					"responsive": true,
+					"clientPrefEnabled": true
+				}
+			]
+		}
+	},
+	"SkinLessImportPaths": {
+		"fluent": "resources/mediawiki.less"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "MediaWiki\\Skin\\Fluent\\Hooks"
+		}
+	},
+	"Hooks": {
+		"GetPreferences": "main"
+	},
+	"DefaultUserOptions": {
+		"fluent-theme": "os"
 	},
 	"MessagesDirs": {
 		"Fluent": [
@@ -52,6 +77,24 @@
 		"skins.fluent.js": {
 			"scripts": [
 				"resources/main.js"
+			],
+			"dependencies": [
+				"jquery",
+				"mediawiki.base",
+				"mediawiki.util",
+				"mediawiki.user",
+				"mediawiki.api"
+			],
+			"messages": [
+				"fluent-image-close",
+				"fluent-image-reset",
+				"fluent-image-open-file",
+				"fluent-image-dialog-label",
+				"fluent-toc-reset"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		}
 	},
@@ -62,15 +105,16 @@
 	"ResourceModuleSkinStyles": {
 		"fluent": {
 			"+ext.echo.styles.badge": "resources/extensions/echo.styles.badge.less",
-			"+ext.visualEditor.base": "resources/extensions/ext.visualEditor.less"
+			"+ext.visualEditor.base": "resources/extensions/ext.visualEditor.less",
+			"+ext.popups.main": "resources/extensions/ext.popups.main.less",
+			"+ext.discussionTools.init.styles": "resources/extensions/ext.discussionTools.init.styles.less",
+			"+ext.uls.pt": "resources/extensions/ext.uls.pt.less",
+			"+ext.CodeMirror.v6.WikiEditor": "resources/extensions/ext.CodeMirror.v6.WikiEditor.less",
+			"+ext.CodeMirror.WikiEditor": "resources/extensions/ext.CodeMirror.WikiEditor.less"
 		}
 	},
-	"AutoloadClasses": {
-		"SkinFluent": "includes/SkinFluent.php",
-		"FluentTemplate": "includes/FluentTemplate.php"
-	},
-	"ConfigRegistry":{
-		"Fluent":"GlobalVarConfig::newInstance"
+	"AutoloadNamespaces": {
+		"MediaWiki\\Skin\\Fluent\\": "includes/"
 	},
 	"config": {
 		"FluentDisableGravatar": {
@@ -78,5 +122,5 @@
 			"help": "Control whether or not we should use Gravatar. You should set this to true for wikis not available over the internet"
 		}
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }

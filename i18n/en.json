@@ -1,7 +1,17 @@
 {
 	"@metadata": {
-		"authors": [ "..." ]
+		"authors": [
+			"..."
+		]
 	},
 	"fluent": "Fluent",
-	"fluent-desc": "A skin based on the Microsoft Fluent Design System"
+	"fluent-desc": "A skin based on the Microsoft Fluent Design System",
+	"fluent-toggle-theme-label": "Toggle theme",
+	"fluent-toggle-dark-mode": "Toggle dark mode",
+	"fluent-user-icon-label": "User icon",
+	"fluent-image-close": "Close",
+	"fluent-image-reset": "Reset",
+	"fluent-image-open-file": "Open file page",
+	"fluent-image-dialog-label": "Image viewer",
+	"fluent-toc-reset": "Reset position and size"
 }

@@ -1,7 +1,17 @@
 {
 	"@metadata": {
-		"authors": [ "LZMAShili" ]
+		"authors": [
+			"LZMAShili"
+		]
 	},
 	"fluent": "Fluent",
-	"fluent-desc": "Microsoft Fluent Design Systemを基本としたデザインのスキン"
+	"fluent-desc": "Microsoft Fluent Design Systemを基本としたデザインのスキン",
+	"fluent-toggle-theme-label": "テーマ切替",
+	"fluent-toggle-dark-mode": "ダークモード切替",
+	"fluent-user-icon-label": "ユーザーアイコン",
+	"fluent-image-close": "閉じる",
+	"fluent-image-reset": "元に戻す",
+	"fluent-image-open-file": "ファイルページを開く",
+	"fluent-image-dialog-label": "画像ビューア",
+	"fluent-toc-reset": "位置とサイズをリセット"
 }

@@ -7,38 +7,152 @@
 /*   強制ライトモード						*/
 /*   デフォルトのライトモードスタイルを継承	*/
 /* =================================== 	*/
-html.theme-light,
-body.theme-light {
+.fluent-theme-light-syntaxhighlight-colors-1() {
 	/* プリプロセッサディレクティブ (#include, #define等) */
 	.mw-highlight .cp {   /* Comment.Preproc */
 		color: #d63384 !important;
 		font-weight: 600 !important;
 		font-style: normal !important;
 	}
-
-	/* QML言語固有のスタイル */
-	.mw-highlight-lang-qml .nx {
-		color: #0066cc; /* 識別子 - 青 */
+	.mw-highlight .cpf {   /* Comment.PreprocFile (<QFile>等のヘッダ名) */
+		color: #0050ff !important;
+		font-weight: bold !important;
+		font-style: normal !important;
 	}
 
-	.mw-highlight-lang-qml .p {
-		color: #666666; /* 句読点 - グレー */
+	/* QML言語固有のスタイル - ライトモード派手ビビッド系 */
+	.mw-highlight-lang-qml .k,    /* import, property, signal, function等 */
+	.mw-highlight-lang-qml .kd,
+	.mw-highlight-lang-qml .kn { color: #e65c00 !important; font-weight: bold !important; }
+	.mw-highlight-lang-qml .kc { color: #e60000 !important; font-weight: bold !important; } /* true/false - 赤 */
+	.mw-highlight-lang-qml .n,
+	.mw-highlight-lang-qml .nx { color: #0050ff !important; font-weight: bold !important; } /* 識別子 - ビビッド青 */
+	.mw-highlight-lang-qml .nt { color: #00707d !important; font-weight: bold !important; } /* Rectangle, Item等の型 */
+	.mw-highlight-lang-qml .na { color: #a100ff !important; font-weight: bold !important; } /* width, text等の属性 */
+	.mw-highlight-lang-qml .nf,
+	.mw-highlight-lang-qml .fm { color: #c000c0 !important; font-weight: bold !important; } /* 関数・シグナルハンドラ */
+	.mw-highlight-lang-qml .p { color: #a020f0 !important; font-weight: bold !important; } /* {}:; 等の句読点 */
+	.mw-highlight-lang-qml .o,
+	.mw-highlight-lang-qml .ow { color: #e60073 !important; font-weight: bold !important; } /* 演算子 */
+	.mw-highlight-lang-qml .s,
+	.mw-highlight-lang-qml .s1,
+	.mw-highlight-lang-qml .s2 { color: #0d8a00 !important; font-weight: 600 !important; } /* 文字列 */
+	.mw-highlight-lang-qml .c,
+	.mw-highlight-lang-qml .c1,
+	.mw-highlight-lang-qml .cm { color: #5c6770 !important; font-style: italic !important; } /* コメント */
+	.mw-highlight-lang-qml .m,
+	.mw-highlight-lang-qml .mi,
+	.mw-highlight-lang-qml .mf { color: #b45f06 !important; font-weight: bold !important; } /* 数値 */
+
+	/* Nushell固有のスタイル - ライトモード派手ビビッド系 */
+	.mw-highlight-lang-nu {
+		border-radius: 6px;
 	}
 
-	.mw-highlight-lang-qml .mi {
-		color: #ac4fc6; /* 数値 - 紫 */
+	.mw-highlight-lang-nu .k,	/* ls, where, def, use等 */
+	.mw-highlight-lang-nu .kd,
+	.mw-highlight-lang-nu .kn,
+	.mw-highlight-lang-nu .kp {
+		color: #e65c00 !important; font-weight: bold !important;
 	}
 
-	.mw-highlight-lang-qml .kc {
-		color: #cc0000; /* キーワード定数 - 赤 */
+	.mw-highlight-lang-nu .p {	/* | */
+		color: #a020f0 !important; font-weight: bold !important;
+	}
+
+	.mw-highlight-lang-nu .nv,	/* $変数 */
+	.mw-highlight-lang-nu .vc,
+	.mw-highlight-lang-nu .vg,
+	.mw-highlight-lang-nu .vi,
+	.mw-highlight-lang-nu .vm {
+		color: #a100ff !important; font-weight: bold !important;
+	}
+
+	.mw-highlight-lang-nu .na {	/* $env.path の .path / .FOO 等の属性 */
+		color: #0090c0 !important; font-weight: bold !important;
+	}
+
+	.mw-highlight-lang-nu .nb,	/* 組み込みコマンド名 */
+	.mw-highlight-lang-nu .nf,	/* 関数名 */
+	.mw-highlight-lang-nu .nn {
+		color: #0070c0 !important; font-weight: bold !important;
+	}
+
+	.mw-highlight-lang-nu .o,	/* ++=, =, == 等の演算子 */
+	.mw-highlight-lang-nu .ow,
+	.mw-highlight-lang-nu .op {
+		color: #e60073 !important; font-weight: bold !important;
+	}
+
+	.mw-highlight-lang-nu .s,
+	.mw-highlight-lang-nu .s1,
+	.mw-highlight-lang-nu .s2,
+	.mw-highlight-lang-nu .sb,
+	.mw-highlight-lang-nu .sc,
+	.mw-highlight-lang-nu .sd { color: #0d8a00 !important; font-weight: 600 !important; } /* 文字列 */
+	.mw-highlight-lang-nu .se,
+	.mw-highlight-lang-nu .si { color: #e65c00 !important; font-weight: bold !important; } /* 文字列内エスケープ・展開 */
+	.mw-highlight-lang-nu .c,
+	.mw-highlight-lang-nu .c1,
+	.mw-highlight-lang-nu .cm { color: #5c6770 !important; font-style: italic !important; } /* #コメント */
+	.mw-highlight-lang-nu .m,
+	.mw-highlight-lang-nu .mi,
+	.mw-highlight-lang-nu .mf,
+	.mw-highlight-lang-nu .mh,
+	.mw-highlight-lang-nu .mo,
+	.mw-highlight-lang-nu .il { color: #c55a00 !important; font-weight: bold !important; } /* 数値 */
+
+	/* C++/C#共通 - ライトモード派手ビビッド系（グローなし） */
+	.mw-highlight-lang-cpp,
+	.mw-highlight-lang-csharp,
+	div[class*="mw-highlight-lang-c++"],
+	div[class*="mw-highlight-lang-c#"] {
+		.k, .kd, .kn, .kp, .kr { color: #e65c00 !important; font-weight: bold !important; } /* class, namespace, public, using等 */
+		.kt { color: #00707d !important; font-weight: bold !important; } /* int, void, string, var等の型 */
+		.nc, .ne { color: #0050ff !important; font-weight: bold !important; } /* クラス名 */
+		.nf, .fm { color: #c000c0 !important; font-weight: bold !important; } /* 関数・メソッド名 */
+		.nn, .nb, .bp { color: #0090c0 !important; font-weight: bold !important; } /* std, System, 組み込み */
+		.na, .nd, .ni { color: #a100ff !important; font-weight: bold !important; } /* 属性・アノテーション */
+		.no, .kc { color: #e60000 !important; font-weight: bold !important; } /* true/false, NULL, 定数 */
+		.nv, .vg, .vi, .vm { color: #a100ff !important; font-weight: bold !important; } /* 変数 */
+		.o, .ow { color: #e60073 !important; font-weight: bold !important; } /* 演算子 */
+		.p { color: #a020f0 !important; font-weight: bold !important; } /* ; {} () */
+		.s, .s1, .s2, .sb, .sc, .sd { color: #0d8a00 !important; font-weight: 600 !important; } /* 文字列 */
+		.se, .si { color: #e65c00 !important; font-weight: bold !important; } /* エスケープ・展開 */
+		.c, .c1, .cm { color: #5c6770 !important; font-style: italic !important; } /* コメント */
+		.m, .mi, .mf, .mh, .mo, .il { color: #b45f06 !important; font-weight: bold !important; } /* 数値 */
+	}
+
+	/* qmake言語固有のスタイル - ライトモード派手ビビッド系（グローなし） */
+	.mw-highlight-lang-qmake .k { color: #e65c00 !important; font-weight: bold !important; } /* QT, SOURCES等の変数 */
+	.mw-highlight-lang-qmake .nf { color: #c000c0 !important; font-weight: bold !important; } /* contains, message等の関数 */
+	.mw-highlight-lang-qmake .nv { color: #a100ff !important; font-weight: bold !important; } /* $$VAR */
+	.mw-highlight-lang-qmake .o,
+	.mw-highlight-lang-qmake .ow { color: #e60073 !important; font-weight: bold !important; } /* = += $$ */
+	.mw-highlight-lang-qmake .p { color: #a020f0 !important; font-weight: bold !important; } /* (){} */
+	.mw-highlight-lang-qmake .s,
+	.mw-highlight-lang-qmake .s1,
+	.mw-highlight-lang-qmake .s2 { color: #0d8a00 !important; font-weight: 600 !important; } /* 文字列 */
+	.mw-highlight-lang-qmake .c,
+	.mw-highlight-lang-qmake .c1 { color: #5c6770 !important; font-style: italic !important; } /* #コメント */
+	.mw-highlight-lang-qmake .m,
+	.mw-highlight-lang-qmake .mi { color: #b45f06 !important; font-weight: bold !important; } /* 数値 */
+}
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-syntaxhighlight-colors-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-syntaxhighlight-colors-1();
 	}
 }
 
 /* ===================================	*/
 /*   強制ダークモード						*/
 /* =================================== 	*/
-html.theme-dark,
-body.theme-dark {
+.fluent-theme-dark-syntaxhighlight-colors-2() {
 	/* SyntaxHighlight - キーワードの色を明るく */
 	.mw-highlight .k,     /* Keyword */
 	.mw-highlight .kd,    /* Keyword.Declaration */
@@ -76,6 +190,13 @@ body.theme-dark {
 		color: #ff79c6 !important;
 		font-weight: 600 !important;
 		font-style: normal !important;
+	}
+
+	.mw-highlight .cpf {   /* Comment.PreprocFile (<QFile>等のヘッダ名) - 弱めグロー */
+		color: #7df9ff !important;
+		font-weight: bold !important;
+		font-style: normal !important;
+		text-shadow: 0 0 3px rgba(125, 249, 255, 0.3);
 	}
 
 	.mw-highlight .s,     /* String */
@@ -130,22 +251,30 @@ body.theme-dark {
 		color: #aaaa00 !important;
 	}
 
-	/* QML言語固有のスタイル */
-	.mw-highlight-lang-qml .nx {
-		color: #0066cc; /* 識別子 - 青 */
-	}
-
-	.mw-highlight-lang-qml .p {
-		color: #666666; /* 句読点 - グレー */
-	}
-
-	.mw-highlight-lang-qml .mi {
-		color: #ac4fc6; /* 数値 - 紫 */
-	}
-
-	.mw-highlight-lang-qml .kc {
-		color: #cc0000; /* キーワード定数 - 赤 */
-	}
+	/* QML言語固有のスタイル - ダークモード微グロー系（強弱あり） */
+	.mw-highlight-lang-qml .k,    /* import, property, signal, function等 - 強め */
+	.mw-highlight-lang-qml .kd,
+	.mw-highlight-lang-qml .kn { color: #ff9e00 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 158, 0, 0.35); }
+	.mw-highlight-lang-qml .kc { color: #ff5555 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 85, 85, 0.25); } /* true/false - 弱め */
+	.mw-highlight-lang-qml .n,
+	.mw-highlight-lang-qml .nx { color: #7df9ff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(125, 249, 255, 0.35); } /* 識別子 - 強め */
+	.mw-highlight-lang-qml .nt { color: #66d9ef !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(102, 217, 239, 0.25); } /* 型 - 弱め */
+	.mw-highlight-lang-qml .na { color: #00e5ff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(0, 229, 255, 0.35); } /* 属性 - 強め */
+	.mw-highlight-lang-qml .nf,
+	.mw-highlight-lang-qml .fm { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 91, 255, 0.25); } /* 関数 - 弱め */
+	.mw-highlight-lang-qml .p { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* 句読点 - 強め */
+	.mw-highlight-lang-qml .o,
+	.mw-highlight-lang-qml .ow { color: #ff79c6 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 121, 198, 0.25); } /* 演算子 - 弱め */
+	.mw-highlight-lang-qml .s,
+	.mw-highlight-lang-qml .s1,
+	.mw-highlight-lang-qml .s2,
+	.mw-highlight-lang-qml .sb { color: #adff2f !important; font-weight: 600 !important; text-shadow: 0 0 2px rgba(173, 255, 47, 0.22); } /* 文字列 - 弱め */
+	.mw-highlight-lang-qml .c,
+	.mw-highlight-lang-qml .c1,
+	.mw-highlight-lang-qml .cm { color: #a8b3c1 !important; font-style: italic !important; } /* コメント - グローなし */
+	.mw-highlight-lang-qml .m,
+	.mw-highlight-lang-qml .mi,
+	.mw-highlight-lang-qml .mf { color: #ffab70 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 171, 112, 0.25); } /* 数値 - 弱め */
 
 	/* Python言語固有のスタイル */
 	.mw-highlight-lang-python .nn {
@@ -154,5 +283,90 @@ body.theme-dark {
 
 	.mw-highlight-lang-python .nb {
 		color: #00ff5f !important;
+	}
+
+	/* Nushell固有のスタイル - ダークモード微グロー系（強弱あり） */
+	.mw-highlight-lang-nu {
+		border-radius: 6px;
+	}
+	.mw-highlight-lang-nu .k,   /* ls, where, def, use等のキーワード - 強め */
+	.mw-highlight-lang-nu .kd,
+	.mw-highlight-lang-nu .kn,
+	.mw-highlight-lang-nu .kp { color: #ff9e00 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 158, 0, 0.35); }
+	.mw-highlight-lang-nu .p { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* | 等のパイプ - 強め */
+	.mw-highlight-lang-nu .nv,  /* $変数 - 強め */
+	.mw-highlight-lang-nu .vc,
+	.mw-highlight-lang-nu .vg,
+	.mw-highlight-lang-nu .vi,
+	.mw-highlight-lang-nu .vm { color: #ffe100 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 225, 0, 0.35); }
+	.mw-highlight-lang-nu .na { color: #00e5ff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(0, 229, 255, 0.32); } /* $env.path の .path / .FOO 等の属性 - 強め */
+	.mw-highlight-lang-nu .nb,  /* 組み込みコマンド名 - 弱め */
+	.mw-highlight-lang-nu .nf,  /* 関数名 */
+	.mw-highlight-lang-nu .nn { color: #7df9ff !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(125, 249, 255, 0.25); }
+	.mw-highlight-lang-nu .o,   /* ++=, =, == 等の演算子 - 強め */
+	.mw-highlight-lang-nu .ow,
+	.mw-highlight-lang-nu .op { color: #ff79c6 !important; font-weight: bold !important; text-shadow: 0 0 3px rgba(255, 121, 198, 0.3); }
+	.mw-highlight-lang-nu .s,   /* 文字列 - 弱め */
+	.mw-highlight-lang-nu .s1,
+	.mw-highlight-lang-nu .s2,
+	.mw-highlight-lang-nu .sb,
+	.mw-highlight-lang-nu .sc,
+	.mw-highlight-lang-nu .sd { color: #adff2f !important; font-weight: 600 !important; text-shadow: 0 0 2px rgba(173, 255, 47, 0.22); }
+	.mw-highlight-lang-nu .se,  /* 文字列内エスケープ・展開 - 弱め */
+	.mw-highlight-lang-nu .si { color: #ffeb3b !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 235, 59, 0.25); }
+	.mw-highlight-lang-nu .c,   /* #コメント - グローなし */
+	.mw-highlight-lang-nu .c1,
+	.mw-highlight-lang-nu .cm { color: #a8b3c1 !important; font-style: italic !important; }
+	.mw-highlight-lang-nu .m,   /* 数値 - 弱め */
+	.mw-highlight-lang-nu .mi,
+	.mw-highlight-lang-nu .mf,
+	.mw-highlight-lang-nu .mh,
+	.mw-highlight-lang-nu .mo,
+	.mw-highlight-lang-nu .il { color: #ffab70 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 171, 112, 0.25); }
+
+	/* C++/C#共通 - ダークモード微グロー系（強弱あり） */
+	.mw-highlight-lang-cpp,
+	.mw-highlight-lang-csharp,
+	div[class*="mw-highlight-lang-c++"],
+	div[class*="mw-highlight-lang-c#"] {
+		.k, .kd, .kn, .kp, .kr { color: #ff9e00 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 158, 0, 0.35); } /* キーワード - 強め */
+		.kt { color: #66d9ef !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(102, 217, 239, 0.25); } /* 型 - 弱め */
+		.nc, .ne { color: #7df9ff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(125, 249, 255, 0.35); } /* クラス名 - 強め */
+		.nf, .fm { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* 関数・メソッド - 強め */
+		.nn, .nb, .bp { color: #00e5ff !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(0, 229, 255, 0.25); } /* 名前空間 - 弱め */
+		.na, .nd, .ni { color: #00e5ff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(0, 229, 255, 0.35); } /* 属性 - 強め */
+		.no, .kc { color: #ff5555 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 85, 85, 0.25); } /* 定数 - 弱め */
+		.nv, .vg, .vi, .vm { color: #ffe100 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 225, 0, 0.35); } /* 変数 - 強め */
+		.o, .ow { color: #ff79c6 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 121, 198, 0.25); } /* 演算子 - 弱め */
+		.p { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* 句読点 - 強め */
+		.s, .s1, .s2, .sb, .sc, .sd { color: #adff2f !important; font-weight: 600 !important; text-shadow: 0 0 2px rgba(173, 255, 47, 0.22); } /* 文字列 - 弱め */
+		.se, .si { color: #ffeb3b !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 235, 59, 0.25); } /* エスケープ - 弱め */
+		.c, .c1, .cm { color: #a8b3c1 !important; font-style: italic !important; } /* コメント - グローなし */
+		.m, .mi, .mf, .mh, .mo, .il { color: #ffab70 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 171, 112, 0.25); } /* 数値 - 弱め */
+	}
+
+	/* qmake言語固有のスタイル - ダークモード微グロー系（強弱あり） */
+	.mw-highlight-lang-qmake .k { color: #ff9e00 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 158, 0, 0.35); } /* QT, SOURCES等の変数 - 強め */
+	.mw-highlight-lang-qmake .nf { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* contains, message等の関数 - 強め */
+	.mw-highlight-lang-qmake .nv { color: #ffe100 !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 225, 0, 0.35); } /* $$VAR - 強め */
+	.mw-highlight-lang-qmake .o,
+	.mw-highlight-lang-qmake .ow { color: #ff79c6 !important; font-weight: bold !important; text-shadow: 0 0 3px rgba(255, 121, 198, 0.3); } /* = += $$ - 強め */
+	.mw-highlight-lang-qmake .p { color: #ff5bff !important; font-weight: bold !important; text-shadow: 0 0 4px rgba(255, 91, 255, 0.32); } /* (){} - 強め */
+	.mw-highlight-lang-qmake .s,
+	.mw-highlight-lang-qmake .s1,
+	.mw-highlight-lang-qmake .s2 { color: #adff2f !important; font-weight: 600 !important; text-shadow: 0 0 2px rgba(173, 255, 47, 0.22); } /* 文字列 - 弱め */
+	.mw-highlight-lang-qmake .c,
+	.mw-highlight-lang-qmake .c1 { color: #a8b3c1 !important; font-style: italic !important; } /* #コメント - グローなし */
+	.mw-highlight-lang-qmake .m,
+	.mw-highlight-lang-qmake .mi { color: #ffab70 !important; font-weight: bold !important; text-shadow: 0 0 2px rgba(255, 171, 112, 0.25); } /* 数値 - 弱め */
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-syntaxhighlight-colors-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-syntaxhighlight-colors-2();
 	}
 }

@@ -346,8 +346,7 @@
    ライトモードスタイル
    =================================== */
 
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-toc-styles-1() {
 	/* 目次のコンテナ - ライトモード */
 	#toc,
 	.toc {
@@ -473,13 +472,22 @@ html.theme-light {
 		box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.25);
 	}
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-toc-styles-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-toc-styles-1();
+	}
+}
 
 /* ===================================
    ダークモードスタイル
    =================================== */
 
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-toc-styles-2() {
 	/* 目次のコンテナ - ダークモード */
 	#toc,
 	.toc {
@@ -611,6 +619,16 @@ html.theme-dark {
 
 	.toc a:focus-visible {
 		box-shadow: 0 0 0 4px rgba(107, 163, 192, 0.3);
+	}
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-toc-styles-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-toc-styles-2();
 	}
 }
 

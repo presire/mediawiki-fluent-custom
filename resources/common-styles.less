@@ -184,6 +184,42 @@
 	transform: scale(1.05);
 }
 
+/* ファイルページへのリンク */
+#image-popup-file-link {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	background-color: rgba(255, 255, 255, 0.9);
+	color: #333;
+	border-radius: 18px;
+	padding: 8px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	z-index: 100000;
+	font-family: 'Segoe UI', 'Droid Sans', sans-serif;
+}
+
+#image-popup-file-link:hover {
+	background-color: #4a90e2;
+	color: white;
+	transform: scale(1.05);
+}
+
+#image-popup-file-link[hidden] {
+	display: none;
+}
+
+#image-popup-close:focus-visible,
+#image-popup-reset:focus-visible,
+#image-popup-file-link:focus-visible {
+	outline: 3px solid #4a90e2;
+	outline-offset: 2px;
+}
+
 /* アニメーション */
 @keyframes fadeIn {
 	from {
@@ -239,6 +275,7 @@ label[for=wpCaptchaWord] {
 /* 見出しh2の基本スタイル - TOCスタイルの背景を適用 */
 /* 目次のh2を除外 */
 .mw-parser-output > h2,
+.mw-parser-output > .mw-heading > h2,
 .mw-body-content > h2:not(#mw-toc-heading) {
     font-size: 24px !important;
     font-weight: 800;
@@ -557,8 +594,7 @@ DIV.amazonsearch UL LI.shoplinkamazon {
    ライトモード専用スタイル
    =================================== */
 
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-common-styles-1() {
 	/* ボディ背景 */
 	.mw-body {
 		background-color: #ffffff !important;
@@ -674,6 +710,7 @@ html.theme-light {
 	/* h2 - TOCスタイルの青系グラデーション適用 */
 	/* 目次のh2を除外 */
 	.mw-parser-output > h2,
+	.mw-parser-output > .mw-heading > h2,
 	.mw-body-content > h2:not(#mw-toc-heading) {
 		background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 50%, #FFDAB9 100%);
 		border: 2px solid #D4A574;
@@ -683,6 +720,8 @@ html.theme-light {
 	}
 
 	.mw-parser-output > h2:hover,
+
+	.mw-parser-output > .mw-heading > h2:hover,
 	.mw-body-content > h2:not(#mw-toc-heading):hover {
 		box-shadow: 0 8px 24px rgba(212, 165, 116, 0.35),
 		            inset 0 1px 0 rgba(255, 255, 255, 0.7);
@@ -767,32 +806,56 @@ html.theme-light {
 		display: block;
 	}
 
-	/* シンタックスハイライト */
-	.mw-highlight > pre {
-		font-size: 16px !important;
-		font-family: "DejaVu Sans Mono" !important;
+	/* シンタックスハイライト - コンテナ自体の背景 (ext.pygments既定の #f8f8f8 との継ぎ目防止) */
+	/* 背景・枠線はコンテナ側に集約し、内側preは透明化してグラデーションの継ぎ目を出さない */
+	div.mw-highlight {
+		background-color: #fff !important;
+		background: linear-gradient(to bottom right, #fdfdfd, #ffffff) !important;
 		color: #101010;
-		background: linear-gradient(to bottom right, #fdfdfd, #ffffff);
-		border-color: rgb(80, 120, 80);
 		border: solid 3px rgb(100, 150, 100);
 		border-radius: 5px;
 		width: fit-content;
 		max-width: 100%;
 		overflow-x: auto;
+	}
+
+	/* シンタックスハイライト */
+	.mw-highlight > pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
+		color: #101010;
+		background: transparent;
+		background-color: transparent;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		width: auto;
+		max-width: none;
+		overflow-x: visible;
 		display: block;
+		margin: 0;
+		padding: 0.8em 1em;
 	}
 
 	/* シンタックスハイライト - テキスト */
 	.mw-highlight-lang-text > pre {
 		font-family: "DejaVu Sans Mono" !important;
 		color: #101010;
-		background: linear-gradient(to bottom right, #fdfdfd, #ffffff);
-		border: solid 3px rgb(100, 100, 200);
-		border-radius: 5px;
-		width: fit-content;
-		max-width: 100%;
-		overflow-x: auto;
+		background: transparent;
+		background-color: transparent;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		width: auto;
+		max-width: none;
+		overflow-x: visible;
 		display: block;
+		margin: 0;
+		padding: 0.8em 1em;
+	}
+
+	div.mw-highlight-lang-text {
+		border-color: rgb(100, 100, 200);
 	}
 
 	code {
@@ -809,17 +872,18 @@ html.theme-light {
 		color: #ffb84d !important;
 	}
 
+	/* キャプション: 鮮やかなオレンジ→マゼンタ(白文字のコントラスト比4.5以上を確保) */
 	.wikitable > caption {
-		background: linear-gradient(180deg, #4a90e2 0%, #4a90e2 20%, #5ba3f5 60%, #5ba3f5 100%);
+		background: linear-gradient(90deg, #d9480f 0%, #c2255c 100%);
 		color: #ffffff;
-		border-color: #4a90e2;
 		padding: 8px;
 		font-weight: bold;
 		text-align: center;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
-		border: 1px solid #5ba3f5;
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		border: 1px solid #c2255c;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 	}
 
 	table {
@@ -827,15 +891,29 @@ html.theme-light {
 		background-color: #ffffff !important;
 	}
 
+	/* 見出しセル: 明るいオレンジ + 濃い茶色の文字 */
 	.wikitable th {
-		color: #1a365d !important;
-		border-color: #98a2b0 !important;
-		background: linear-gradient(to bottom, #e0ebff 0%, #d0e0ff 100%);
+		color: #5c2400 !important;
+		border-color: #f08c4a !important;
+		background: linear-gradient(to bottom, #ffd8a8 0%, #ffc078 100%);
 	}
 
 	.wikitable th:hover {
-		color: #1a365d !important;
-		background: linear-gradient(to bottom, #d0e0ff 0%, #c0d5ff 100%);
+		color: #5c2400 !important;
+		background: linear-gradient(to bottom, #ffc078 0%, #ffa94d 100%);
+	}
+
+	/* データセル: 暖色の罫線、縞模様、ホバー行の強調 */
+	.wikitable td {
+		border-color: #f3c8a0 !important;
+	}
+
+	.wikitable > tbody > tr:nth-child(even) > td {
+		background-color: #fff4e6;
+	}
+
+	.wikitable > tbody > tr:hover > td {
+		background-color: #ffe3c2;
 	}
 
 	td {
@@ -941,13 +1019,22 @@ html.theme-light {
 		background-color: transparent;
 	}
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-common-styles-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-common-styles-1();
+	}
+}
 
 /* ===================================
    ダークモード専用スタイル
    =================================== */
 
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-common-styles-2() {
 	.mw-body {
 		background-color: #262626 !important;
 	}
@@ -1070,6 +1157,7 @@ html.theme-dark {
 	/* h2 - TOCスタイルの青系グラデーション適用 */
 	/* 目次のh2を除外 */
 	.mw-parser-output > h2,
+	.mw-parser-output > .mw-heading > h2,
 	.mw-body-content > h2:not(#mw-toc-heading) {
 		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 		border: 2px solid #5a8fa8;
@@ -1078,6 +1166,8 @@ html.theme-dark {
 	}
 
 	.mw-parser-output > h2:hover,
+
+	.mw-parser-output > .mw-heading > h2:hover,
 	.mw-body-content > h2:not(#mw-toc-heading):hover {
 		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
 		transform: translateY(-2px);
@@ -1161,32 +1251,56 @@ html.theme-dark {
 		display: block;
 	}
 
-	/* シンタックスハイライト */
-	.mw-highlight > pre {
-		font-size: 16px !important;
-		font-family: "DejaVu Sans Mono" !important;
+	/* シンタックスハイライト - コンテナ自体の背景 (ext.pygments既定の #f8f8f8 を上書きし右側の白抜きを防止) */
+	/* 背景・枠線はコンテナ側に集約し、内側preは透明化してグラデーションの継ぎ目を出さない */
+	div.mw-highlight {
+		background-color: #222 !important;
+		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a) !important;
 		color: #e0e0e0;
-		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
-		border-color: rgb(80, 120, 80);
 		border: solid 3px rgb(100, 150, 100);
 		border-radius: 5px;
 		width: fit-content;
 		max-width: 100%;
 		overflow-x: auto;
+	}
+
+	/* シンタックスハイライト */
+	.mw-highlight > pre {
+		font-size: 16px !important;
+		font-family: "DejaVu Sans Mono" !important;
+		color: #e0e0e0;
+		background: transparent;
+		background-color: transparent;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		width: auto;
+		max-width: none;
+		overflow-x: visible;
 		display: block;
+		margin: 0;
+		padding: 0.8em 1em;
 	}
 
 	/* シンタックスハイライト - テキスト */
 	.mw-highlight-lang-text > pre {
 		font-family: "DejaVu Sans Mono" !important;
 		color: #e0e0e0;
-		background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
-		border: solid 3px rgb(100, 100, 200);
-		border-radius: 5px;
-		width: fit-content;
-		max-width: 100%;
-		overflow-x: auto;
+		background: transparent;
+		background-color: transparent;
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		width: auto;
+		max-width: none;
+		overflow-x: visible;
 		display: block;
+		margin: 0;
+		padding: 0.8em 1em;
+	}
+
+	div.mw-highlight-lang-text {
+		border-color: rgb(100, 100, 200);
 	}
 
 	code {
@@ -1203,17 +1317,19 @@ html.theme-dark {
 		color: #ffb84d !important;
 	}
 
+	/* ネオン調: 広い面は暗く保ち、縁取り・文字・帯に鮮やかな色を使ってまぶしさを抑える */
+	/* キャプション: ティール→グリーン(白文字のコントラスト比4.5以上を確保) */
 	.wikitable > caption {
-		background: linear-gradient(180deg, #1B4779 0%, #1B4779 20%, #2555A2 60%, #2555A2 100%);
-		color: #f0f0f0;
-		border-color: #1B4779;
+		background: linear-gradient(90deg, #087f5b 0%, #237032 100%);
+		color: #ffffff;
 		padding: 8px;
 		font-weight: bold;
 		text-align: center;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
-		border: 1px solid #2B579A;
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		border: 1px solid #087f5b;
+		box-shadow: 0 0 8px rgba(18, 184, 134, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 	}
 
 	table {
@@ -1221,15 +1337,30 @@ html.theme-dark {
 		background-color: #2a2a2a !important;
 	}
 
+	/* 見出しセル: 深緑の背景 + ネオングリーンの文字とミントの下線 */
 	.wikitable th {
-		color: #f0f0f0 !important;
-		border-color: #606060;
-		background: linear-gradient(to bottom, #3a5080 0%, #2a4070 100%);
+		color: #69db7c !important;
+		border-color: #2b5a44 !important;
+		border-bottom: 2px solid #38d9a9 !important;
+		background: linear-gradient(to bottom, #12291f 0%, #0e2019 100%);
 	}
 
 	.wikitable th:hover {
-		color: #f0f0f0 !important;
-		background: linear-gradient(to bottom, #4a6090 0%, #3a5080 100%);
+		color: #8ce99a !important;
+		background: linear-gradient(to bottom, #183a2b 0%, #12291f 100%);
+	}
+
+	/* データセル: 緑系の罫線、暗い縞模様、ホバー行を淡い緑で強調 */
+	.wikitable td {
+		border-color: #2f4a3c !important;
+	}
+
+	.wikitable > tbody > tr:nth-child(even) > td {
+		background-color: #1f2e27;
+	}
+
+	.wikitable > tbody > tr:hover > td {
+		background-color: #24463a;
 	}
 
 	td {
@@ -1317,5 +1448,15 @@ html.theme-dark {
 	table img.mwe-math-fallback-image-display {
 		filter: invert(1) hue-rotate(180deg);
 		background-color: transparent;
+	}
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-common-styles-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-common-styles-2();
 	}
 }

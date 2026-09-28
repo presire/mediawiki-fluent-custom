@@ -1,7 +1,17 @@
 {
 	"@metadata": {
-		"authors": [ "..." ]
+		"authors": [
+			"..."
+		]
 	},
 	"fluent": "{{optional}}",
-	"fluent-desc": "{{desc|what=skin|name=Fluent|url=https://www.mediawiki.org/wiki/Skin:Fluent}}"
+	"fluent-desc": "{{desc|what=skin|name=Fluent|url=https://www.mediawiki.org/wiki/Skin:Fluent}}",
+	"fluent-toggle-theme-label": "Title/aria-label of the theme toggle button in the header.",
+	"fluent-toggle-dark-mode": "Label of the dark mode toggle link in the user menu.",
+	"fluent-user-icon-label": "Title of the user menu icon button.",
+	"fluent-image-close": "Aria-label of the image popup close button.",
+	"fluent-image-reset": "Label/aria-label of the image popup reset button.",
+	"fluent-image-open-file": "Label of the link to the file description page in the image popup.",
+	"fluent-image-dialog-label": "Accessible label (aria-label) of the image popup dialog.",
+	"fluent-toc-reset": "Title of the table of contents reset button."
 }

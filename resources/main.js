@@ -276,92 +276,113 @@ $(document).ready(function() {
 });
 
 // ============================================
-// テーマ切り替え機能(クラスベース)
+// テーマ切り替え機能(MediaWikiコアのナイトモードと連携)
 // ============================================
-// CSSのメディアクエリ(prefers-color-scheme)は使用せず、
-// body.theme-light / body.theme-dark クラスで完全に制御します。
-// これにより、ユーザーの選択を確実に保存・適用できます。
+// 設定値はコアと同じ <html> の skin-theme-clientpref-day/night/os クラスで表現します。
+//  - 未ログイン: mw.user.clientPrefs (Cookie)。描画前にコアの起動スクリプトが復元します。
+//  - ログイン中: ユーザー設定 fluent-theme (API保存)。サーバ側でクラスを出力します。
+// CSSは上記クラスで配色を切り替えます。body/html の theme-light / theme-dark クラスは
+// 解決後のテーマ(osの場合はシステム設定)を表し、画像切り替え等のために維持しています。
 // ============================================
 (function() {
     'use strict';
 
-    const THEME_STORAGE_KEY = 'fluent-theme-preference';
-    const THEME_LIGHT = 'light';
-    const THEME_DARK = 'dark';
+    const FEATURE = 'skin-theme';
+    const USER_OPTION = 'fluent-theme';
+    const LEGACY_STORAGE_KEY = 'fluent-theme-preference';
+    const THEME_COLOR = { light: '#CF8B54', dark: '#8B5A3C' };
+    const darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-    // テーマを適用する関数
-    // bodyとhtmlの両方にクラスを適用することで、すべてのスタイルに確実に反映
+    function getPreference() {
+        const match = document.documentElement.className.match(/(?:^|\s)skin-theme-clientpref-(day|night|os)(?:\s|$)/);
+        return match ? match[1] : 'os';
+    }
+
+    function resolveTheme(pref) {
+        if (pref === 'night') {
+            return 'dark';
+        }
+        if (pref === 'day') {
+            return 'light';
+        }
+        return darkQuery && darkQuery.matches ? 'dark' : 'light';
+    }
+
     function applyTheme(theme) {
-        const body = document.body;
-        const html = document.documentElement;
+        [document.documentElement, document.body].forEach(function(el) {
+            el.classList.remove('theme-light', 'theme-dark');
+            el.classList.add('theme-' + theme);
+        });
 
-        // 既存のテーマクラスを削除
-        body.classList.remove('theme-light', 'theme-dark');
-        html.classList.remove('theme-light', 'theme-dark');
-
-        // 指定されたテーマを適用
-        body.classList.add('theme-' + theme);
-        html.classList.add('theme-' + theme);
-
-        // テーマトグルボタンのdata-theme属性を更新
         const toggleButton = document.getElementById('theme-toggle');
         if (toggleButton) {
             toggleButton.setAttribute('data-theme', theme);
         }
 
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function(meta) {
+            meta.setAttribute('content', THEME_COLOR[theme]);
+        });
+
         // テーマ変更イベントを発火(画像切り替え機能などが受信)
         $(document).trigger('themeChanged');
     }
 
-    // 保存されたテーマ設定を読み込む
-    function loadSavedTheme() {
-        try {
-            const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-            if (savedTheme === THEME_LIGHT || savedTheme === THEME_DARK) {
-                return savedTheme;
-            }
-            // 保存値がない場合はシステムのカラースキームを検出
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return THEME_DARK;
-            }
-        } catch (e) {
-            console.error('テーマ設定の読み込みに失敗しました:', e);
-        }
-        // デフォルトはライトモード
-        return THEME_LIGHT;
-    }
-
-    // テーマ設定を保存する
-    function saveTheme(theme) {
-        try {
-            localStorage.setItem(THEME_STORAGE_KEY, theme);
-        } catch (e) {
-            console.error('テーマ設定の保存に失敗しました:', e);
+    function savePreference(pref) {
+        if (mw.user.isNamed()) {
+            const html = document.documentElement;
+            html.classList.remove('skin-theme-clientpref-day', 'skin-theme-clientpref-night', 'skin-theme-clientpref-os');
+            html.classList.add('skin-theme-clientpref-' + pref);
+            new mw.Api().saveOption(USER_OPTION, pref).fail(function(code) {
+                mw.log.warn('Fluent: テーマ設定の保存に失敗しました', code);
+            });
+        } else {
+            mw.user.clientPrefs.set(FEATURE, pref);
         }
     }
 
-    // テーマを切り替える
+    // 表示中のテーマの反対を明示的に選択
     function toggleTheme() {
-        const body = document.body;
-        const currentTheme = body.classList.contains('theme-dark') ? THEME_DARK : THEME_LIGHT;
-        const newTheme = currentTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
+        const pref = resolveTheme(getPreference()) === 'dark' ? 'day' : 'night';
+        savePreference(pref);
+        applyTheme(resolveTheme(pref));
+    }
 
-        applyTheme(newTheme);
-        saveTheme(newTheme);
+    // 旧実装(localStorage)の設定を一度だけ引き継ぐ
+    function migrateLegacyPreference() {
+        let legacy = null;
+        try {
+            legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+            localStorage.removeItem(LEGACY_STORAGE_KEY);
+        } catch (e) {
+            return;
+        }
+        if ((legacy === 'light' || legacy === 'dark') && getPreference() === 'os') {
+            savePreference(legacy === 'dark' ? 'night' : 'day');
+        }
     }
 
     // 初期化
     function init() {
-        // 保存されたテーマを適用
-        const savedTheme = loadSavedTheme();
-        applyTheme(savedTheme);
+        migrateLegacyPreference();
+        applyTheme(resolveTheme(getPreference()));
 
-        // トグルボタンのイベントリスナーを設定
-        const toggleButton = document.getElementById('theme-toggle');
-        if (toggleButton) {
-            toggleButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleTheme();
+        // ヘッダーのトグルボタンとユーザーメニューの「ダークモード切替」
+        ['theme-toggle', 'a-dark-toggle'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    toggleTheme();
+                });
+            }
+        });
+
+        // OS設定に従う場合はシステムのカラースキーム変更に追従
+        if (darkQuery) {
+            darkQuery.addEventListener('change', function() {
+                if (getPreference() === 'os') {
+                    applyTheme(resolveTheme('os'));
+                }
             });
         }
     }
@@ -583,6 +604,9 @@ $(document).ready(function() {
             });
             return;
         }
+
+        // 1.43以降の見出しマークアップ(div.mw-heading > h2)では包み要素ごと表示する
+        targetElement = targetElement.closest('.mw-heading') || targetElement;
 
         // スクロール可能なコンテナを取得(MediaWikiのメインコンテンツエリア)
         const scrollContainer = document.getElementById('mw-main-content') ||
@@ -859,14 +883,20 @@ $(document).ready(function() {
     /**
      * 初期化
      */
+    function getToc() {
+        return document.getElementById('toc') || document.querySelector('.toc');
+    }
+
     function init() {
-        const toc = document.getElementById('toc') || document.querySelector('.toc');
-        if (!toc) return;
+        const toc = getToc();
+        // wikipage.content はプレビュー等で繰り返し発火するため、要素ごとに1回だけ初期化する
+        if (!toc || toc.dataset.fluentTocInitialized === 'true') return;
 
         // モバイル表示の場合は機能を無効化
         if (window.innerWidth <= 768) {
             return;
         }
+        toc.dataset.fluentTocInitialized = 'true';
 
         // タイトル要素にドラッグ可能な属性を追加
         const tocTitle = toc.querySelector('.toctitle') || toc.querySelector('#mw-toc-heading')?.parentElement;
@@ -889,14 +919,15 @@ $(document).ready(function() {
 
         // イベントリスナーの設定
         setupEventListeners(toc);
+    }
 
-        // ウィンドウリサイズ時の処理
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                constrainToViewport(toc);
-                adjustTocHeight(toc); // リサイズ時にも高さを調整
-            }
-        });
+    // ウィンドウリサイズ時の処理(ページ全体で1回だけ登録し、現在の目次に適用)
+    function handleWindowResize() {
+        const toc = getToc();
+        if (toc && toc.dataset.fluentTocInitialized === 'true' && window.innerWidth > 768) {
+            constrainToViewport(toc);
+            adjustTocHeight(toc);
+        }
     }
 
     /**
@@ -981,7 +1012,7 @@ $(document).ready(function() {
         const resetButton = document.createElement('button');
         resetButton.className = 'toc-reset-button';
         resetButton.textContent = '↺';
-        resetButton.title = '位置とサイズをリセット';
+        resetButton.title = mw.message('fluent-toc-reset').text();
         resetButton.style.cssText = `
             background: none;
             border: none;
@@ -1366,6 +1397,7 @@ $(document).ready(function() {
 
     // ページ遷移後も初期化(MediaWikiのAjaxナビゲーション対応)
     mw.hook('wikipage.content').add(init);
+    window.addEventListener('resize', handleWindowResize);
 })();
 
 // ============================================
@@ -1520,7 +1552,9 @@ $(document).ready(function() {
 	let container = null;
 	let closeButton = null;
 	let resetButton = null;
+	let fileLink = null;
 	let currentImage = null;
+	let previousFocus = null;
 	let scale = 1.0;
 	let translateX = 0;
 	let translateY = 0;
@@ -1560,9 +1594,13 @@ $(document).ready(function() {
 		// オーバーレイが既に存在する場合は何もしない
 		if (overlay) return;
 
-		// オーバーレイを作成
+		// オーバーレイ(モーダルダイアログ)を作成
 		overlay = document.createElement('div');
 		overlay.id = 'image-popup-overlay';
+		overlay.setAttribute('role', 'dialog');
+		overlay.setAttribute('aria-modal', 'true');
+		overlay.setAttribute('aria-label', mw.message('fluent-image-dialog-label').text());
+		overlay.setAttribute('aria-hidden', 'true');
 
 		// コンテナを作成
 		container = document.createElement('div');
@@ -1570,19 +1608,27 @@ $(document).ready(function() {
 
 		// 閉じるボタンを作成
 		closeButton = document.createElement('button');
+		closeButton.type = 'button';
 		closeButton.id = 'image-popup-close';
-		closeButton.innerHTML = '×';
-		closeButton.setAttribute('aria-label', '閉じる');
+		closeButton.textContent = '×';
+		closeButton.setAttribute('aria-label', mw.message('fluent-image-close').text());
 
 		// 元に戻すボタンを作成
 		resetButton = document.createElement('button');
+		resetButton.type = 'button';
 		resetButton.id = 'image-popup-reset';
-		resetButton.innerHTML = '元に戻す';
-		resetButton.setAttribute('aria-label', '元に戻す');
+		resetButton.textContent = mw.message('fluent-image-reset').text();
+
+		// ファイルページへのリンクを作成
+		fileLink = document.createElement('a');
+		fileLink.id = 'image-popup-file-link';
+		fileLink.textContent = mw.message('fluent-image-open-file').text();
+		fileLink.hidden = true;
 
 		// 要素を組み立て
 		container.appendChild(closeButton);
 		container.appendChild(resetButton);
+		container.appendChild(fileLink);
 		overlay.appendChild(container);
 		document.body.appendChild(overlay);
 
@@ -1597,10 +1643,14 @@ $(document).ready(function() {
 		closeButton.addEventListener('click', hidePopup);
 		resetButton.addEventListener('click', resetZoom);
 
-		// Escapeキーで閉じる
+		// Escapeキーで閉じる / Tabキーのフォーカスをダイアログ内に閉じ込める
 		document.addEventListener('keydown', function(e) {
-			if (e.key === 'Escape' && overlay.classList.contains('active')) {
+			if (!overlay.classList.contains('active')) return;
+
+			if (e.key === 'Escape') {
 				hidePopup();
+			} else if (e.key === 'Tab') {
+				trapFocus(e);
 			}
 		});
 
@@ -1735,9 +1785,17 @@ $(document).ready(function() {
 		// 画像をコンテナに追加(閉じるボタンとリセットボタンの後に)
 		container.appendChild(popupImg);
 
+		// ファイルページへのリンク(ファイル説明ページにリンクしている画像のみ)
+		const descriptionLink = imgElement.closest('a.mw-file-description');
+		fileLink.hidden = !descriptionLink;
+		fileLink.href = descriptionLink ? descriptionLink.href : '';
+
 		// ポップアップを表示
+		previousFocus = document.activeElement;
 		overlay.classList.add('active');
+		overlay.setAttribute('aria-hidden', 'false');
 		currentImage = imgElement;
+		closeButton.focus();
 
 		// スクロールを無効化
 		document.body.style.overflow = 'hidden';
@@ -1747,9 +1805,10 @@ $(document).ready(function() {
 	 * ポップアップを非表示
 	 */
 	function hidePopup() {
-		if (!overlay) return;
+		if (!overlay || !overlay.classList.contains('active')) return;
 
 		overlay.classList.remove('active');
+		overlay.setAttribute('aria-hidden', 'true');
 		currentImage = null;
 
 		// ズームをリセット
@@ -1757,6 +1816,46 @@ $(document).ready(function() {
 
 		// スクロールを再有効化
 		document.body.style.overflow = '';
+
+		// 開く前の要素にフォーカスを戻す
+		if (previousFocus && document.contains(previousFocus)) {
+			previousFocus.focus();
+		}
+		previousFocus = null;
+	}
+
+	/**
+	 * Tabキーのフォーカスをダイアログ内の操作要素で循環させる
+	 */
+	function trapFocus(e) {
+		const focusable = [closeButton, resetButton, fileLink].filter(function(el) {
+			return !el.hidden;
+		});
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+
+		if (!overlay.contains(document.activeElement)) {
+			e.preventDefault();
+			first.focus();
+		} else if (e.shiftKey && document.activeElement === first) {
+			e.preventDefault();
+			last.focus();
+		} else if (!e.shiftKey && document.activeElement === last) {
+			e.preventDefault();
+			first.focus();
+		}
+	}
+
+	/**
+	 * ポップアップ表示の対象にする画像か判定
+	 * 独自リンク(link=ページ名 / 外部URL)付きの画像や .noviewer 内の画像はリンク動作を優先する
+	 */
+	function isPopupTarget(img) {
+		if (img.closest('.noviewer, .mw-editsection, #toc, #image-popup-overlay')) {
+			return false;
+		}
+		const link = img.closest('a');
+		return !link || link.classList.contains('mw-file-description') || link.classList.contains('image');
 	}
 
 	/**
@@ -1774,6 +1873,11 @@ $(document).ready(function() {
 
 			// クリック時にポップアップを表示
 			img.addEventListener('click', function(e) {
+				// 修飾キー付きクリック(新しいタブで開く等)と対象外の画像は通常のリンク動作
+				if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || !isPopupTarget(this)) {
+					return;
+				}
+
 				// リンクのデフォルト動作を防止
 				e.preventDefault();
 				e.stopPropagation();

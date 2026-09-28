@@ -3,6 +3,7 @@
 @import 'variables.less';
 @import 'common-styles.less';
 @import 'theme-toggle.less';
+@import 'night-mode.less';
 
 @font-face {
 	font-family: FabricIcons;
@@ -1009,8 +1010,7 @@ figure {
 /* ===================================
    明示的なライトモード
    =================================== */
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-screen-common-1() {
     /* タブバー全体 - ライトモード */
     .oo-ui-menuLayout-menu {
         background-color: #f8f9fa !important;
@@ -1585,12 +1585,21 @@ html.theme-light {
 		background-color: #E1DFDD;
 	}
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-screen-common-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-screen-common-1();
+	}
+}
 
 /* ===================================
    明示的なダークモード
    =================================== */
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-screen-common-2() {
     /* 編集エリア */
 
     /* フォント */
@@ -1858,4 +1867,14 @@ html.theme-dark {
     #fabric-heading #search-box form#p-search {
         background-color: var(--search-background-color);
     }
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-screen-common-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-screen-common-2();
+	}
 }

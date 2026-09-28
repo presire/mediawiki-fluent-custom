@@ -36,6 +36,7 @@ html.ve-activated {
 
 	// Dark theme support (if Fluent has dark theme)
 	&.theme-dark,
+	&.skin-theme-clientpref-night,
 	&[data-theme="dark"] {
 		.ve-ce-branchNode-blockSlug,
 		body p.ve-ce-branchNode-newSlug {
@@ -82,7 +83,8 @@ html.ve-loading {
 	border-bottom: 1px solid #c8c8c8;
 
 	html[data-theme="dark"] &,
-	html.theme-dark & {
+	html.theme-dark &,
+	html.skin-theme-clientpref-night & {
 		background: #1a1a1a;
 		border-bottom-color: #444;
 	}

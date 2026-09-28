@@ -205,8 +205,7 @@
    ライトモード用のインジケーター・アイコン
    プルダウンの下矢印を黒に設定（デフォルト）
    =================================== */
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-variables-1() {
   .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
   .oo-ui-icon-expand, .oo-ui-icon-collapse,
   .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
@@ -214,12 +213,21 @@ html.theme-light {
     filter: none !important;
   }
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-variables-1();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-variables-1();
+	}
+}
 
 /* ===================================
    ダークモード用のCSS変数
    =================================== */
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-variables-2() {
   :root {
     /* アクセントカラー（ダークモード用に調整） */
     --accent-color: #8B5A3C;
@@ -823,6 +831,16 @@ html.theme-dark {
     filter: invert(1) !important;
   }
 }
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-variables-2();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-variables-2();
+	}
+}
 
 /* ===================================
    ライトモード用の追加スタイル
@@ -865,8 +883,7 @@ html.theme-dark {
    =================================== */
 
 /* ライトモードを手動で適用 */
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-variables-3() {
   /* アクセントカラー */
   --accent-color: #CF8B54;
 
@@ -1060,13 +1077,22 @@ html.theme-light {
   --thumbinner-background-color: #f8f9fa;
   --thumbinner-border-color: #a2a9b1;
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-variables-3();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-variables-3();
+	}
+}
 
 /* ===================================
    明示的なライトモード用のインジケーター・アイコン
    プルダウンの下矢印を黒に設定
    =================================== */
-body.theme-light,
-html.theme-light {
+.fluent-theme-light-variables-4() {
   .oo-ui-icon-menu, .oo-ui-indicatorElement-indicator.oo-ui-indicator-down,
   .oo-ui-icon-expand, .oo-ui-icon-collapse,
   .oo-ui-textInputWidget.oo-ui-widget-enabled.oo-ui-textInputWidget-type-search > .oo-ui-indicatorElement-indicator,
@@ -1074,10 +1100,19 @@ html.theme-light {
     filter: none !important;
   }
 }
+body.theme-light,
+html.theme-light,
+html.skin-theme-clientpref-day {
+	.fluent-theme-light-variables-4();
+}
+@media screen and (prefers-color-scheme: light) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-light-variables-4();
+	}
+}
 
 /* ダークモードを手動で適用 */
-body.theme-dark,
-html.theme-dark {
+.fluent-theme-dark-variables-5() {
   /* アクセントカラー */
   --accent-color: #8B5A3C;
 
@@ -1268,4 +1303,14 @@ html.theme-dark {
   /* サムネイル関連 */
   --thumbinner-background-color: #252525;
   --thumbinner-border-color: #555;
+}
+body.theme-dark,
+html.theme-dark,
+html.skin-theme-clientpref-night {
+	.fluent-theme-dark-variables-5();
+}
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		.fluent-theme-dark-variables-5();
+	}
 }

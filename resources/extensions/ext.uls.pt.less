@@ -1,0 +1,9 @@
+// Universal Language Selector trigger in the personal tools menu for the Fluent skin.
+// The ULS menu itself uses the core "notheme skin-invert" classes (handled in night-mode.less);
+// only the trigger icon outside the menu needs to be inverted in night mode.
+@import 'night-mode-mixins.less';
+
+/* stylelint-disable-next-line selector-max-id */
+#pt-uls .uls-trigger::before {
+	.fluent-night-invert-icon();
+}

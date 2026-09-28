@@ -1,0 +1,20 @@
+// Apply a declaration only when night mode is active
+// (explicit "night", or "os" with a dark system color scheme). Same approach as CodeMirror's .darkmode().
+.fluent-night( @prop, @value ) {
+	@media screen {
+		html.skin-theme-clientpref-night & {
+			@{prop}: @value;
+		}
+	}
+
+	@media screen and ( prefers-color-scheme: dark ) {
+		html.skin-theme-clientpref-os & {
+			@{prop}: @value;
+		}
+	}
+}
+
+// Invert dark monochrome icons (background images) in night mode
+.fluent-night-invert-icon() {
+	.fluent-night( filter, invert( 1 ) hue-rotate( 180deg ) );
+}

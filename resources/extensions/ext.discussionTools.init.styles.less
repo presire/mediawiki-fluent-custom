@@ -1,0 +1,17 @@
+// DiscussionTools styles for the Fluent skin.
+// DiscussionTools' visual enhancements reset the heading padding/margin with a boosted selector
+// (dt.init.less); restore the Fluent heading card (common-styles.less) in discussion sections.
+.ext-discussiontools-visualenhancements-enabled {
+	.ext-discussiontools-init-section.mw-heading2,
+	.ext-discussiontools-init-section {
+		// The heading card already separates sections
+		border-top: 0;
+		// Do not clip the card and its shadow (same width as on article pages)
+		overflow: visible;
+
+		h2 {
+			padding: 16px 20px 16px 30px;
+			margin: 0 0 8px 0;
+		}
+	}
+}

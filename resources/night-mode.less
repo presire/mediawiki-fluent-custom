@@ -1,0 +1,76 @@
+/**
+ * MediaWiki core night mode integration.
+ *
+ * <html> carries one of skin-theme-clientpref-day / -night / -os
+ * (set by SkinFluent::getHtmlElementAttributes() and, for anonymous users,
+ * restored from the client preference cookie before first paint).
+ * This file provides the Codex design token values for each mode so that
+ * core and extension styles compiled with resources/mediawiki.less follow the theme.
+ */
+@import 'mediawiki.skin.codex-design-tokens/theme-wikimedia-ui-mixin-dark.less';
+@import 'mediawiki.skin.codex-design-tokens/theme-wikimedia-ui-reset.less';
+
+// Monochrome (black) OOUI icons and indicators, e.g. the VisualEditor toolbar (same as Vector, T365764).
+// Colored (progressive/destructive), already inverted, checkbox and .mw-no-invert icons are excluded.
+@fluent-ooui-icons: ~'.oo-ui-iconElement-icon:not( .oo-ui-image-progressive ):not( .oo-ui-image-destructive ):not( .oo-ui-checkboxInputWidget-checkIcon ):not( .oo-ui-image-invert ):not( .mw-no-invert )';
+@fluent-ooui-indicators: ~'.oo-ui-indicatorElement-indicator';
+
+.fluent-night-tokens() {
+	color-scheme: dark;
+	.cdx-mode-dark();
+	// Match base colors to the Fluent dark palette (defined in variables.less)
+	--background-color-base: var( --content-background-color );
+	--color-base: var( --content-text-color );
+}
+
+.fluent-night-content() {
+	// Inverted dark mode for user content that cannot use CSS variables (T365102)
+	.skin-invert-image img,
+	.skin-invert {
+		color-scheme: light;
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+
+	// Forced light mode for user content
+	.notheme {
+		color-scheme: light;
+		color: var( --color-base );
+	}
+
+	@{fluent-ooui-icons},
+	@{fluent-ooui-indicators} {
+		color-scheme: light;
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
+
+:root,
+.skin-invert,
+.notheme {
+	.cdx-mode-reset();
+}
+
+// Prevent double inversion inside already inverted (.skin-invert) or light (.notheme) elements
+.skin-invert,
+.notheme {
+	@{fluent-ooui-icons},
+	@{fluent-ooui-indicators} {
+		filter: none !important; /* stylelint-disable-line declaration-no-important */
+	}
+}
+
+html.skin-theme-clientpref-day {
+	color-scheme: light;
+}
+
+html.skin-theme-clientpref-night {
+	.fluent-night-tokens();
+	.fluent-night-content();
+}
+
+@media ( prefers-color-scheme: dark ) {
+	html.skin-theme-clientpref-os {
+		.fluent-night-tokens();
+		.fluent-night-content();
+	}
+}

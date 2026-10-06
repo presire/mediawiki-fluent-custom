@@ -1,8 +1,11 @@
 {
 	"name": "Fluent",
-	"version": "0.70",
-	"author": "immewnity",
-	"url": "https://www.mediawiki.org/wiki/Skin:Fluent",
+	"version": "0.8.0",
+	"author": [
+		"[https://github.com/presire presire] (Fluent Custom)",
+		"[https://github.com/immewnity immewnity] (original Fluent skin)"
+	],
+	"url": "https://github.com/presire/mediawiki-fluent-custom",
 	"descriptionmsg": "fluent-desc",
 	"namemsg": "fluent",
 	"license-name": "MIT",

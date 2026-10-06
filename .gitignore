@@ -1,0 +1,26 @@
+# Dependencies
+/node_modules/
+/vendor/
+/composer.lock
+
+# Tool caches
+/.phpcs-cache
+/.phpunit.result.cache
+/.stylelintcache
+/.eslintcache
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+/.idea/
+/.vscode/
+
+# AI agent workspace
+/.omo/

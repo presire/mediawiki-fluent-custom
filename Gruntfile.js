@@ -7,6 +7,10 @@ module.exports = function ( grunt ) {
 
 	grunt.initConfig( {
 		jshint: {
+			options: {
+				esversion: 6,
+				browser: true
+			},
 			all: [
 				'**/*.js',
 				'!node_modules/**',
@@ -32,6 +36,7 @@ module.exports = function ( grunt ) {
 				'**/*.{less,css}',
 				'!node_modules/**',
 				'!resources/libraries/**',
+				'!resources/fabric.min.css',
 				'!vendor/**'
 			]
 		}

@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"..."
+			"immewnity",
+			"presire"
 		]
 	},
 	"fluent": "{{optional}}",
-	"fluent-desc": "{{desc|what=skin|name=Fluent|url=https://www.mediawiki.org/wiki/Skin:Fluent}}",
+	"fluent-desc": "{{desc|what=skin|name=Fluent|url=https://github.com/presire/mediawiki-fluent-custom}}",
 	"fluent-toggle-theme-label": "Title/aria-label of the theme toggle button in the header.",
 	"fluent-toggle-dark-mode": "Label of the dark mode toggle link in the user menu.",
 	"fluent-user-icon-label": "Title of the user menu icon button.",

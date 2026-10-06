@@ -5,7 +5,7 @@
 // Select the search box when clicking on the search icon
 document.getElementById('p-search').getElementsByTagName('h3')[0].onclick = function(){
      document.getElementById("searchInput").focus();
-}
+};
 
 // Toggle the search bar when clicking on the search icon
 var searchIcon = document.getElementById("search-icon");
@@ -14,7 +14,7 @@ if (searchIcon) {
 	searchIcon.addEventListener("click", function() {
 		searchBox.classList.toggle("fade-search");
 	});
-};
+}
 
 // Toggle the dropdown menu when clicking on the user icon
 var userIcon = document.getElementById("user-icon");
@@ -23,7 +23,7 @@ if (userIcon) {
 	userIcon.addEventListener("click", function() {
 		userMenu.classList.toggle("fade-menu");
 	});
-};
+}
 
 // Toggle the dropdown menu when clicking on the namespaces label
 var namespacesLabel = document.getElementById("p-namespaces-label");
@@ -32,7 +32,7 @@ if (namespacesLabel) {
 	namespacesLabel.addEventListener("click", function() {
 		namespacesMenu.classList.toggle("fade-menu");
 	});
-};
+}
 
 // Toggle the dropdown menu when clicking on the views label
 var viewsLabel = document.getElementById("p-views-label");
@@ -41,7 +41,7 @@ if (viewsLabel) {
 	viewsLabel.addEventListener("click", function() {
 		viewsMenu.classList.toggle("fade-menu");
 	});
-};
+}
 
 // Toggle the dropdown menu when clicking on the actions label
 var actionsLabel = document.getElementById("p-actions-label");
@@ -50,7 +50,7 @@ if (actionsLabel) {
 	actionsLabel.addEventListener("click", function() {
 		actionsMenu.classList.toggle("fade-menu");
 	});
-};
+}
 
 // Toggle header dropdown menus when clicking on their labels
 var headerDropdowns = document.querySelectorAll('.header-dropdown');
@@ -108,7 +108,7 @@ window.onclick = function(event) {
 			}
 		}
 	});
-}
+};
 
 // Toggle the sidebar on mobile when clicking on the actions label
 var expandCollapseButton = document.getElementById("expand-collapse");
@@ -117,7 +117,7 @@ if (expandCollapseButton) {
 	expandCollapseButton.addEventListener("click", function() {
 		siteWrapper.classList.toggle("expanded-sidebar");
 	});
-};
+}
 
 
 // User Add
@@ -448,7 +448,7 @@ $(document).ready(function() {
 
             try {
                 localStorage.setItem(STORAGE_KEY, currentBaseUrl);
-            } catch (e) {
+            } catch (err) {
                 // localStorageが使えない環境への対応
             }
         }
@@ -471,7 +471,7 @@ $(document).ready(function() {
                 if (!localStorage.getItem(STORAGE_KEY)) {
                     localStorage.setItem(STORAGE_KEY, currentBaseUrl);
                 }
-            } catch (e) {
+            } catch (err) {
                 // localStorageが使えない環境への対応
             }
         }
@@ -481,7 +481,7 @@ $(document).ready(function() {
             // localStorageをクリア
             try {
                 localStorage.removeItem(STORAGE_KEY);
-            } catch (e) {
+            } catch (err) {
                 // localStorageが使えない環境への対応
             }
         }
@@ -899,7 +899,8 @@ $(document).ready(function() {
         toc.dataset.fluentTocInitialized = 'true';
 
         // タイトル要素にドラッグ可能な属性を追加
-        const tocTitle = toc.querySelector('.toctitle') || toc.querySelector('#mw-toc-heading')?.parentElement;
+        const tocHeading = toc.querySelector('#mw-toc-heading');
+        const tocTitle = toc.querySelector('.toctitle') || (tocHeading ? tocHeading.parentElement : null);
         if (tocTitle) {
             tocTitle.setAttribute('data-draggable', 'true');
         }
